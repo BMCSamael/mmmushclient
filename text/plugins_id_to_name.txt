@@ -4,7 +4,7 @@ adc3a873d4e47348da7cb426 IMap_GMCP.xml
 aedf0cb0be5bf045860d54b7 LuaAudio.xml
 f973af093e715dece34dc25f MM_GMCP_Mapper_GMCP.xml
 f67c4339ed0591a5b010d05b MM_GMCP_handler.xml
-000000000000000000000000 dpercent.xml
+4e2bf9f75646bf678cf620ee dpercent.xml
 925cdd0331023d9f0b8f05a7 MushReader.xml
 463242566069ebfd1b379ec1 Sapi_speaker.xml
 adf79802005a0d6186530bee Trace_To_Notepad.xml
@@ -30,10 +30,12 @@ d900cb999816b1f6f2d4bdc5 detect_globals.xml
 909d8c23b717f4de1262d0a4 faux_sextant.xml
 a326b480b3f02b3ff6d58e7d generic_buy.xml
 97784abf5f30629a0d7e7307 global_vars.xml
+d692e95c094853d2b2458f58 hyperlink_url_lua.xml
 164db33914b912da8aac6ecc kills_tnl.xml
 29aff4e19e96d79f40ffcbd6 latest_daily.xml
 ce9475a5d7acf80d07396cac locations_helper.xml
 0084625af85a3786d14c5b8d log_events.xml
+d83fdde9ed133fb0859936a6 log_renamer.xml
 6e79c67fd99121b8b383e377 meh_filters.xml
 4df60011beba94a6b9e41859 meh_id.xml
 57ba85788195beece2a1a171 meh_pirates.xml
@@ -53,11 +55,13 @@ a11c9d4e484b5fc428a49941 meh_timers.xml
 cab11fa55cae7d04b2fe8b70 players_tagger.xml
 4b03d42b86ed2b802247c058 plugins_updater.xml
 fbd5b7cc1ef6acf827a3f4a1 plugins_updater_v2.xml
+5945aedf1aacc09e42c48cef plugins_updater_v3.xml
 ad02c292bb640b7aee9e4df0 quests.xml
 e377771aeee520a633f3dd4d quests_abridged.xml
 66f8ef96f2166bb586529087 read_captures.xml
 bb2a97fe72b34a0cd5135bcf reagents_buy.xml
 d2b442f2da9a95f34f5a199f reagents_counter.xml
+233091f6c00f9afb14a2af62 room_desc_mini.xml
 4e2bf9f75646bf678cf620dd sbrief.xml
 697bd90f4f6ee5ac1493050c scan_helper.xml
 7daf1d7890d9db73d74a8188 sequencer.xml
