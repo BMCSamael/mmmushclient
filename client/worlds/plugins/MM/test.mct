@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE muclient>
+<!-- Saved on Thursday, July 21, 2022, 6:06 PM -->
+<!-- MuClient version 5.03 -->
+<!-- Written by Nick Gammon -->
+<!-- Home Page: http://www.mushclient.com/ -->
+<muclient>
+
+<!-- triggers -->
+
+<triggers
+   muclient_version="5.03"
+   world_file_version="15"
+   date_saved="2022-07-21 18:06:13"
+  >
+  <trigger
+   enabled="y"
+   lines_to_match="23"
+   keep_evaluating="y"
+   match="It looks like this map depicts an area closest to Eastern Auryn\.(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n"
+   multi_line="y"
+   regexp="y"
+   send_to="12"
+   sequence="100"
+  >
+  <send>http = require "socket.http"
+local mylines = "%1\\r\\n%2\\r\\n%3\\r\\n%4\\r\\n%5\\r\\n%6\\r\\n%7\\r\\n%8\\r\\n%9\\r\\n%&amp;lt;10&amp;gt;\\r\\n%&amp;lt;11&amp;gt;\\r\\n%&amp;lt;12&amp;gt;\\r\\n%&amp;lt;13&amp;gt;\\r\\n%&amp;lt;14&amp;gt;\\r\\n%&amp;lt;15&amp;gt;\\r\\n%&amp;lt;16&amp;gt;\\r\\n%&amp;lt;17&amp;gt;\\r\\n%&amp;lt;18&amp;gt;\\r\\n%&amp;lt;19&amp;gt;\\r\\n%&amp;lt;20&amp;gt;\\r\\n%&amp;lt;21&amp;gt;\\r\\n%&amp;lt;22&amp;gt;"
+page, retcode, header = http.request("http://mmatlas.dune.net/find-crystal-guild-vi.pl","map=".. mylines)
+Note(mylines)
+if (retcode == 200) then
+  cstart = string.find(page, "(", 0, true)
+
+  if (cstart ~= nil) then
+    cend = string.find(page, ")", 0, true)
+    crystal = string.sub(page, cstart + 1, cend - 1)
+    Note("Your crystal is located at ".. crystal)
+
+    -- we check if iMap is installed + started
+    local result, imap_started = CallPlugin("adc3a873d4e47348da7cb426", "IsStarted")
+    if (result == 0) then -- it is installed
+      if (imap_started == false) then
+        -- it isn't started, so we start it
+        Execute("imap start")
+      end
+      Execute("imap dest ".. crystal)
+&#9;  Execute("imap desticon custom")
+     end
+
+  else
+    Note("MMAtlas: " .. page)
+  end
+
+else
+  Note("error accessing MMAtlas - code: " .. retcode)
+end
+EnableTrigger("findcrystal", false)</send>
+  </trigger>
+</triggers>
+</muclient>
