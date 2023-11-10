@@ -956,7 +956,7 @@ function inc_other_def(desc, tgt, who, type)
 
     for k, v in ipairs(trigger_style_runs) do
       if (config.show_dmg_brief) then
-       	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] [" .. tgt .. "]")
+       	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] [" .. who .. "->" .. tgt .. "]")
       else
 	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] " .. desc)
       end
@@ -974,7 +974,7 @@ function inc_vs_me_def(desc, tgt, type)
 
     for k, v in ipairs(trigger_style_runs) do
       if (config.show_dmg_brief) then
-       	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] [" .. tgt .. "]")
+       	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] Me->[" .. tgt .. "]")
       else
 	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] " .. desc)
       end
@@ -991,7 +991,7 @@ function inc_my_def(desc, who, type)
 
     for k, v in ipairs(trigger_style_runs) do
       if (config.show_dmg_brief) then
-       	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] [" .. who .. "]")
+       	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] [" .. who .. "]->Me")
       else
 	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] " .. desc)
       end
