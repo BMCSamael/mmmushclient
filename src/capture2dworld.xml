@@ -866,7 +866,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/capture2dworld.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/capture2dworld.xml",
   }
   return (table.concat(t, ";"))
 end
@@ -874,8 +874,8 @@ end
 
 function plugin_update_aux_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/res/captures.MCL,MUSH/worlds",
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/res/announce.mp3,MUSH/sounds",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/res/captures.MCL,MUSH/worlds",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/res/announce.mp3,MUSH/sounds",
   }
   return (table.concat(t, ";"))
 end
@@ -1325,8 +1325,8 @@ function handle_gmcp_gecho_v1_nocolors(msg)
     msg = strip_colors(msg)
     msg = strip_crlfs(msg)
 
-    for line in string.gmatch(msg, "[^§]*§") do
-      line = string.match(line, "(.+)§")
+    for line in string.gmatch(msg, "[^ ]* ") do
+      line = string.match(line, "(.+) ")
       line = Trim(line or "")
 
       if (line ~= "") then
@@ -1388,9 +1388,9 @@ function handle_gmcp_gecho_v2_colors(msg)
       end
 
       if (txt) then
-        if (string.find(txt, "§")) then
-          for line in string.gmatch(txt, "[^§]*§") do
-            line = string.match(line, "(.+)§")
+        if (string.find(txt, " ")) then
+          for line in string.gmatch(txt, "[^ ]* ") do
+            line = string.match(line, "(.+) ")
             line = Trim(line or "")
 
             if (line ~= "") then
@@ -1429,12 +1429,12 @@ end
 
 
 function strip_crlfs(msg)
-  msg = string.gsub(msg, "\r", "§")
-  msg = string.gsub(msg, "\n", "§")
-  msg = msg .. "§"
+  msg = string.gsub(msg, "\r", " ")
+  msg = string.gsub(msg, "\n", " ")
+  msg = msg .. " "
 
-  while (string.find(msg, "§§")) do
-    msg = string.gsub(msg, "§§", "§")
+  while (string.find(msg, "  ")) do
+    msg = string.gsub(msg, "  ", " ")
   end
 
   return msg
@@ -1566,7 +1566,7 @@ function handle_irc_msg(text)
 --    Note("extuser: " .. (extuser or "nil"))
 --    Note("msg: " .. (msg or "nil"))
 
-    if (not string.match(msg, "^§.+"))
+    if (not string.match(msg, "^ .+"))
     or (is_listed("captures", "ircverb")) then
       captures = GetWorld("captures") -- gotta check every time in case they close it
 --      Note("trying to show it")
@@ -1624,7 +1624,7 @@ function broadcast_txt_line(type, line, who)
     [2] = line,
     [3] = who,
   }
-  BroadcastPlugin(2, table.concat(t, "Ø"))
+  BroadcastPlugin(2, table.concat(t, " "))
 end
 
 
@@ -1691,7 +1691,7 @@ function show_txt(fgcol, bgcol, txt)
     [2] = bgcol,
     [3] = txt,
   }
-  BroadcastPlugin(1, table.concat(t, "Ø"))
+  BroadcastPlugin(1, table.concat(t, " "))
 end
 
 

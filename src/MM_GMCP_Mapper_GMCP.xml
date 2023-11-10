@@ -1087,7 +1087,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/MM_GMCP_Mapper_GMCP.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/MM_GMCP_Mapper_GMCP.xml",
   }
   return (table.concat(t, ";"))
 end
@@ -1095,7 +1095,7 @@ end
 
 function plugin_update_aux_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/mm_mapper.lua,MUSH/lua",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/mm_mapper.lua,MUSH/lua",
   }
   return (table.concat(t, ";"))
 end

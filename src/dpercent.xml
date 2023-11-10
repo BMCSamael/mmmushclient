@@ -717,7 +717,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/dpercent.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/dpercent.xml",
   }
   return (table.concat(t, ";"))
 end
@@ -725,7 +725,7 @@ end
 
 function plugin_update_aux_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/res/ping.mp3,MUSH/sounds",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/res/ping.mp3,MUSH/sounds",
   }
   return (table.concat(t, ";"))
 end
@@ -956,7 +956,7 @@ function inc_other_def(desc, tgt, who, type)
 
     for k, v in ipairs(trigger_style_runs) do
       if (config.show_dmg_brief) then
-       	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] [" .. who .. "->" .. tgt .. "]")
+       	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] [" .. tgt .. "]")
       else
 	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] " .. desc)
       end
@@ -974,7 +974,7 @@ function inc_vs_me_def(desc, tgt, type)
 
     for k, v in ipairs(trigger_style_runs) do
       if (config.show_dmg_brief) then
-       	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] Me->[" .. tgt .. "]")
+       	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] [" .. tgt .. "]")
       else
 	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] " .. desc)
       end
@@ -991,7 +991,7 @@ function inc_my_def(desc, who, type)
 
     for k, v in ipairs(trigger_style_runs) do
       if (config.show_dmg_brief) then
-       	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] [" .. who .. "]->Me")
+       	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] [" .. who .. "]")
       else
 	newval = string.gsub(v.text, desc, "[DEFN] [" .. type .. "] " .. desc)
       end
