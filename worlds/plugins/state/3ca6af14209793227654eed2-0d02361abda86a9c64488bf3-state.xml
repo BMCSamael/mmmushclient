@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE muclient>
+<!-- Saved on Friday, November 10, 2023, 3:43 AM -->
+<!-- MuClient version 5.03 -->
+<!-- Written by Nick Gammon -->
+<!-- Home Page: http://www.mushclient.com/ -->
+
+<!-- Plugin state saved. Plugin: "capture2mini". World: "Materia Magica GMCP". -->
+
+<muclient>
+
+<!-- variables -->
+
+<variables
+   muclient_version="5.03"
+   world_file_version="15"
+   date_saved="2023-11-10 03:43:20"
+  >
+  <variable name="WINDOW_HEIGHT">272</variable>
+  <variable name="WINDOW_WIDTH">469</variable>
+  <variable name="enabled">true</variable>
+  <variable name="mw_0d02361abda86a9c64488bf3_windowflags">2</variable>
+  <variable name="mw_0d02361abda86a9c64488bf3_windowmode">0</variable>
+  <variable name="mw_0d02361abda86a9c64488bf3_windowx">1430</variable>
+  <variable name="mw_0d02361abda86a9c64488bf3_windowy">0</variable>
+</variables>
+</muclient>

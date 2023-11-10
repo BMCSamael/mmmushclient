@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE muclient>
+<!-- Saved on Friday, November 10, 2023, 3:43 AM -->
+<!-- MuClient version 5.03 -->
+<!-- Written by Nick Gammon -->
+<!-- Home Page: http://www.mushclient.com/ -->
+
+<!-- Plugin state saved. Plugin: "faux_sextant". World: "Materia Magica GMCP". -->
+
+<muclient>
+
+<!-- variables -->
+
+<variables
+   muclient_version="5.03"
+   world_file_version="15"
+   date_saved="2023-11-10 03:43:20"
+  >
+  <variable name="log_coords">true</variable>
+  <variable name="show_sextant">true</variable>
+</variables>
+</muclient>

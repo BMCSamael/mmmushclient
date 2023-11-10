@@ -1,0 +1,1245 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE muclient>
+<!-- Saved on Thursday, November 09, 2023, 9:33 PM -->
+<!-- MuClient version 5.03 -->
+<!-- Written by Nick Gammon -->
+<!-- Home Page: http://www.mushclient.com/ -->
+<muclient>
+<world
+   muclient_version="5.03"
+   world_file_version="15"
+   date_saved="2023-11-09 21:33:39"
+
+   auto_say_override_prefix="-"
+   auto_say_string="say "
+   chat_name="Name-not-set"
+   command_stack_character=";"
+   id="3ca6af14209793227654eed2"
+   input_font_name="Lucida Console"
+   mapping_failure="Alas, you cannot go that way."
+   name="Materia Magica GMCP"
+   new_activity_sound="(No sound)"
+   output_font_name="Lucida Console"
+   password_base64="y"
+   password="cjNzc2whbg=="
+   player="Tamlin"
+   script_editor="notepad"
+   script_editor_argument="%file"
+   script_language="Lua"
+   script_prefix="\"
+   site="materiamagica.com"
+   spam_message="look"
+   speed_walk_prefix="."
+   terminal_identification="mushclient"
+
+   arrows_change_history="y"
+   auto_pause="y"
+   auto_repeat="y"
+   auto_resize_minimum_lines="1"
+   auto_resize_maximum_lines="20"
+   auto_wrap_window_width="y"
+   chat_foreground_colour="red"
+   chat_background_colour="black"
+   chat_port="4050"
+   confirm_on_paste="y"
+   confirm_on_send="y"
+   connect_method="3"
+   convert_ga_to_newline="y"
+   default_trigger_send_to="10"
+   default_trigger_sequence="100"
+   default_trigger_keep_evaluating="y"
+   default_alias_send_to="10"
+   default_alias_sequence="100"
+   default_timer_send_to="10"
+   detect_pueblo="y"
+   display_my_input="y"
+   echo_colour="10"
+   echo_hyperlink_in_output_window="y"
+   edit_script_with_notepad="y"
+   enable_aliases="y"
+   enable_beeps="y"
+   enable_scripts="y"
+   enable_speed_walk="y"
+   enable_timers="y"
+   enable_triggers="y"
+   enable_trigger_sounds="y"
+   escape_deletes_input="y"
+   flash_taskbar_icon="y"
+   history_lines="1000"
+   hyperlink_adds_to_command_history="y"
+   hyperlink_colour="#0080FF"
+   indent_paras="y"
+   input_background_colour="white"
+   input_font_height="10"
+   input_font_weight="400"
+   input_text_colour="black"
+   keep_commands_on_same_line="y"
+   keypad_enable="y"
+   log_input="y"
+   log_output="y"
+   max_output_lines="50000"
+   mud_can_change_link_colour="y"
+   mud_can_remove_underline="y"
+   mud_can_change_options="y"
+   mxp_debug_level="2"
+   naws="y"
+   note_text_colour="#040000"
+   no_echo_off="y"
+   output_font_height="10"
+   output_font_weight="400"
+   paste_delay_per_lines="1"
+   play_sounds_in_background="y"
+   pixel_offset="1"
+   port="4000"
+   proxy_port="1080"
+   save_deleted_command="y"
+   save_world_automatically="y"
+   script_errors_to_output_window="y"
+   send_file_delay_per_lines="1"
+   send_keep_alives="y"
+   send_mxp_afk_response="y"
+   show_connect_disconnect="y"
+   show_italic="y"
+   show_underline="y"
+   spam_line_count="20"
+   tab_completion_lines="200"
+   timestamp_input_text_colour="maroon"
+   timestamp_notes_text_colour="blue"
+   timestamp_output_text_colour="white"
+   timestamp_input_back_colour="black"
+   timestamp_notes_back_colour="black"
+   timestamp_output_back_colour="black"
+   tool_tip_visible_time="5000"
+   tool_tip_start_time="400"
+   treeview_triggers="y"
+   treeview_aliases="y"
+   treeview_timers="y"
+   underline_hyperlinks="y"
+   unpause_on_send="y"
+   use_default_input_font="y"
+   use_default_output_font="y"
+   warn_if_scripting_inactive="y"
+   wrap_column="176"
+   write_world_name_to_log="y"
+   > <!-- end of general world attributes -->
+  <notes>Renn Ghost Train - 78947
+FBF - 34654</notes>
+
+</world>
+
+<!-- triggers -->
+
+<triggers
+   muclient_version="5.03"
+   world_file_version="15"
+   date_saved="2023-11-09 21:33:39"
+  >
+  <trigger
+   enabled="y"
+   group="collections"
+   keep_evaluating="y"
+   match=".* plushie sits on the ground\, waiting for a caring owner to claim it\."
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get plush</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="collections"
+   keep_evaluating="y"
+   match=".* stamp .* has been left here\."
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get stamp</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="collections"
+   keep_evaluating="y"
+   match=".*A cloud of airborne spores are not long for this world\."
+   name="collections"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get spore</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="collections"
+   ignore_case="y"
+   keep_evaluating="y"
+   match=".*A decorative plate .*\, waiting for a caring owner to claim it\."
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get plate</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="imps"
+   keep_evaluating="y"
+   match=".*A dense brick of hypercompressed gold is protected by a magical seal\."
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get brick</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="imps"
+   keep_evaluating="y"
+   match=".*A heavy box full of wax seals rests here\."
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get box</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="imps"
+   keep_evaluating="y"
+   match=".*A wad of handwritten papers is wrapped together with twine\."
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get wad</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="imps"
+   keep_evaluating="y"
+   match=".*An accounting ledger with a busted lock is here\."
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get ledger</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="PG"
+   keep_evaluating="y"
+   match="A black tourmaline emits a bright flare of white light as you take it and it binds with you."
+   send_to="10"
+   sequence="100"
+  >
+  <send>put tourm ruck</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="ingress"
+   keep_evaluating="y"
+   match="A captive phoenix rears up, inhaling tremendously for a huge flame blast!"
+   send_to="10"
+   sequence="100"
+  >
+  <send>flee</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="MARK RELATED"
+   keep_evaluating="y"
+   match="A goblin rock-hauler drops a sapphire"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get sapphire</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="BOSS"
+   keep_evaluating="y"
+   match="Cloudchaser Verena points at you with a clawed finger and a focused beam of sunlight appears on your forehead."
+   name="Boss"
+   send_to="10"
+   sequence="100"
+  >
+  <send>flee north</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="slots"
+   keep_evaluating="y"
+   match="Steam spouts from a gnomish slot machine as it starts up and the game begins."
+   send_to="10"
+   sequence="100"
+  >
+  <send>pull slot</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="PG"
+   keep_evaluating="y"
+   match="Tzapoatli's rucksack of tourming can hold a maximum of 150 items, and is already full."
+   send_to="10"
+   sequence="100"
+  >
+  <send>close ruck
+open ruck
+put all.tourm ruck</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="Crystal"
+   lines_to_match="24"
+   keep_evaluating="y"
+   match="You have been tasked with retrieving the octarine crystal located at the following location\:\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\m"
+   multi_line="y"
+   regexp="y"
+   send_to="12"
+   sequence="100"
+  >
+  <send>http = require "socket.http"
+local mylines = "%1\\r\\n%2\\r\\n%3\\r\\n%4\\r\\n%5\\r\\n%6\\r\\n%7\\r\\n%8\\r\\n%9\\r\\n%&amp;lt;10&amp;gt;\\r\\n%&amp;lt;11&amp;gt;\\r\\n%&amp;lt;12&amp;gt;\\r\\n%&amp;lt;13&amp;gt;\\r\\n%&amp;lt;14&amp;gt;\\r\\n%&amp;lt;15&amp;gt;\\r\\n%&amp;lt;16&amp;gt;\\r\\n%&amp;lt;17&amp;gt;\\r\\n%&amp;lt;18&amp;gt;\\r\\n%&amp;lt;19&amp;gt;\\r\\n%&amp;lt;20&amp;gt;\\r\\n%&amp;lt;21&amp;gt;\\r\\n%&amp;lt;22&amp;gt;"
+page, retcode, header = http.request("http://mmatlas.dune.net/find-crystal-guild-vi.pl","map=".. mylines)
+
+if (retcode == 200) then
+  cstart = string.find(page, "(", 0, true)
+
+  if (cstart ~= nil) then
+    cend = string.find(page, ")", 0, true)
+    crystal = string.sub(page, cstart + 1, cend - 1)
+    Note("Your crystal is located at ".. crystal)
+
+    -- we check if iMap is installed + started
+    local result, imap_started = CallPlugin("adc3a873d4e47348da7cb426", "IsStarted")
+    if (result == 0) then -- it is installed
+      if (imap_started == false) then
+        -- it isn't started, so we start it
+        Execute("imap start")
+      end
+      Execute("imap dest ".. crystal)
+&#9;  Execute("imap desticon custom")
+     end
+
+  else
+    Note("MMAtlas: " .. page)
+  end
+
+else
+  Note("error accessing MMAtlas - code: " .. retcode)
+end
+EnableTrigger("findcrystal", false)</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="PG"
+   keep_evaluating="y"
+   match="You have contributed .* maleficarum roots into your clan\'s account"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>open rift</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="slots"
+   keep_evaluating="y"
+   match="You pull the machine arm, stopping reel one."
+   send_to="10"
+   sequence="100"
+  >
+  <send>pull slot</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="slots"
+   keep_evaluating="y"
+   match="You pull the machine arm, stopping reel three."
+   send_to="10"
+   sequence="100"
+  >
+  <send>pull slot</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="slots"
+   keep_evaluating="y"
+   match="You pull the machine arm, stopping reel two."
+   send_to="10"
+   sequence="100"
+  >
+  <send>pull slot</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="PG"
+   keep_evaluating="y"
+   match="You put .* of a maleficarum root in a stable rift to the Master of Clans"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>close rift</send>
+  </trigger>
+  <trigger
+   group="sparkeq"
+   keep_evaluating="y"
+   match="You stop using shoulderplates of the Innocent."
+   send_to="10"
+   sequence="100"
+  >
+  <send>wear shoulder</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="PG"
+   keep_evaluating="y"
+   match="You take .* of a maleficarum root"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>put all.root rift</send>
+  </trigger>
+  <trigger
+   group="sparkeq"
+   keep_evaluating="y"
+   match="You wear shoulderplates of the Innocent about your body."
+   send_to="10"
+   sequence="100"
+  >
+  <send>rem should</send>
+  </trigger>
+  <trigger
+   custom_colour="2"
+   expand_variables="y"
+   keep_evaluating="y"
+   make_italic="y"
+   match="^(?P&lt;tgt&gt;([a-zA-Z0-9 \-\,\.\']+)) is (.+) on the (?P&lt;bpart&gt;.+) with your (?P&lt;type&gt;.+) causing (?P&lt;how_much&gt;.+) damage\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="2"
+   sequence="100"
+  >
+  <send>%&lt;tgt&gt;</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="PG"
+   keep_evaluating="y"
+   match="^.*A fist\-sized\, shiny black stone has been uncovered here\.$"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get all.tourmaline</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="PG"
+   keep_evaluating="y"
+   match="^.*A gnarled and blackened root is on the ground\.$"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get all.root</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="PG"
+   keep_evaluating="y"
+   match="^.*of a Baron's"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>drop all.baron</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="BOSS"
+   keep_evaluating="y"
+   match="^A frothing unicorn has arrived\.$"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get horn
+lay out unicorn
+k uni</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="rahdiyr"
+   keep_evaluating="y"
+   match="^A tall sidhe archer protects the city from this position\.$"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>lay out archer</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="Kali"
+   keep_evaluating="y"
+   match="^The dread pirate Kali jumps through the air\, landing a foot on"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>k kali</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="Kali"
+   keep_evaluating="y"
+   match="^With graceful precision\, the dread pirate Kali spins through the air and lands a single foot on"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>k kali</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="Kali"
+   keep_evaluating="y"
+   match="^With her other foot\, the dread pirate Kali kicks"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>k kali</send>
+  </trigger>
+  <trigger
+   group="PG"
+   keep_evaluating="y"
+   match="^You take (.*) from the corpse of .*\.$"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>%1</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   keep_evaluating="y"
+   match="^You throw a diorite axe"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get diorite</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="Crystal"
+   lines_to_match="24"
+   keep_evaluating="y"
+   match="near one corner\.\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n"
+   multi_line="y"
+   regexp="y"
+   send_to="12"
+   sequence="100"
+  >
+  <send>http = require "socket.http"
+local mylines = "%1\\r\\n%2\\r\\n%3\\r\\n%4\\r\\n%5\\r\\n%6\\r\\n%7\\r\\n%8\\r\\n%9\\r\\n%&amp;lt;10&amp;gt;\\r\\n%&amp;lt;11&amp;gt;\\r\\n%&amp;lt;12&amp;gt;\\r\\n%&amp;lt;13&amp;gt;\\r\\n%&amp;lt;14&amp;gt;\\r\\n%&amp;lt;15&amp;gt;\\r\\n%&amp;lt;16&amp;gt;\\r\\n%&amp;lt;17&amp;gt;\\r\\n%&amp;lt;18&amp;gt;\\r\\n%&amp;lt;19&amp;gt;\\r\\n%&amp;lt;20&amp;gt;\\r\\n%&amp;lt;21&amp;gt;\\r\\n%&amp;lt;22&amp;gt;"
+page, retcode, header = http.request("http://mmatlas.dune.net/find-crystal-guild-vi.pl","map=".. mylines)
+
+if (retcode == 200) then
+  cstart = string.find(page, "(", 0, true)
+
+  if (cstart ~= nil) then
+    cend = string.find(page, ")", 0, true)
+    crystal = string.sub(page, cstart + 1, cend - 1)
+    Note("Your crystal is located at ".. crystal)
+
+    -- we check if iMap is installed + started
+    local result, imap_started = CallPlugin("adc3a873d4e47348da7cb426", "IsStarted")
+    if (result == 0) then -- it is installed
+      if (imap_started == false) then
+        -- it isn't started, so we start it
+        Execute("imap start")
+      end
+      Execute("imap dest ".. crystal)
+&#9;  Execute("imap desticon custom")
+     end
+
+  else
+    Note("MMAtlas: " .. page)
+  end
+
+else
+  Note("error accessing MMAtlas - code: " .. retcode)
+end
+EnableTrigger("findcrystal", false)</send>
+  </trigger>
+</triggers>
+
+<!-- aliases -->
+
+<aliases
+   muclient_version="5.03"
+   world_file_version="15"
+   date_saved="2023-11-09 21:33:39"
+  >
+  <alias
+   match="$ei (.*)"
+   enabled="y"
+   group="druid"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>evoke ice %1</send>
+  </alias>
+  <alias
+   match="$em (.*)"
+   enabled="y"
+   group="druid"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>evoke minerals %1</send>
+  </alias>
+  <alias
+   match="^addalias$"
+   enabled="y"
+   group="(generic)"
+   regexp="y"
+   send_to="2"
+   sequence="100"
+  >
+  <send>Will create a simple alias that works both targetted and untargetted
+
+Use:
+  addalias &lt;alias_name&gt; &lt;full_game_command&gt;
+
+For example:
+  addalias cs cast 'counterspell'
+
+Then, once you added it:
+  cs 'pig' - will cast counterspell on 'pig'
+  cs - will cast counterspell untargetted, on your opponent in combat
+</send>
+  </alias>
+  <alias
+   match="^addalias[ ]+(?P&lt;name&gt;[A-Za-z\_]+)[ ]+(?P&lt;command&gt;.+)$"
+   enabled="y"
+   group="(generic)"
+   omit_from_log="y"
+   regexp="y"
+   send_to="12"
+   sequence="100"
+  >
+  <send>require "addxml"
+
+local al = GetAliasList()
+local exists = false
+local regexp = "^%&lt;name&gt;(|[ ]+(?P&lt;target&gt;.+))$"
+
+if al then
+  for k, v in ipairs (al) do 
+    if (regexp == GetAliasInfo(v, 1)) then
+      exists = true
+      break
+    end
+  end  -- for
+end -- if we have any aliases
+
+if (not exists) then
+  addxml.alias {
+    match = regexp,
+    enabled = "y",
+    group="spell",
+    regexp = "y",
+    send_to="10",
+    send = "%&lt;command&gt; %" .. string.char(60) .. "target" .. string.char(62),
+    sequence = 100,
+  }
+
+else
+  Note("addalias error: an alias matching that regular expression already exists")
+end
+</send>
+  </alias>
+  <alias
+   match="^disable group (.+)$"
+   enabled="y"
+   group="(generic)"
+   regexp="y"
+   send_to="12"
+   sequence="100"
+  >
+  <send>EnableGroup("%1", false)
+</send>
+  </alias>
+  <alias
+   match="^enable group (.+)$"
+   enabled="y"
+   group="(generic)"
+   regexp="y"
+   send_to="12"
+   sequence="100"
+  >
+  <send>EnableGroup("%1", true)
+</send>
+  </alias>
+  <alias
+   match="^sextant help (.*?)$"
+   enabled="y"
+   group="quicktools"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>help _filter %1 areas</send>
+  </alias>
+  <alias
+   match="fbf"
+   enabled="y"
+   group="UG_RUNS"
+   send_to="10"
+   sequence="100"
+  >
+  <send>mapper goto 34637</send>
+  </alias>
+  <alias
+   match="hbout"
+   enabled="y"
+   group="phrases"
+   send_to="10"
+   sequence="100"
+  >
+  <send>say by the flames of gath, deliver me from this inferno</send>
+  </alias>
+  <alias
+   match="internalcheck"
+   enabled="y"
+   group="UG_RUNS"
+   send_to="10"
+   sequence="100"
+  >
+  <send>mapper goto 79134</send>
+  </alias>
+  <alias
+   match="priest_fp"
+   enabled="y"
+   group="phrases"
+   send_to="10"
+   sequence="100"
+  >
+  <send>sayto priest hala katalla hum</send>
+  </alias>
+  <alias
+   match="scadd"
+   enabled="y"
+   group="ship"
+   send_to="12"
+   sequence="100"
+  >
+  <send>Send ("ship mark coordinateadd 1 897 911 Renn to Acid Ocean")
+DoAfter (2, "ship mark coordinateadd 1 881 897 NW of PP")
+DoAfter (3, "ship mark coordinateadd 1 871 890 NW of PP")
+DoAfter (4, "ship mark coordinateadd 1 864 886 NW of PP Vertical Stratification")
+DoAfter (5, "ship mark coordinateadd 1 864 863 Inkwell Fog N of PP")
+DoAfter (6, "ship mark coordinateadd 1 932 860 E of PP")
+DoAfter (7, "ship mark coordinateadd 1 938 854 NE of PP")
+DoAfter (8, "ship mark coordinateadd 1 938 812 N of PP")
+DoAfter (9, "ship mark coordinateadd 1 949 814 Huaka Skull &gt;&gt;&gt;")
+DoAfter (10, "ship mark coordinateadd 1 958 805 Huaka Skull &gt;&gt;&gt;")
+DoAfter (10, "ship mark coordinateadd 1 966 805 E of PP Passed Huaka Skull &gt;&gt;&gt;")
+DoAfter (11, "ship mark coordinateadd 1 966 797 NE of PP")
+DoAfter (12, "ship mark coordinateadd 1 952 783 IWF NW of PP")
+DoAfter (13, "ship mark coordinateadd 1 952 768 Alyce's Folley")
+DoAfter (14, "ship mark coordinateadd 1 942 763 Rounding Alyce's Folley")
+DoAfter (15, "ship mark coordinateadd 1 931 758 Rounding Alyce's Folley")
+DoAfter (16, "ship mark coordinateadd 1 931 745 Rounding Alyce's Folley")
+DoAfter (17, "ship mark coordinateadd 1 947 729 N of Alyce's Folley")
+DoAfter (18, "ship mark coordinateadd 1 944 714 N of PP")
+DoAfter (19, "ship mark coordinateadd 1 938 708 NW of PP")
+DoAfter (20, "ship mark coordinateadd 1 951 706 Past &gt;&gt;&gt;")
+DoAfter (21, "ship mark coordinateadd 1 961 673 NE by North of PP")
+DoAfter (22, "ship mark coordinateadd 1 972 669 Acid Ocean")
+DoAfter (23, "ship mark coordinateadd 2 972 669 Acid Ocean to Renn")
+DoAfter (24, "ship mark coordinateadd 2 961 673 SW by South of PP")
+DoAfter (25, "ship mark coordinateadd 2 951 706 Approaching &gt;&gt;&gt;")
+DoAfter (26, "ship mark coordinateadd 2 938 708 SE of PP")
+DoAfter (27, "ship mark coordinateadd 2 944 714 S of PP")
+DoAfter (28, "ship mark coordinateadd 2 947 729 N of Alyce's Folley")
+DoAfter (29, "ship mark coordinateadd 2 931 745 Rounding Alyce's Folley")
+DoAfter (30, "ship mark coordinateadd 2 931 758 Rounding Alyce's Folley")
+DoAfter (31, "ship mark coordinateadd 2 942 763 Rounding Alyce's Folley")
+DoAfter (32, "ship mark coordinateadd 2 952 768 Alyce's Folley")
+DoAfter (33, "ship mark coordinateadd 2 952 783 IWF SE of PP")
+DoAfter (34, "ship mark coordinateadd 2 966 797 SW of PP")
+DoAfter (34, "ship mark coordinateadd 1 966 805 E of PP Passed Huaka Skull &gt;&gt;&gt;")
+DoAfter (35, "ship mark coordinateadd 2 958 805 SW of PP Approaching Huaka Skull &gt;&gt;&gt;")
+DoAfter (36, "ship mark coordinateadd 2 949 814 Passed Huaka Skull &gt;&gt;&gt;")
+DoAfter (37, "ship mark coordinateadd 2 938 812 S of PP")
+DoAfter (38, "ship mark coordinateadd 2 938 854 SW of PP")
+DoAfter (39, "ship mark coordinateadd 2 932 860 W of PP")
+DoAfter (40, "ship mark coordinateadd 2 864 863 Inkwell Fog S of PP")
+DoAfter (41, "ship mark coordinateadd 2 864 886 SE of PP Vertical Stratification")
+DoAfter (42, "ship mark coordinateadd 2 871 890 SE of PP")
+DoAfter (43, "ship mark coordinateadd 2 881 897 SE of PP")
+DoAfter (44, "ship mark coordinateadd 2 897 911 SE of PP")
+DoAfter (45, "ship mark coordinateadd 2 916 921 Renn Docks")
+DoAfter (46, "ship mark coordinateadd 4 1120 1075 Red WP to Renn")
+DoAfter (47, "ship mark coordinateadd 4 1102 1058 .")
+DoAfter (48, "ship mark coordinateadd 4 1039 1038 .")
+DoAfter (49, "ship mark coordinateadd 4 1008 1038 Lake Eerie")
+DoAfter (50, "ship mark coordinateadd 4 981 1023 .")
+DoAfter (51, "ship mark coordinateadd 4 979 1012 .")
+DoAfter (52, "ship mark coordinateadd 4 972 977 .")
+DoAfter (53, "ship mark coordinateadd 4 936 929 .")
+DoAfter (54, "ship mark coordinateadd 4 916 921 Renn")
+DoAfter (55, "ship mark coordinateadd 3 916 921 Renn to Red WP")
+DoAfter (56, "ship mark coordinateadd 3 936 929 .")
+DoAfter (57, "ship mark coordinateadd 3 972 977 .")
+DoAfter (58, "ship mark coordinateadd 3 979 1012 .")
+DoAfter (59, "ship mark coordinateadd 3 981 1023 .")
+DoAfter (60, "ship mark coordinateadd 3 1008 1038 Lake Eerie")
+DoAfter (61, "ship mark coordinateadd 3 1039 1038 .")
+DoAfter (61, "ship mark coordinateadd 3 1102 1058 .")
+DoAfter (62, "ship mark coordinateadd 3 1120 1075 Red Whirlpool")
+DoAfter (63, "ship mark coordinateadd 11 1192 960 PC to Beltane WP")
+DoAfter (64, "ship mark coordinateadd 11 1200 968 .")
+DoAfter (65, "ship mark coordinateadd 11 1198 970 .")
+DoAfter (66, "ship mark coordinateadd 11 1210 981 .")
+DoAfter (67, "ship mark coordinateadd 11 1217 981 .")
+DoAfter (68, "ship mark coordinateadd 11 1234 997 .")
+DoAfter (69, "ship mark coordinateadd 11 1235 997 .")
+DoAfter (70, "ship mark coordinateadd 11 1242 1003 .")
+DoAfter (71, "ship mark coordinateadd 11 1241 1013 .")
+DoAfter (72, "ship mark coordinateadd 11 1244 1018 .")
+DoAfter (73, "ship mark coordinateadd 11 1244 1020 .")
+DoAfter (74, "ship mark coordinateadd 11 1245 1020 .")
+DoAfter (75, "ship mark coordinateadd 11 1245 1030 .")
+DoAfter (76, "ship mark coordinateadd 11 1237 1038 .")
+DoAfter (77, "ship mark coordinateadd 11 1234 1038 .")
+DoAfter (77, "ship mark coordinateadd 11 1222 1046 .")
+DoAfter (78, "ship mark coordinateadd 11 1211 1056 .")
+DoAfter (79, "ship mark coordinateadd 11 1185 1054 .")
+DoAfter (80, "ship mark coordinateadd 11 1156 1054 .")
+DoAfter (81, "ship mark coordinateadd 11 1121 1083 Beltane WP")
+DoAfter (82, "ship mark coordinateadd 9 1121 1083 Beltane WP to PC")
+DoAfter (83, "ship mark coordinateadd 9 1156 1054 .")
+DoAfter (84, "ship mark coordinateadd 9 1185 1054 .")
+DoAfter (85, "ship mark coordinateadd 9 1211 1056 .")
+DoAfter (85, "ship mark coordinateadd 9 1222 1046 .")
+DoAfter (86, "ship mark coordinateadd 9 1234 1038 .")
+DoAfter (87, "ship mark coordinateadd 9 1237 1038 .")
+DoAfter (88, "ship mark coordinateadd 9 1245 1030 .")
+DoAfter (89, "ship mark coordinateadd 9 1245 1020 .")
+DoAfter (90, "ship mark coordinateadd 9 1244 1020 .")
+DoAfter (91, "ship mark coordinateadd 9 1244 1018 .")
+DoAfter (92, "ship mark coordinateadd 9 1241 1013 .")
+DoAfter (93, "ship mark coordinateadd 9 1242 1003 .")
+DoAfter (94, "ship mark coordinateadd 9 1235 997 .")
+DoAfter (95, "ship mark coordinateadd 9 1234 997 .")
+DoAfter (96, "ship mark coordinateadd 9 1217 981 .")
+DoAfter (97, "ship mark coordinateadd 9 1210 981 .")
+DoAfter (98, "ship mark coordinateadd 9 1198 970 .")
+DoAfter (99, "ship mark coordinateadd 9 1200 968 .")
+DoAfter (100, "ship mark coordinateadd 9 1192 960 PC from Beltane WP")
+DoAfter (101, "ship mark coordinateadd 19 972 669 Acid Ocean to Treant")
+DoAfter (102, "ship mark coordinateadd 19 1182 621 NE by E of PP")
+DoAfter (103, "ship mark coordinateadd 19 1230 557 Bath")
+DoAfter (104, "ship mark coordinateadd 19 1290 510 Bath Bay")
+DoAfter (105, "ship mark coordinateadd 19 1314 520 SE of PP")
+DoAfter (106, "ship mark coordinateadd 19 1341 520 E of PP")
+DoAfter (107, "ship mark coordinateadd 19 1382 501 NE of PP")
+DoAfter (108, "ship mark coordinateadd 19 1431 483 Treants Truce")
+DoAfter (109, "ship mark coordinateadd 20 1431 483 Treants to Acid Ocean")
+DoAfter (110, "ship mark coordinateadd 20 1382 501 SW of PP")
+DoAfter (111, "ship mark coordinateadd 20 1341 520 W of PP")
+DoAfter (112, "ship mark coordinateadd 20 1314 520 NW of PP")
+DoAfter (113, "ship mark coordinateadd 20 1290 510 Bath Bay")
+DoAfter (114, "ship mark coordinateadd 20 1230 557 Bath")
+DoAfter (115, "ship mark coordinateadd 20 1182 621 SW by W of PP")
+DoAfter (116, "ship mark coordinateadd 20 972 669 Acid Ocean")</send>
+  </alias>
+  <alias
+   match="slow"
+   enabled="y"
+   group="Bard"
+   send_to="10"
+   sequence="100"
+  >
+  <send>play hinder</send>
+  </alias>
+</aliases>
+
+<!-- timers -->
+
+<timers
+   muclient_version="5.03"
+   world_file_version="15"
+   date_saved="2023-11-09 21:33:39"
+  >
+  <timer second="59.00" offset_second="0.00"    send_to="10"
+group="forthrak" >
+  <send>get all cor</send>
+
+  </timer>
+</timers>
+
+<!-- macros -->
+
+<macros
+   muclient_version="5.03"
+   world_file_version="15"
+   date_saved="2023-11-09 21:33:39"
+  >
+
+  <macro name="up" type="send_now" >
+  <send>up</send>
+
+  </macro>
+
+  <macro name="down" type="send_now" >
+  <send>down</send>
+
+  </macro>
+
+  <macro name="north" type="send_now" >
+  <send>north</send>
+
+  </macro>
+
+  <macro name="south" type="send_now" >
+  <send>south</send>
+
+  </macro>
+
+  <macro name="east" type="send_now" >
+  <send>east</send>
+
+  </macro>
+
+  <macro name="west" type="send_now" >
+  <send>west</send>
+
+  </macro>
+
+  <macro name="examine" type="replace" >
+  <send>examine </send>
+
+  </macro>
+
+  <macro name="look" type="replace" >
+  <send>look </send>
+
+  </macro>
+
+  <macro name="page" type="replace" >
+  <send>page </send>
+
+  </macro>
+
+  <macro name="say" type="replace" >
+  <send>say </send>
+
+  </macro>
+
+  <macro name="whisper" type="replace" >
+  <send>whisper </send>
+
+  </macro>
+
+  <macro name="doing" type="send_now" >
+  <send>DOING</send>
+
+  </macro>
+
+  <macro name="who" type="send_now" >
+  <send>WHO</send>
+
+  </macro>
+
+  <macro name="drop" type="replace" >
+  <send>drop </send>
+
+  </macro>
+
+  <macro name="take" type="replace" >
+  <send>take </send>
+
+  </macro>
+
+  <macro name="logout" type="send_now" >
+  <send>LOGOUT</send>
+
+  </macro>
+
+  <macro name="quit" type="send_now" >
+  <send>QUIT</send>
+
+  </macro>
+</macros>
+
+<!-- variables -->
+
+<variables
+   muclient_version="5.03"
+   world_file_version="15"
+   date_saved="2023-11-09 21:33:39"
+  >
+  <variable name="dropitems">a sickle shaped fellblade</variable>
+  <variable name="mxp_hp">4031</variable>
+  <variable name="mxp_sp">3075</variable>
+  <variable name="mxp_st">3336</variable>
+</variables>
+
+<!-- colours -->
+
+<colours
+   muclient_version="5.03"
+   world_file_version="15"
+   date_saved="2023-11-09 21:33:39"
+  >
+
+<ansi>
+
+ <normal>
+   <colour seq="1" rgb="black" />
+   <colour seq="2" rgb="maroon" />
+   <colour seq="3" rgb="green" />
+   <colour seq="4" rgb="olive" />
+   <colour seq="5" rgb="navy" />
+   <colour seq="6" rgb="purple" />
+   <colour seq="7" rgb="teal" />
+   <colour seq="8" rgb="silver" />
+
+ </normal>
+
+ <bold>
+   <colour seq="1" rgb="gray" />
+   <colour seq="2" rgb="red" />
+   <colour seq="3" rgb="lime" />
+   <colour seq="4" rgb="yellow" />
+   <colour seq="5" rgb="blue" />
+   <colour seq="6" rgb="magenta" />
+   <colour seq="7" rgb="cyan" />
+   <colour seq="8" rgb="white" />
+
+ </bold>
+
+</ansi>
+
+<custom>
+  <colour seq="1" name="Custom1" text="#FF8080" back="black" />
+  <colour seq="2" name="Custom2" text="#FFFF80" back="black" />
+  <colour seq="3" name="Custom3" text="#80FF80" back="black" />
+  <colour seq="4" name="Custom4" text="#80FFFF" back="black" />
+  <colour seq="5" name="Custom5" text="#0080FF" back="black" />
+  <colour seq="6" name="Custom6" text="#FF80C0" back="black" />
+  <colour seq="7" name="Custom7" text="red" back="black" />
+  <colour seq="8" name="Custom8" text="#0080C0" back="black" />
+  <colour seq="9" name="Custom9" text="magenta" back="black" />
+  <colour seq="10" name="Custom10" text="#804040" back="black" />
+  <colour seq="11" name="Custom11" text="#FF8040" back="black" />
+  <colour seq="12" name="Custom12" text="teal" back="black" />
+  <colour seq="13" name="Custom13" text="#004080" back="black" />
+  <colour seq="14" name="Custom14" text="#FF0080" back="black" />
+  <colour seq="15" name="Custom15" text="green" back="black" />
+  <colour seq="16" name="Custom16" text="blue" back="black" />
+
+</custom>
+</colours>
+
+<!-- keypad -->
+
+<keypad
+   muclient_version="5.03"
+   world_file_version="15"
+   date_saved="2023-11-09 21:33:39"
+  >
+
+  <key name="0" >
+  <send>scan</send>
+  </key>
+
+  <key name="1" >
+  <send>southwest</send>
+  </key>
+
+  <key name="2" >
+  <send>south</send>
+  </key>
+
+  <key name="3" >
+  <send>southeast</send>
+  </key>
+
+  <key name="4" >
+  <send>west</send>
+  </key>
+
+  <key name="5" >
+  <send>look</send>
+  </key>
+
+  <key name="6" >
+  <send>east</send>
+  </key>
+
+  <key name="7" >
+  <send>northwest</send>
+  </key>
+
+  <key name="8" >
+  <send>north</send>
+  </key>
+
+  <key name="9" >
+  <send>northeast</send>
+  </key>
+
+  <key name="." >
+  <send>score</send>
+  </key>
+
+  <key name="/" >
+  <send>inventory</send>
+  </key>
+
+  <key name="*" >
+  <send>equipment</send>
+  </key>
+
+  <key name="-" >
+  <send>up</send>
+  </key>
+
+  <key name="+" >
+  <send>down</send>
+  </key>
+
+  <key name="Ctrl+0" >
+  </key>
+
+  <key name="Ctrl+1" >
+  <send>open southwest door</send>
+  </key>
+
+  <key name="Ctrl+2" >
+  <send>open south door</send>
+  </key>
+
+  <key name="Ctrl+3" >
+  <send>open southeast door</send>
+  </key>
+
+  <key name="Ctrl+4" >
+  <send>open west door</send>
+  </key>
+
+  <key name="Ctrl+5" >
+  </key>
+
+  <key name="Ctrl+6" >
+  <send>open east door</send>
+  </key>
+
+  <key name="Ctrl+7" >
+  <send>open northwest door</send>
+  </key>
+
+  <key name="Ctrl+8" >
+  <send>open north door</send>
+  </key>
+
+  <key name="Ctrl+9" >
+  <send>open northeast door</send>
+  </key>
+
+  <key name="Ctrl+." >
+  </key>
+
+  <key name="Ctrl+/" >
+  </key>
+
+  <key name="Ctrl+*" >
+  </key>
+
+  <key name="Ctrl+-" >
+  <send>open up door</send>
+  </key>
+
+  <key name="Ctrl++" >
+  <send>open down door</send>
+  </key>
+</keypad>
+
+<!-- printing -->
+
+<printing
+   muclient_version="5.03"
+   world_file_version="15"
+   date_saved="2023-11-09 21:33:39"
+  >
+
+<ansi>
+
+ <normal>
+
+ </normal>
+
+ <bold>
+   <style seq="1" bold="y" />
+   <style seq="2" bold="y" />
+   <style seq="3" bold="y" />
+   <style seq="4" bold="y" />
+   <style seq="5" bold="y" />
+   <style seq="6" bold="y" />
+   <style seq="7" bold="y" />
+   <style seq="8" bold="y" />
+
+ </bold>
+
+</ansi>
+</printing>
+
+<!-- plugins -->
+<include name="MM\MM_GMCP_handler.xml" plugin="y" />
+<include name="MM\accelerators.xml" plugin="y" />
+<include name="MM\global_vars.xml" plugin="y" />
+<include name="MM\detect_globals.xml" plugin="y" />
+<include name="Repeat_Command.xml" plugin="y" />
+<include name="MM\world_mini.xml" plugin="y" />
+<include name="MM\speedwalk_manager_gmcp_p2.xml" plugin="y" />
+<include name="MM\switch_maps.xml" plugin="y" />
+<include name="MM\sequencer.xml" plugin="y" />
+<include name="MM\ship_kp.xml" plugin="y" />
+<include name="MM\ship_lookout.xml" plugin="y" />
+<include name="MM\affects_by_name.xml" plugin="y" />
+<include name="MM\kills_tnl.xml" plugin="y" />
+<include name="MM\latest_daily.xml" plugin="y" />
+<include name="MM\meh_pirates.xml" plugin="y" />
+<include name="MM\meh_prompt.xml" plugin="y" />
+<include name="MM\meh_timers.xml" plugin="y" />
+<include name="MM\missing_affects.xml" plugin="y" />
+<include name="MM\opponent_hp_sub.xml" plugin="y" />
+<include name="MM\play_sounds.xml" plugin="y" />
+<include name="MM\quests.xml" plugin="y" />
+<include name="MM\quests_abridged.xml" plugin="y" />
+<include name="MM\terrain_o_vision.xml" plugin="y" />
+<include name="MM\transport_kp.xml" plugin="y" />
+<include name="MM\vitals_bars_v2.xml" plugin="y" />
+<include name="MM\vitals_changes.xml" plugin="y" />
+<include name="MM\CrystalLocator.xml" plugin="y" />
+<include name="MM\faux_sextant.xml" plugin="y" />
+<include name="MM\plugins_updater_v3.xml" plugin="y" />
+<include name="MM\MM_GMCP_Mapper_GMCP.xml" plugin="y" />
+<include name="Config_Option_Changer.xml" plugin="y" />
+<include name="MM\capture2dworld.xml" plugin="y" />
+<include name="MM\capture2mini.xml" plugin="y" />
+<include name="MM\IMap_GMCP.xml" plugin="y" />
+<include name="MM\dpercent.xml" plugin="y" />
+</muclient>

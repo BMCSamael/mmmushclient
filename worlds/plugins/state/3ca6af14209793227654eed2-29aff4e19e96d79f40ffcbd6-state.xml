@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE muclient>
+<!-- Saved on Friday, November 10, 2023, 3:43 AM -->
+<!-- MuClient version 5.03 -->
+<!-- Written by Nick Gammon -->
+<!-- Home Page: http://www.mushclient.com/ -->
+
+<!-- Plugin state saved. Plugin: "latest_daily". World: "Materia Magica GMCP". -->
+
+<muclient>
+
+<!-- variables -->
+
+<variables
+   muclient_version="5.03"
+   world_file_version="15"
+   date_saved="2023-11-10 03:43:20"
+  >
+  <variable name="Resslin_dailies_per_city">dailies_per_city = {
+  ["New Rigel"] = {
+    ["a chipped orb"] = 1,
+    },
+  Xaventry = {
+    ["a handful of gold"] = 1,
+    },
+  }</variable>
+  <variable name="Resslin_daily_stats_since">1698736756</variable>
+  <variable name="Resslin_daily_totals">daily_totals = {
+  ["a handful of gold"] = 1,
+  ["a chipped orb"] = 1,
+  }</variable>
+  <variable name="Resslin_new_rigel">1698738184</variable>
+  <variable name="Resslin_xaventry">1698736756</variable>
+  <variable name="Tamlin_dailies_per_city">dailies_per_city = {
+  ["New Rigel"] = {
+    ["a chipped orb"] = 1,
+    ["a pile of gold coins"] = 1,
+    ["a garish coupon for Death Insurance"] = 1,
+    },
+  Sigil = {
+    ["blackjack vouchers x 1,000 gp"] = 1,
+    ["a garish coupon for Death Insurance"] = 1,
+    },
+  Tellerium = {
+    ["a manual"] = 1,
+    ["a garish coupon for Death Insurance"] = 1,
+    },
+  Xaventry = {
+    ["blackjack vouchers x 1,000 gp"] = 1,
+    },
+  }</variable>
+  <variable name="Tamlin_daily_stats_since">1697694223</variable>
+  <variable name="Tamlin_daily_totals">daily_totals = {
+  ["blackjack vouchers x 1,000 gp"] = 2,
+  ["a pile of gold coins"] = 1,
+  ["a garish coupon for Death Insurance"] = 3,
+  ["a manual"] = 1,
+  ["a chipped orb"] = 1,
+  }</variable>
+  <variable name="Tamlin_new_rigel">1698698927</variable>
+  <variable name="Tamlin_sigil">1698344492</variable>
+  <variable name="Tamlin_tellerium">1699123180</variable>
+  <variable name="Tamlin_xaventry">1698253246</variable>
+</variables>
+</muclient>

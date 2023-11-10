@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE muclient>
+<!-- Saved on Friday, November 10, 2023, 3:43 AM -->
+<!-- MuClient version 5.03 -->
+<!-- Written by Nick Gammon -->
+<!-- Home Page: http://www.mushclient.com/ -->
+
+<!-- Plugin state saved. Plugin: "meh_prompt". World: "Materia Magica GMCP". -->
+
+<muclient>
+
+<!-- variables -->
+
+<variables
+   muclient_version="5.03"
+   world_file_version="15"
+   date_saved="2023-11-10 03:43:20"
+  >
+  <variable name="bracket">darkslategray</variable>
+  <variable name="char_name">[a-zA-Z0-9 \-\,\.\']+</variable>
+  <variable name="fireshield">red</variable>
+  <variable name="guide">teal</variable>
+  <variable name="haste">silver</variable>
+  <variable name="hidden">gray</variable>
+  <variable name="invis">lime</variable>
+  <variable name="levitation">cyan</variable>
+  <variable name="passdoor">cyan</variable>
+  <variable name="sanctuary">white</variable>
+  <variable name="shifted">olive</variable>
+</variables>
+</muclient>

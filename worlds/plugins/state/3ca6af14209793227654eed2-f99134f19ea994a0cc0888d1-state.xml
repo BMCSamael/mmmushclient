@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE muclient>
+<!-- Saved on Friday, November 10, 2023, 3:43 AM -->
+<!-- MuClient version 5.03 -->
+<!-- Written by Nick Gammon -->
+<!-- Home Page: http://www.mushclient.com/ -->
+
+<!-- Plugin state saved. Plugin: "accelerators". World: "Materia Magica GMCP". -->
+
+<muclient>
+
+<!-- variables -->
+
+<variables
+   muclient_version="5.03"
+   world_file_version="15"
+   date_saved="2023-11-10 03:43:20"
+  >
+  <variable name="backup_keystrokes">backup_keystrokes = {
+  }</variable>
+  <variable name="use_keystrokes">use_keystrokes = {
+  ["ctrl+alt+numpad8"] = "flee north",
+  numpad6 = "east",
+  ["alt+numpad6"] = "look east",
+  ["ctrl+add"] = "open down door",
+  numpad7 = "northwest",
+  ["ctrl+alt+numpad9"] = "flee northeast",
+  ["ctrl+alt+numpad7"] = "flee northwest",
+  numpad4 = "west",
+  ["alt+numpad7"] = "look northwest",
+  ["alt+numpad9"] = "look northeast",
+  ["alt+subtract"] = "look up",
+  ["ctrl+numpad2"] = "open south door",
+  ["ctrl+numpad3"] = "open southeast door",
+  ["alt+numpad4"] = "look west",
+  ["alt+numpad2"] = "look south",
+  ["ctrl+numpad8"] = "open north door",
+  numpad3 = "southeast",
+  ["ctrl+alt+numpad5"] = "flee",
+  ["ctrl+numpad9"] = "open northeast door",
+  ["alt+numpad3"] = "look southeast",
+  ["ctrl+numpad1"] = "open southwest door",
+  numpad9 = "northeast",
+  ["ctrl+numpad6"] = "open east door",
+  ["ctrl+subtract"] = "open up door",
+  ["ctrl+alt+numpad2"] = "flee south",
+  add = "down",
+  ["alt+numpad8"] = "look north",
+  ["ctrl+numpad7"] = "open northwest door",
+  ["alt+add"] = "look down",
+  numpad1 = "southwest",
+  subtract = "up",
+  ["ctrl+alt+numpad4"] = "flee west",
+  ["ctrl+numpad4"] = "open west door",
+  numpad8 = "north",
+  ["ctrl+alt+numpad3"] = "flee southeast",
+  numpad2 = "south",
+  ["ctrl+alt+subtract"] = "flee up",
+  ["ctrl+alt+numpad1"] = "flee southwest",
+  ["alt+numpad1"] = "look southwest",
+  ["ctrl+alt+numpad6"] = "flee east",
+  ["ctrl+alt+add"] = "flee down",
+  }</variable>
+</variables>
+</muclient>
