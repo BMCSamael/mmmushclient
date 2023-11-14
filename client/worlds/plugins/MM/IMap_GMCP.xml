@@ -1509,6 +1509,7 @@ local subareas = {
   ["new rigel realty"] = "the towne of new rigel",
   ["pirate's cove realty"] = "pirate's cove",
   ["the arches of rune estates east"] = "towne of rune",
+  ["rune condominiums"] = "towne of rune",
   ["rune estates"] = "towne of rune",
   ["rune graveyard"] = "rune forest",
   ["rune realty"] = "towne of rune",
