@@ -288,7 +288,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/speedwalk_manager_gmcp_p2.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/speedwalk_manager_gmcp_p2.xml",
   }
   return (table.concat(t, ";"))
 end
@@ -341,7 +341,7 @@ function get_database(path, filename)
   Note("-- " .. GetPluginInfo(GetPluginID(), 1) .. ": downloading database --")
 
   local res = 0
-  local url = "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/" .. filename
+  local url = "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/" .. filename
 
   SetStatus ("Downloading file: " .. url .. " to: " .. path .. filename .. "...")
 
@@ -631,7 +631,7 @@ function find_matching_places(what, plane, place)
 
   -- build table of places that match
   for row in db:nrows(string.format("SELECT uid, desc FROM locations WHERE type = %s AND plane = %s AND UPPER(desc) like %s", what, plane, place)) do
-    tuids[#tuids + 1] = row.desc .. "Ø" .. row.uid
+    tuids[#tuids + 1] = row.desc .. " " .. row.uid
   end -- finding rooms
 
   -- sort it alphabetically
@@ -655,7 +655,7 @@ function show_matching_places(tuids, what, plane, place)
 
   if (#tuids > 0) then
     for i = 1, #tuids do
-      t = utils.split(tuids[i], "Ø")
+      t = utils.split(tuids[i], " ")
       Tell(label)
       Hyperlink("mapper goto " .. t[2], t[1], "", "white", "black", false)
       Tell(" - id: ")
@@ -722,7 +722,7 @@ function find_by_desc(place)
 
   -- build table of places that match
   for row in db:nrows(string.format("SELECT desc, shortcut FROM locations WHERE UPPER(desc) like %s", place)) do
-    tuids[#tuids + 1] = row.desc .. "Ø" .. row.shortcut
+    tuids[#tuids + 1] = row.desc .. " " .. row.shortcut
   end -- finding rooms
 
   -- sort it alphabetically
@@ -739,7 +739,7 @@ function show_results(tuids, place)
 
   if (#tuids > 0) then
     for i = 1, #tuids do
-      t = utils.split(tuids[i], "Ø")
+      t = utils.split(tuids[i], " ")
       ColourNote("silver", "black", t[2] .. " - " .. t[1])
     end
 

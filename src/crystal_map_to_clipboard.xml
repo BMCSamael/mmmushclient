@@ -175,7 +175,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/crystal_map_to_clipboard.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/crystal_map_to_clipboard.xml",
   }
   return (table.concat(t, ";"))
 end
