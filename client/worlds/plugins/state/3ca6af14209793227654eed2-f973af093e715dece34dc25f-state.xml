@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Friday, November 10, 2023, 3:43 AM -->
+<!-- Saved on Tuesday, November 14, 2023, 4:00 PM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
@@ -14,7 +14,7 @@
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-11-10 03:43:20"
+   date_saved="2023-11-14 16:00:19"
   >
   <variable name="autotag_signposts">true</variable>
   <variable name="color_terrain">false</variable>
@@ -39,9 +39,8 @@
     name = "Safe",
     colour = 16777215,
     },
-  NOTHING_FILL_COLOUR = {
-    name = "nothing",
-    colour = 16760576,
+  SCAN = {
+    depth = 250,
     },
   FONT = {
     name = "Lucida Console",
@@ -113,17 +112,17 @@
     name = "Dizzy",
     colour = 16711680,
     },
-  DIGGABLE_FILL_COLOUR = {
-    name = "diggable",
-    colour = 11788021,
+  EXIT_COLOUR_PRT = {
+    name = "Teleport/portal",
+    colour = 15234359,
     },
   BACKGROUND_COLOUR = {
     name = "Background",
     colour = 10526303,
     },
   WINDOW = {
-    height = 274,
-    width = 468,
+    height = 270,
+    width = 460,
     },
   AREA_NAME_BORDER = {
     name = "Area name box",
@@ -133,9 +132,9 @@
     name = "Area name fill",
     colour = 5461520,
     },
-  EXIT_COLOUR_PRT = {
-    name = "Teleport/portal",
-    colour = 15234359,
+  DIGGABLE_FILL_COLOUR = {
+    name = "diggable",
+    colour = 11788021,
     },
   DIFFERENT_AREA_COLOUR = {
     name = "Another area",
@@ -157,8 +156,9 @@
     name = "poison-gas",
     colour = 3329434,
     },
-  SCAN = {
-    depth = 250,
+  NOTHING_FILL_COLOUR = {
+    name = "nothing",
+    colour = 16760576,
     },
   UNKNOWN_ROOM_COLOUR = {
     name = "Unknown room",
@@ -172,10 +172,10 @@
   <variable name="do_map_wilds">false</variable>
   <variable name="draw_other_floors">true</variable>
   <variable name="mapper_visible">true</variable>
-  <variable name="mw_f973af093e715dece34dc25f_mapper_windowflags">0</variable>
-  <variable name="mw_f973af093e715dece34dc25f_mapper_windowmode">7</variable>
-  <variable name="mw_f973af093e715dece34dc25f_mapper_windowx">1431</variable>
-  <variable name="mw_f973af093e715dece34dc25f_mapper_windowy">290</variable>
+  <variable name="mw_f973af093e715dece34dc25f_mapper_windowflags">2</variable>
+  <variable name="mw_f973af093e715dece34dc25f_mapper_windowmode">0</variable>
+  <variable name="mw_f973af093e715dece34dc25f_mapper_windowx">1428</variable>
+  <variable name="mw_f973af093e715dece34dc25f_mapper_windowy">267</variable>
   <variable name="safewalk">false</variable>
   <variable name="show_bookmarks">false</variable>
   <variable name="show_database_mods">true</variable>

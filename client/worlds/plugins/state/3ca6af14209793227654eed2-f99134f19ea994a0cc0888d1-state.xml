@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Friday, November 10, 2023, 3:43 AM -->
+<!-- Saved on Tuesday, November 14, 2023, 4:00 PM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
@@ -14,7 +14,7 @@
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-11-10 03:43:20"
+   date_saved="2023-11-14 16:00:01"
   >
   <variable name="backup_keystrokes">backup_keystrokes = {
   }</variable>
@@ -27,39 +27,39 @@
   ["ctrl+alt+numpad9"] = "flee northeast",
   ["ctrl+alt+numpad7"] = "flee northwest",
   numpad4 = "west",
-  ["alt+numpad7"] = "look northwest",
-  ["alt+numpad9"] = "look northeast",
+  ["ctrl+alt+add"] = "flee down",
+  ["ctrl+alt+numpad4"] = "flee west",
   ["alt+subtract"] = "look up",
-  ["ctrl+numpad2"] = "open south door",
-  ["ctrl+numpad3"] = "open southeast door",
-  ["alt+numpad4"] = "look west",
   ["alt+numpad2"] = "look south",
+  ["ctrl+numpad3"] = "open southeast door",
+  numpad2 = "south",
+  ["ctrl+alt+numpad6"] = "flee east",
   ["ctrl+numpad8"] = "open north door",
-  numpad3 = "southeast",
+  ["alt+numpad1"] = "look southwest",
+  ["alt+numpad3"] = "look southeast",
   ["ctrl+alt+numpad5"] = "flee",
   ["ctrl+numpad9"] = "open northeast door",
-  ["alt+numpad3"] = "look southeast",
-  ["ctrl+numpad1"] = "open southwest door",
-  numpad9 = "northeast",
+  ["alt+numpad4"] = "look west",
+  ["ctrl+numpad4"] = "open west door",
   ["ctrl+numpad6"] = "open east door",
-  ["ctrl+subtract"] = "open up door",
-  ["ctrl+alt+numpad2"] = "flee south",
+  numpad1 = "southwest",
   add = "down",
+  ["ctrl+alt+numpad2"] = "flee south",
   ["alt+numpad8"] = "look north",
   ["ctrl+numpad7"] = "open northwest door",
   ["alt+add"] = "look down",
-  numpad1 = "southwest",
-  subtract = "up",
-  ["ctrl+alt+numpad4"] = "flee west",
-  ["ctrl+numpad4"] = "open west door",
-  numpad8 = "north",
   ["ctrl+alt+numpad3"] = "flee southeast",
-  numpad2 = "south",
+  subtract = "up",
+  ["alt+numpad7"] = "look northwest",
+  ["ctrl+numpad1"] = "open southwest door",
+  numpad8 = "north",
+  ["ctrl+subtract"] = "open up door",
+  numpad3 = "southeast",
   ["ctrl+alt+subtract"] = "flee up",
   ["ctrl+alt+numpad1"] = "flee southwest",
-  ["alt+numpad1"] = "look southwest",
-  ["ctrl+alt+numpad6"] = "flee east",
-  ["ctrl+alt+add"] = "flee down",
+  ["alt+numpad9"] = "look northeast",
+  numpad9 = "northeast",
+  ["ctrl+numpad2"] = "open south door",
   }</variable>
 </variables>
 </muclient>

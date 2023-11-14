@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Thursday, November 09, 2023, 9:33 PM -->
+<!-- Saved on Tuesday, November 14, 2023, 4:00 PM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
@@ -8,7 +8,7 @@
 <world
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-11-09 21:33:39"
+   date_saved="2023-11-14 16:00:01"
 
    auto_say_override_prefix="-"
    auto_say_string="say "
@@ -132,7 +132,7 @@ FBF - 34654</notes>
 <triggers
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-11-09 21:33:39"
+   date_saved="2023-11-14 16:00:01"
   >
   <trigger
    enabled="y"
@@ -226,6 +226,15 @@ FBF - 34654</notes>
   </trigger>
   <trigger
    enabled="y"
+   keep_evaluating="y"
+   match=".+ partially-eaten tuber is here\."
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get tuber</send>
+  </trigger>
+  <trigger
    group="PG"
    keep_evaluating="y"
    match="A black tourmaline emits a bright flare of white light as you take it and it binds with you."
@@ -276,7 +285,6 @@ FBF - 34654</notes>
   <send>pull slot</send>
   </trigger>
   <trigger
-   enabled="y"
    group="PG"
    keep_evaluating="y"
    match="Tzapoatli's rucksack of tourming can hold a maximum of 150 items, and is already full."
@@ -331,7 +339,6 @@ end
 EnableTrigger("findcrystal", false)</send>
   </trigger>
   <trigger
-   enabled="y"
    group="PG"
    keep_evaluating="y"
    match="You have contributed .* maleficarum roots into your clan\'s account"
@@ -372,7 +379,6 @@ EnableTrigger("findcrystal", false)</send>
   <send>pull slot</send>
   </trigger>
   <trigger
-   enabled="y"
    group="PG"
    keep_evaluating="y"
    match="You put .* of a maleficarum root in a stable rift to the Master of Clans"
@@ -392,7 +398,6 @@ EnableTrigger("findcrystal", false)</send>
   <send>wear shoulder</send>
   </trigger>
   <trigger
-   enabled="y"
    group="PG"
    keep_evaluating="y"
    match="You take .* of a maleficarum root"
@@ -425,7 +430,6 @@ EnableTrigger("findcrystal", false)</send>
   <send>%&lt;tgt&gt;</send>
   </trigger>
   <trigger
-   enabled="y"
    group="PG"
    keep_evaluating="y"
    match="^.*A fist\-sized\, shiny black stone has been uncovered here\.$"
@@ -436,7 +440,6 @@ EnableTrigger("findcrystal", false)</send>
   <send>get all.tourmaline</send>
   </trigger>
   <trigger
-   enabled="y"
    group="PG"
    keep_evaluating="y"
    match="^.*A gnarled and blackened root is on the ground\.$"
@@ -447,7 +450,6 @@ EnableTrigger("findcrystal", false)</send>
   <send>get all.root</send>
   </trigger>
   <trigger
-   enabled="y"
    group="PG"
    keep_evaluating="y"
    match="^.*of a Baron's"
@@ -584,7 +586,7 @@ EnableTrigger("findcrystal", false)</send>
 <aliases
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-11-09 21:33:39"
+   date_saved="2023-11-14 16:00:01"
   >
   <alias
    match="$ei (.*)"
@@ -880,7 +882,7 @@ DoAfter (116, "ship mark coordinateadd 20 972 669 Acid Ocean")</send>
 <timers
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-11-09 21:33:39"
+   date_saved="2023-11-14 16:00:01"
   >
   <timer second="59.00" offset_second="0.00"    send_to="10"
 group="forthrak" >
@@ -894,7 +896,7 @@ group="forthrak" >
 <macros
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-11-09 21:33:39"
+   date_saved="2023-11-14 16:00:01"
   >
 
   <macro name="up" type="send_now" >
@@ -988,12 +990,12 @@ group="forthrak" >
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-11-09 21:33:39"
+   date_saved="2023-11-14 16:00:01"
   >
   <variable name="dropitems">a sickle shaped fellblade</variable>
-  <variable name="mxp_hp">4031</variable>
+  <variable name="mxp_hp">4232</variable>
   <variable name="mxp_sp">3075</variable>
-  <variable name="mxp_st">3336</variable>
+  <variable name="mxp_st">3491</variable>
 </variables>
 
 <!-- colours -->
@@ -1001,7 +1003,7 @@ group="forthrak" >
 <colours
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-11-09 21:33:39"
+   date_saved="2023-11-14 16:00:01"
   >
 
 <ansi>
@@ -1058,7 +1060,7 @@ group="forthrak" >
 <keypad
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-11-09 21:33:39"
+   date_saved="2023-11-14 16:00:01"
   >
 
   <key name="0" >
@@ -1182,7 +1184,7 @@ group="forthrak" >
 <printing
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-11-09 21:33:39"
+   date_saved="2023-11-14 16:00:01"
   >
 
 <ansi>
@@ -1235,11 +1237,11 @@ group="forthrak" >
 <include name="MM\vitals_changes.xml" plugin="y" />
 <include name="MM\CrystalLocator.xml" plugin="y" />
 <include name="MM\faux_sextant.xml" plugin="y" />
-<include name="MM\plugins_updater_v3.xml" plugin="y" />
-<include name="MM\MM_GMCP_Mapper_GMCP.xml" plugin="y" />
 <include name="Config_Option_Changer.xml" plugin="y" />
-<include name="MM\capture2dworld.xml" plugin="y" />
 <include name="MM\capture2mini.xml" plugin="y" />
 <include name="MM\IMap_GMCP.xml" plugin="y" />
+<include name="MM\capture2dworld.xml" plugin="y" />
+<include name="MM\MM_GMCP_Mapper_GMCP.xml" plugin="y" />
 <include name="MM\dpercent.xml" plugin="y" />
+<include name="MM\plugins_updater_v3.xml" plugin="y" />
 </muclient>

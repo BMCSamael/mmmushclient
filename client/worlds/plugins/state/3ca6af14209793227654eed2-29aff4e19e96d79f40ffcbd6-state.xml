@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Friday, November 10, 2023, 3:43 AM -->
+<!-- Saved on Tuesday, November 14, 2023, 4:00 PM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
@@ -14,7 +14,7 @@
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-11-10 03:43:20"
+   date_saved="2023-11-14 16:00:01"
   >
   <variable name="Resslin_dailies_per_city">dailies_per_city = {
   ["New Rigel"] = {
@@ -33,9 +33,9 @@
   <variable name="Resslin_xaventry">1698736756</variable>
   <variable name="Tamlin_dailies_per_city">dailies_per_city = {
   ["New Rigel"] = {
-    ["a chipped orb"] = 1,
     ["a pile of gold coins"] = 1,
     ["a garish coupon for Death Insurance"] = 1,
+    ["a chipped orb"] = 1,
     },
   Sigil = {
     ["blackjack vouchers x 1,000 gp"] = 1,
@@ -46,13 +46,15 @@
     ["a garish coupon for Death Insurance"] = 1,
     },
   Xaventry = {
-    ["blackjack vouchers x 1,000 gp"] = 1,
+    ["a handful of gold"] = 1,
+    ["blackjack vouchers x 1,000 gp"] = 2,
     },
   }</variable>
   <variable name="Tamlin_daily_stats_since">1697694223</variable>
   <variable name="Tamlin_daily_totals">daily_totals = {
-  ["blackjack vouchers x 1,000 gp"] = 2,
+  ["blackjack vouchers x 1,000 gp"] = 3,
   ["a pile of gold coins"] = 1,
+  ["a handful of gold"] = 1,
   ["a garish coupon for Death Insurance"] = 3,
   ["a manual"] = 1,
   ["a chipped orb"] = 1,
@@ -60,6 +62,6 @@
   <variable name="Tamlin_new_rigel">1698698927</variable>
   <variable name="Tamlin_sigil">1698344492</variable>
   <variable name="Tamlin_tellerium">1699123180</variable>
-  <variable name="Tamlin_xaventry">1698253246</variable>
+  <variable name="Tamlin_xaventry">1699953501</variable>
 </variables>
 </muclient>

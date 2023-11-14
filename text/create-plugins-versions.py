@@ -136,7 +136,7 @@ if __name__ == "__main__":
 # 
 # function plugin_update_aux_url()
 #   local t = {
-#     "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master//master/res/buttons.png",
+#     "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/master/res/buttons.png",
 #   }
 #   return (table.concat(t, ";"))
 # end
@@ -149,7 +149,7 @@ if __name__ == "__main__":
 # 
 # function plugin_update_aux_url()
 #   local t = {
-#     "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master//master/src/mm_mapper.lua,MUSH/lua",
+#     "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/master/src/mm_mapper.lua,MUSH/lua",
 #   }
 #   return (table.concat(t, ";"))
 # end
@@ -162,8 +162,8 @@ if __name__ == "__main__":
 # 
 # function plugin_update_aux_url()
 #   local t = {
-#     "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master//master/res/captures.MCL,MUSH/worlds",
-#     "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master//master/res/announce.mp3,MUSH/sounds",
+#     "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/master/res/captures.MCL,MUSH/worlds",
+#     "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/master/res/announce.mp3,MUSH/sounds",
 #   }
 #   return (table.concat(t, ";"))
 # end
