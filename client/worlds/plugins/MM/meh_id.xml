@@ -231,7 +231,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/meh_id.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/meh_id.xml",
   }
   return (table.concat(t, ";"))
 end
@@ -284,7 +284,7 @@ function get_database(path, filename)
   Note("-- " ..  GetPluginInfo(GetPluginID(), 1) .. ": downloading database --")
 
   local res = 0
-  local url = "raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/" .. filename
+  local url = "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/" .. filename
 
   SetStatus ("Downloading file: " .. url .. " to: " .. path .. filename .. "...")
 

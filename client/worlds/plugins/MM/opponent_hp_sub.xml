@@ -61,7 +61,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    group="script-op_dmg"
    keep_evaluating="y"
    expand_variables="y"
-   match="^(@!char_name) (?P&lt;desc&gt;(is in perfect health|is in good health|has several minor scratches|has several minor wounds and bruises|has some significant wounds|has some very significant wounds and scratches|looks pretty beaten up|is in terrible condition|is vomiting blood|screams in agony|pales visibly as death nears|is barely clinging to life))\.$"
+   match="^(@!char_name) (?P&lt;desc&gt;(is in perfect health|is in good health|has several minor scratches|has several minor wounds and bruises|has some significant wounds|has some very significant wounds and scratches|looks pretty beaten up|is in terrible condition|is vomiting blood|screams in agony|pales visibly as death nears|is barely clinging to life|is in worn condition|is in slightly worn condition|is in used condition|is in heavily worn condition|is in heavily damaged condition|is in falling apart condition|is in crumbling condition|is in destroyed condition|is about to collapse))\.$"
    omit_from_output="y"
    regexp="y"
    send_to="14"
@@ -126,6 +126,7 @@ end
 --------------------
 
 function subtitle_enemy_hp(desc)
+
   local damage = {
     ["is in perfect health"] = "100",
     ["is in good health"] = "100",
@@ -138,7 +139,17 @@ function subtitle_enemy_hp(desc)
     ["is vomiting blood"] = "15-25",
     ["screams in agony"] = "10-15",
     ["pales visibly as death nears"] = "5-10",
-    ["is barely clinging to life"] = "0-5"
+    ["is barely clinging to life"] = "0-5",
+   -- Tangle Tree
+    ["is in used condition"] = "90-100",
+    ["is in slightly worn condition"] = "75-90",
+    ["is in worn condition"] = "60-75",
+    ["is in heavily worn condition"] = "45-60",
+    ["is in heavily damaged condition"] = "35-45",
+    ["is in falling apart condition"] = "15-25",
+    ["is in crumbling condition"] = "10-15",
+    ["is in destroyed condition"] = " 5-10",
+    ["is about to collapse"] = "  0-5"
   }
 
   for k, v in ipairs(trigger_style_runs) do

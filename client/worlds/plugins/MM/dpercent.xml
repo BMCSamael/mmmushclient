@@ -650,6 +650,22 @@ check_other_dmg("%0", "%&lt;who&gt;", "none", "fail", "miss")
    check_my_dmg("%0", "%&lt;tgt&gt;", "%&lt;bpart&gt;", "%&lt;type&gt;", "%&lt;how_much&gt;")
 </send>
   </trigger>
+
+  <trigger
+   enabled="y"
+   group="script-dpercent"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;tgt&gt;(@!char_name)) is (\w) with your (?P&lt;type&gt;.+) causing (?P&lt;how_much&gt;.+) damage\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>trigger_style_runs = TriggerStyleRuns
+   check_my_dmg("%0", "%&lt;tgt&gt;", "No Part", "%&lt;type&gt;", "%&lt;how_much&gt;")
+</send>
+  </trigger>
 </triggers>
 
 <!--  Scripts  -->
@@ -1012,10 +1028,10 @@ function inc_other_dmg(desc, who, bpart, type, dmg)
                     string.gsub(
                     v.text,
                     desc,
-                    "[ " .. damage_dealt[dmg] .. " ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. who .. "] [" .. bpart .. "]"
+                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. who .. "] [" .. bpart .. "]"
                 )
             else
-                newval = string.gsub(v.text, desc, "[ " .. damage_dealt[dmg] .. " ] " .. desc)
+                newval = string.gsub(v.text, desc, "[  " .. damage_dealt[dmg] .. "  ] " .. desc)
             end
             ColourTell(RGBColourToName(v.textcolour), RGBColourToName(v.backcolour), newval)
         end -- for each style run
@@ -1043,10 +1059,10 @@ function inc_vs_me_dmg(desc, who, bpart, type, dmg)
                     string.gsub(
                     v.text,
                     desc,
-                    "[ " .. damage_dealt[dmg] .. " ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. who .. "] [" .. bpart .. "]"
+                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. who .. "] [" .. bpart .. "]"
                 )
             else
-                newval = string.gsub(v.text, desc, "[ " .. damage_dealt[dmg] .. " ] " .. desc)
+                newval = string.gsub(v.text, desc, "[  " .. damage_dealt[dmg] .. "  ] " .. desc)
             end
             ColourTell(RGBColourToName(v.textcolour), RGBColourToName(v.backcolour), newval)
         end -- for each style run
@@ -1080,7 +1096,7 @@ function inc_my_dmg(desc, who, bpart, type, dmg)
                     string.gsub(
                     v.text,
                     desc,
-                    "[ " .. damage_dealt[dmg] .. " ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. who .. "] [" .. bpart .. "]"
+                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. who .. "] [" .. bpart .. "]"
                 )
             else
                 newval = string.gsub(v.text, desc, "[" .. damage_dealt[dmg] .. "] " .. desc)

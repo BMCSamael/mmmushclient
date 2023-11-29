@@ -390,16 +390,16 @@ end
 function handle_irc_msg(text)
   local user, extuser, param = string.match(text, "(.+);(.+);(.+)")
 
---  Note(user)
---  Note(extuser)
---  Note(param)
+  Note(user)
+  Note(extuser)
+  Note(param)
 
   local hp, sp, st
 
-  if (string.match(param, "^§vit§ %d+,%d+,%d+")) then
+  if (string.match(param, "^ vit  %d+,%d+,%d+")) then
     handle_other_vitals(user, param)
 
-  elseif (string.match(param, "^§quit§")) then
+  elseif (string.match(param, "^ quit ")) then
     handle_quit(user)
   end
 end
@@ -478,7 +478,7 @@ end
 
 function handle_other_vitals(user, param)
   if (mode == "multi") and (user ~= "me") then
-    hp, sp, st = string.match(param, "^§vit§ (%d+),(%d+),(%d+)")
+    hp, sp, st = string.match(param, "^ vit  (%d+),(%d+),(%d+)")
 
     if (hp) and (sp) and (st) then
       set_vitals(user, tonumber(hp), tonumber(sp), tonumber(st))
