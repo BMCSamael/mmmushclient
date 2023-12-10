@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Tuesday, November 14, 2023, 4:00 PM -->
+<!-- Saved on Sunday, December 10, 2023, 5:47 PM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
@@ -14,7 +14,7 @@
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-11-14 16:00:19"
+   date_saved="2023-12-10 17:47:41"
   >
   <variable name="autotag_signposts">true</variable>
   <variable name="color_terrain">false</variable>
@@ -112,9 +112,9 @@
     name = "Dizzy",
     colour = 16711680,
     },
-  EXIT_COLOUR_PRT = {
-    name = "Teleport/portal",
-    colour = 15234359,
+  DIGGABLE_FILL_COLOUR = {
+    name = "diggable",
+    colour = 11788021,
     },
   BACKGROUND_COLOUR = {
     name = "Background",
@@ -124,17 +124,17 @@
     height = 270,
     width = 460,
     },
-  AREA_NAME_BORDER = {
-    name = "Area name box",
-    colour = 0,
+  FEAR_COLOUR = {
+    name = "Fear",
+    colour = 65535,
     },
-  AREA_NAME_FILL = {
-    name = "Area name fill",
-    colour = 5461520,
+  UNKNOWN_ROOM_COLOUR = {
+    name = "Unknown room",
+    colour = 13289984,
     },
-  DIGGABLE_FILL_COLOUR = {
-    name = "diggable",
-    colour = 11788021,
+  NOTHING_FILL_COLOUR = {
+    name = "nothing",
+    colour = 16760576,
     },
   DIFFERENT_AREA_COLOUR = {
     name = "Another area",
@@ -144,34 +144,34 @@
     name = "LPK",
     colour = 8421616,
     },
-  ROOM_NAME_TEXT = {
-    name = "Room name text",
-    colour = 15856574,
+  POISON_FILL_COLOUR = {
+    name = "poison-gas",
+    colour = 3329434,
     },
   FREEZING_FILL_COLOUR = {
     name = "freezing",
     colour = 16777184,
     },
-  POISON_FILL_COLOUR = {
-    name = "poison-gas",
-    colour = 3329434,
+  ROOM_NAME_TEXT = {
+    name = "Room name text",
+    colour = 15856574,
     },
-  NOTHING_FILL_COLOUR = {
-    name = "nothing",
-    colour = 16760576,
+  EXIT_COLOUR_PRT = {
+    name = "Teleport/portal",
+    colour = 15234359,
     },
-  UNKNOWN_ROOM_COLOUR = {
-    name = "Unknown room",
-    colour = 13289984,
+  AREA_NAME_FILL = {
+    name = "Area name fill",
+    colour = 5461520,
     },
-  FEAR_COLOUR = {
-    name = "Fear",
-    colour = 65535,
+  AREA_NAME_BORDER = {
+    name = "Area name box",
+    colour = 0,
     },
   }</variable>
   <variable name="do_map_wilds">false</variable>
   <variable name="draw_other_floors">true</variable>
-  <variable name="mapper_visible">true</variable>
+  <variable name="mapper_visible">false</variable>
   <variable name="mw_f973af093e715dece34dc25f_mapper_windowflags">2</variable>
   <variable name="mw_f973af093e715dece34dc25f_mapper_windowmode">0</variable>
   <variable name="mw_f973af093e715dece34dc25f_mapper_windowx">1428</variable>
@@ -179,7 +179,7 @@
   <variable name="safewalk">false</variable>
   <variable name="show_bookmarks">false</variable>
   <variable name="show_database_mods">true</variable>
-  <variable name="show_flags">false</variable>
+  <variable name="show_flags">true</variable>
   <variable name="show_numbers">true</variable>
   <variable name="use_grappling">false</variable>
   <variable name="use_nospeed">false</variable>

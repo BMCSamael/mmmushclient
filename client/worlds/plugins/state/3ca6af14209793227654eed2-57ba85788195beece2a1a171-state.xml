@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Tuesday, November 14, 2023, 4:00 PM -->
+<!-- Saved on Sunday, December 10, 2023, 3:14 PM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
@@ -14,34 +14,41 @@
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-11-14 16:00:01"
+   date_saved="2023-12-10 15:14:23"
   >
   <variable name="char_name">[a-zA-Z0-9 \-\,\.\']+</variable>
   <variable name="resource_wanted">resource_wanted = {
   ["medium cannonball"] = 0,
   ["heavy ballista bolt"] = 90,
-  ["heavy cannonball"] = 0,
-  ["sulfur mix"] = 46,
   ["basic cannonball"] = 500,
-  ["black powder"] = 800,
+  ["sulfur mix"] = 46,
+  ["heavy cannonball"] = 0,
   ["light ballista bolt"] = 160,
+  ["black powder"] = 800,
   }</variable>
   <variable name="services">services = {
-  Decara = {
-    crewmen = 1700,
-    drydock = 25000,
-    },
   ["Pirate's Cove"] = {
     crewmen = 950,
     drydock = 2500,
     },
+  Tellerium = {
+    crewmen = 2250,
+    drydock = 4000,
+    },
+  Decara = {
+    crewmen = 1700,
+    drydock = 25000,
+    },
   }</variable>
   <variable name="sh_locations">sh_locations = {
-  ["The Panty Dropper"] = "Alyrian Underworld: 1526, 519",
-  ["Chromatuss bringer of DEATH"] = "Sigil Underground: 1502, 759",
+  Atonement = "Alyrian Underworld: 1521, 496",
+  ["The Panty Dropper"] = "Alyrian Underworld: 852, 600",
+  ["Lunar Leviathan"] = "Sigil Underground: 1430, 473",
   ["Tamlins Dread"] = "Alyria: 686, 775",
-  ["Tamlin SuperDread"] = "Sigil Underground: 914, 924",
+  ["Chromatuss bringer of DEATH"] = "Sigil Underground: 915, 923",
+  ["Tamlin SuperDread"] = "Sigil Underground: 914, 925",
   ["Kilophs Ship"] = "Sigil Underground: 1430, 473",
+  ["Decara Skiff"] = "Alyrian Underworld: 1598, 839",
   }</variable>
 </variables>
 </muclient>
