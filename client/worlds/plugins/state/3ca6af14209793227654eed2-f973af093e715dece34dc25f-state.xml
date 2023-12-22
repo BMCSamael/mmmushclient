@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Sunday, December 10, 2023, 5:47 PM -->
+<!-- Saved on Friday, December 22, 2023, 5:18 PM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
@@ -14,10 +14,10 @@
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-10 17:47:41"
+   date_saved="2023-12-22 17:18:17"
   >
   <variable name="autotag_signposts">true</variable>
-  <variable name="color_terrain">false</variable>
+  <variable name="color_terrain">true</variable>
   <variable name="config">config = {
   EXIT_COLOUR = {
     name = "Exit",
@@ -182,7 +182,7 @@
   <variable name="show_flags">true</variable>
   <variable name="show_numbers">true</variable>
   <variable name="use_grappling">false</variable>
-  <variable name="use_nospeed">false</variable>
+  <variable name="use_nospeed">true</variable>
   <variable name="vis_road_exits">false</variable>
   <variable name="vis_unmapped_exits">false</variable>
 </variables>

@@ -4965,6 +4965,7 @@ function purge_entire_area(name, line, wildcards)
     arooms[#arooms + 1] = row.uid
   end -- finding rooms
 
+  purge_bookmarks(arooms, name)
   purge_stuff(arooms, name, false)
 end
 
@@ -5125,6 +5126,7 @@ end
 function nuke_room(uid)
   SetStatus("Erasing room " .. uid .. "...")
   del_exits_from_database(uid)
+  del_tags_from_database(uid)
   del_room_from_database(uid)
 
   local notes = load_notes_from_database(uid)

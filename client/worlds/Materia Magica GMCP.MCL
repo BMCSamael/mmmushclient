@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Saturday, December 09, 2023, 6:42 PM -->
+<!-- Saved on Thursday, December 21, 2023, 7:31 PM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
@@ -8,7 +8,7 @@
 <world
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-09 18:42:30"
+   date_saved="2023-12-21 19:31:39"
 
    auto_log_file_name="D:\Onedrive\Desktop\mushclient\worlds\plugins\MM\Logs\%d.%b.%y_Log.html"
    auto_say_override_prefix="-"
@@ -151,7 +151,7 @@ FBF - 34654</notes>
 <triggers
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-09 18:42:30"
+   date_saved="2023-12-21 19:31:39"
   >
   <trigger
    enabled="y"
@@ -628,7 +628,7 @@ EnableTrigger("findcrystal", false)</send>
 <aliases
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-09 18:42:30"
+   date_saved="2023-12-21 19:31:39"
   >
   <alias
    match="$ei (.*)"
@@ -811,6 +811,25 @@ put grind pouch</send>
   <send>mapper goto 79134</send>
   </alias>
   <alias
+   match="iweb *"
+   enabled="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>c slipstream
+evoke earth %1</send>
+  </alias>
+  <alias
+   name="kess"
+   match="kess"
+   enabled="y"
+   group="run speedwalks"
+   send_to="10"
+   sequence="100"
+  >
+  <send>mapper goto 177191</send>
+  </alias>
+  <alias
    match="priest_fp"
    enabled="y"
    group="phrases"
@@ -818,6 +837,15 @@ put grind pouch</send>
    sequence="100"
   >
   <send>sayto priest hala katalla hum</send>
+  </alias>
+  <alias
+   match="qc"
+   enabled="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>c slipstream
+play calm</send>
   </alias>
   <alias
    match="scadd"
@@ -964,7 +992,7 @@ DoAfter (116, "ship mark coordinateadd 20 972 669 Acid Ocean")</send>
 <timers
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-09 18:42:30"
+   date_saved="2023-12-21 19:31:39"
   >
   <timer name="resetlogs" enabled="y" second="0.00" offset_second="0.00"    send_to="10"
 at_time="y" group="logging" >
@@ -984,7 +1012,7 @@ group="forthrak" >
 <macros
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-09 18:42:30"
+   date_saved="2023-12-21 19:31:39"
   >
 
   <macro name="up" type="send_now" >
@@ -1078,14 +1106,14 @@ group="forthrak" >
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-09 18:42:30"
+   date_saved="2023-12-21 19:31:39"
   >
   <variable name="allowed"></variable>
   <variable name="dropitems">a sickle shaped fellblade</variable>
-  <variable name="mxp_hp">3976</variable>
-  <variable name="mxp_sp">2987</variable>
-  <variable name="mxp_st">3393</variable>
-  <variable name="tank">an incensed water weird</variable>
+  <variable name="mxp_hp">4766</variable>
+  <variable name="mxp_sp">3575</variable>
+  <variable name="mxp_st">4131</variable>
+  <variable name="tank">Roobidra, the sea witch</variable>
 </variables>
 
 <!-- colours -->
@@ -1093,7 +1121,7 @@ group="forthrak" >
 <colours
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-09 18:42:30"
+   date_saved="2023-12-21 19:31:39"
   >
 
 <ansi>
@@ -1150,7 +1178,7 @@ group="forthrak" >
 <keypad
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-09 18:42:30"
+   date_saved="2023-12-21 19:31:39"
   >
 
   <key name="0" >
@@ -1274,7 +1302,7 @@ group="forthrak" >
 <printing
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-09 18:42:30"
+   date_saved="2023-12-21 19:31:39"
   >
 
 <ansi>
@@ -1323,7 +1351,6 @@ group="forthrak" >
 <include name="MM\terrain_o_vision.xml" plugin="y" />
 <include name="MM\transport_kp.xml" plugin="y" />
 <include name="MM\vitals_changes.xml" plugin="y" />
-<include name="MM\CrystalLocator.xml" plugin="y" />
 <include name="MM\faux_sextant.xml" plugin="y" />
 <include name="Config_Option_Changer.xml" plugin="y" />
 <include name="MM\capture2dworld.xml" plugin="y" />
@@ -1336,4 +1363,6 @@ group="forthrak" >
 <include name="MM\tick.xml" plugin="y" />
 <include name="MM\capture2mini.xml" plugin="y" />
 <include name="MM\dpercent.xml" plugin="y" />
+<include name="MM\CrystalLocator.xml" plugin="y" />
+<include name="MM\events_mini.xml" plugin="y" />
 </muclient>
