@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Friday, December 22, 2023, 5:06 PM -->
+<!-- Saved on Thursday, December 28, 2023, 4:40 PM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
@@ -14,12 +14,13 @@
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-22 17:06:01"
+   date_saved="2023-12-28 16:40:51"
   >
   <variable name="backup_keystrokes">backup_keystrokes = {
   }</variable>
   <variable name="use_keystrokes">use_keystrokes = {
   ["ctrl+alt+numpad8"] = "flee north",
+  f9 = "ship fire heavy-cannon",
   numpad6 = "east",
   ["alt+numpad6"] = "look east",
   ["ctrl+add"] = "open down door",
@@ -27,39 +28,54 @@
   ["ctrl+alt+numpad9"] = "flee northeast",
   ["ctrl+alt+numpad7"] = "flee northwest",
   numpad4 = "west",
-  ["ctrl+numpad2"] = "open south door",
   ["alt+numpad7"] = "look northwest",
+  ["ctrl+alt+numpad6"] = "flee east",
+  f8 = "ship fire medium-cannon",
   ["alt+subtract"] = "look up",
-  numpad9 = "northeast",
-  ["ctrl+numpad3"] = "open southeast door",
+  numpad5 = "ship_kp stop",
+  ["alt+numpad9"] = "look northeast",
   ["alt+numpad4"] = "look west",
+  f10 = "ship fire harpoon",
+  ["shift+add"] = "ship_kp flank",
+  ["ctrl+numpad3"] = "open southeast door",
+  f2 = "ship target attacker",
+  ["shift+subtract"] = "ship_kp halt",
+  decimal = "ship_kp rig",
   ["alt+numpad2"] = "look south",
+  ["alt+add"] = "look down",
   ["ctrl+numpad8"] = "open north door",
   numpad3 = "southeast",
-  ["ctrl+alt+numpad6"] = "flee east",
   ["ctrl+alt+numpad4"] = "flee west",
+  numpad8 = "north",
   ["ctrl+alt+numpad5"] = "flee",
+  f5 = "ship fire light-ballista",
   ["ctrl+numpad9"] = "open northeast door",
-  ["alt+numpad9"] = "look northeast",
-  ["ctrl+alt+numpad3"] = "flee southeast",
+  numpad0 = "ship_kp salv",
+  f6 = "ship fire heavy-ballista",
+  ["ctrl+alt+add"] = "flee down",
+  numpad2 = "south",
+  f7 = "ship fire basic-cannon",
   ["ctrl+numpad6"] = "open east door",
   numpad1 = "southwest",
-  ["ctrl+alt+numpad2"] = "flee south",
   add = "down",
-  ["ctrl+numpad4"] = "open west door",
+  divide = "ship_kp look",
+  ["ctrl+alt+numpad2"] = "flee south",
+  ["ctrl+subtract"] = "open up door",
   ["ctrl+numpad7"] = "open northwest door",
   ["alt+numpad8"] = "look north",
-  ["alt+add"] = "look down",
-  subtract = "up",
-  ["ctrl+alt+add"] = "flee down",
-  ["ctrl+subtract"] = "open up door",
-  numpad8 = "north",
   ["alt+numpad3"] = "look southeast",
-  ["ctrl+numpad1"] = "open southwest door",
+  subtract = "up",
+  multiply = "ship_kp scan",
+  ["ctrl+numpad2"] = "open south door",
+  ["ctrl+numpad4"] = "open west door",
+  f4 = "ship fire fire-launcher",
+  f3 = "ship fire",
   ["ctrl+alt+subtract"] = "flee up",
   ["ctrl+alt+numpad1"] = "flee southwest",
   ["alt+numpad1"] = "look southwest",
-  numpad2 = "south",
+  numpad9 = "northeast",
+  ["ctrl+alt+numpad3"] = "flee southeast",
+  ["ctrl+numpad1"] = "open southwest door",
   }</variable>
 </variables>
 </muclient>

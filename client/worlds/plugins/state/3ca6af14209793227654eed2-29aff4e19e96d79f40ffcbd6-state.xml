@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Friday, December 22, 2023, 5:06 PM -->
+<!-- Saved on Thursday, December 28, 2023, 4:40 PM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
@@ -14,7 +14,7 @@
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-22 17:06:01"
+   date_saved="2023-12-28 16:40:51"
   >
   <variable name="Resslin_dailies_per_city">dailies_per_city = {
   ["New Rigel"] = {
@@ -33,11 +33,12 @@
   <variable name="Resslin_xaventry">1698736756</variable>
   <variable name="Tamlin_dailies_per_city">dailies_per_city = {
   ["New Rigel"] = {
-    ["a heap of gold coins"] = 1,
-    ["blackjack vouchers x 1,000 gp"] = 1,
-    ["a chipped orb"] = 1,
-    ["a pile of gold coins"] = 1,
+    ["a heap of gold coins"] = 3,
     ["20,000 worth of Toll Road credit"] = 1,
+    ["a pile of gold coins"] = 1,
+    ["a handful of gold"] = 1,
+    ["a chipped orb"] = 1,
+    ["blackjack vouchers x 1,000 gp"] = 1,
     ["a pile of gold pieces"] = 1,
     ["a manual"] = 2,
     ["a garish coupon for Death Insurance"] = 3,
@@ -45,43 +46,54 @@
   Sigil = {
     ["blackjack vouchers x 1,000 gp"] = 2,
     ["a decorative plate"] = 1,
+    ["a pile of gold coins"] = 2,
     ["a handful of gold"] = 1,
     ["a pile of gold pieces"] = 1,
     ["a garish coupon for Death Insurance"] = 1,
     },
   Tellerium = {
+    ["blackjack vouchers x 1,000 gp"] = 1,
     ["20,000 worth of Toll Road credit"] = 1,
     ["a pile of gold coins"] = 1,
     ["a handful of gold"] = 1,
+    ["a stamp"] = 1,
     ["a manual"] = 1,
     ["a garish coupon for Death Insurance"] = 1,
     },
   Xaventry = {
-    ["blackjack vouchers x 1,000 gp"] = 3,
+    ["a heap of gold coins"] = 1,
+    ["blackjack vouchers x 25,000 gp"] = 1,
     ["a pile of gold coins"] = 1,
     ["a handful of gold"] = 1,
+    ["blackjack vouchers x 1,000 gp"] = 3,
     ["a summoning stone"] = 1,
     ["a summoning pentagram"] = 3,
+    ["a pile of gold pieces"] = 1,
+    ["blackjack vouchers x 50,000 gp"] = 1,
+    ["a garish coupon for Death Insurance"] = 1,
     },
   }</variable>
   <variable name="Tamlin_daily_stats_since">1697694223</variable>
   <variable name="Tamlin_daily_totals">daily_totals = {
-  ["a heap of gold coins"] = 1,
+  ["a heap of gold coins"] = 4,
   ["20,000 worth of Toll Road credit"] = 2,
-  ["a pile of gold coins"] = 3,
-  ["a handful of gold"] = 3,
+  ["blackjack vouchers x 25,000 gp"] = 1,
+  ["a pile of gold coins"] = 5,
+  ["a handful of gold"] = 4,
+  ["blackjack vouchers x 50,000 gp"] = 1,
   ["a chipped orb"] = 1,
-  ["blackjack vouchers x 1,000 gp"] = 6,
+  ["a stamp"] = 1,
+  ["blackjack vouchers x 1,000 gp"] = 7,
   ["a decorative plate"] = 1,
   ["a summoning stone"] = 1,
   ["a summoning pentagram"] = 3,
-  ["a pile of gold pieces"] = 2,
+  ["a pile of gold pieces"] = 3,
   ["a manual"] = 3,
-  ["a garish coupon for Death Insurance"] = 5,
+  ["a garish coupon for Death Insurance"] = 6,
   }</variable>
-  <variable name="Tamlin_new_rigel">1702186680</variable>
-  <variable name="Tamlin_sigil">1701207160</variable>
-  <variable name="Tamlin_tellerium">1700343802</variable>
-  <variable name="Tamlin_xaventry">1702352631</variable>
+  <variable name="Tamlin_new_rigel">1703624600</variable>
+  <variable name="Tamlin_sigil">1703624683</variable>
+  <variable name="Tamlin_tellerium">1703624646</variable>
+  <variable name="Tamlin_xaventry">1703727660</variable>
 </variables>
 </muclient>

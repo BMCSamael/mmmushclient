@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Friday, December 22, 2023, 5:06 PM -->
+<!-- Saved on Thursday, December 28, 2023, 4:40 PM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
@@ -14,45 +14,45 @@
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-22 17:06:01"
+   date_saved="2023-12-28 16:40:51"
   >
   <variable name="char_name">[a-zA-Z0-9 \-\,\.\']+</variable>
   <variable name="resource_wanted">resource_wanted = {
   ["medium cannonball"] = 0,
   ["heavy ballista bolt"] = 90,
-  ["light ballista bolt"] = 160,
-  ["sulfur mix"] = 46,
-  ["black powder"] = 800,
   ["heavy cannonball"] = 0,
+  ["sulfur mix"] = 46,
   ["basic cannonball"] = 500,
+  ["black powder"] = 800,
+  ["light ballista bolt"] = 160,
   }</variable>
   <variable name="services">services = {
-  Decara = {
-    crewmen = 1700,
-    drydock = 25000,
-    },
-  Tellerium = {
-    crewmen = 2250,
-    drydock = 4000,
+  ["Pirate's Cove"] = {
+    crewmen = 950,
+    drydock = 2500,
     },
   Rune = {
     crewmen = 1450,
     drydock = 5000,
     },
-  ["Pirate's Cove"] = {
-    crewmen = 950,
-    drydock = 2500,
+  Tellerium = {
+    crewmen = 2250,
+    drydock = 4000,
+    },
+  Decara = {
+    crewmen = 1700,
+    drydock = 25000,
     },
   }</variable>
   <variable name="sh_locations">sh_locations = {
-  ["The Panty Dropper"] = "Alyria: 1580, 936",
+  ["The Panty Dropper"] = "Alyrian Underworld: 801, 774",
   ["The Fishmobile"] = "Alyria: 482, 1226",
   ["Chromatuss bringer of DEATH"] = "Sigil Underground: 1083, 515",
   ["Tamlins Dread"] = "Alyria: 686, 775",
   ["Decara Skiff"] = "Alyrian Underworld: 1598, 839",
   ["Lunar Leviathan"] = "Sigil Underground: 1430, 473",
   ["Kilophs Ship"] = "Sigil Underground: 1430, 473",
-  ["Tamlin SuperDread"] = "Alyrian Underworld: 1593, 839",
+  ["Tamlin SuperDread"] = "Sigil Underground: 915, 923",
   ["Kinverlys Wrath"] = "Alyria: 1196, 969",
   Atonement = "Alyrian Underworld: 1521, 496",
   }</variable>
