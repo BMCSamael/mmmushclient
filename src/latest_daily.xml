@@ -47,6 +47,8 @@ Syntax:
 
 * daily reset stats  - resets the above stats
 
+* daily auto - will run the NR, Xav, Tellerium, Sigil daily reps.
+
 
 Author: Ruthgul
 
@@ -130,6 +132,24 @@ end
 </send>
   </alias>
 
+<!-- Auto -->
+
+<alias
+   enabled="y"
+   match="^daily auto$"
+   regexp="y"
+   send_to="12"
+   sequence="100"
+  >
+  <send>if (name) then
+  SetVariable("dailyauto", "auto")
+  EnableTriggerGroup("dailies")
+  run_dailies("none")
+else
+  plugin_not_initialized()
+end
+</send>
+  </alias>
 
 <!--  Plugin help  -->
 
@@ -191,7 +211,35 @@ end
   <send>save_daily("%&lt;place&gt;")
 update_stats("%&lt;place&gt;", "%&lt;item&gt;")
 set_unique_countdown(24, 0, 0, "%&lt;place&gt; daily reward", "latest_daily plugin")
+  run_dailies("%&lt;place&gt;")
 </send>
+  </trigger>
+
+<!-- Auto Run -->
+
+  <trigger
+   enabled="y"
+   group="dailies"
+   keep_evaluating="y"
+   match="^A pretty half-elf woman with a ponytail smiles at you\.$"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>sayto rep yes</send>
+  </trigger>
+
+  <trigger
+   enabled="y"
+   group="dailies"
+   keep_evaluating="y"
+   match="^\'I will give you one prize every four days *.+$"
+   regexp="y"
+   script="disable_auto"
+   sequence="100"
+  >
+   <send>
+   </send>
   </trigger>
 
 </triggers>
@@ -519,6 +567,51 @@ function reset_bj_vouchers()
   got_bj_vouchers = {}
 end
 
+function run_dailies(where)
+  local daily_auto = {}
+  daily_auto = GetVariable("dailyauto")
+
+  if (name) and (daily_auto == "auto") then
+   
+   if (where == "none") then
+      Note("* beginning daily run to: New Rigel")
+          DoAfterSpecial(1, "mapper goto 2809518", 10)
+          DoAfterSpecial(6, "run newrigel", 0)
+ 	  DoAfterSpecial(30, "mapper goto 62036", 10)
+   else
+     Execute("recall")
+     if (where == "New Rigel") then
+       Note ("*Daily Run:  Xaventry")
+          DoAfterSpecial(1, "mapper goto 2809518", 10)
+          DoAfterSpecial(5, "run xaventry", 0)
+ 	  DoAfterSpecial(60, "mapper goto 73100", 10)
+     end
+     if (where == "Xaventry") then
+       Note ("*Daily Run:  Tellerium")
+          DoAfterSpecial(1, "mapper goto 10636", 10)
+          DoAfterSpecial(5, "sh buy tellerium", 0)
+          DoAfterSpecial(6, "down", 0)
+          DoAfterSpecial(7, "give tellerium ganuk", 0)
+ 	  DoAfterSpecial(10, "mapper goto 41790", 10)
+     end
+     if (where == "Tellerium") then
+       Note ("*Daily Run: Sigil")
+          DoAfterSpecial(1, "mapper goto 10636", 10)
+          DoAfterSpecial(5, "sh buy sigil", 0)
+          DoAfterSpecial(6, "down", 0)
+          DoAfterSpecial(7, "give sigil ganuk", 0)
+ 	  DoAfterSpecial(10, "mapper goto 27890", 10)
+     end
+     disable_auto(null,null,null)
+   end
+ end
+end
+
+function disable_auto(name, line, wildcards)
+  EnableTriggerGroup("dailies", false)
+  SetVariable("dailyauto","none")
+  ColourNote ("white","red", "Warning! - Already Collected, Disabling AutoRun")
+end
 
 function update_stats(where, what)
   if (name) then
