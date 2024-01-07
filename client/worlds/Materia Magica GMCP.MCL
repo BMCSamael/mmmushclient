@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Thursday, December 28, 2023, 4:01 PM -->
+<!-- Saved on Sunday, January 07, 2024, 12:09 AM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
@@ -8,7 +8,7 @@
 <world
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-28 16:01:51"
+   date_saved="2024-01-07 00:09:21"
 
    auto_log_file_name="D:\Onedrive\Desktop\mushclient\worlds\plugins\MM\Logs\%d.%b.%y_Log.html"
    auto_say_override_prefix="-"
@@ -151,7 +151,7 @@ FBF - 34654</notes>
 <triggers
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-28 16:01:51"
+   date_saved="2024-01-07 00:09:21"
   >
   <trigger
    enabled="y"
@@ -303,6 +303,18 @@ FBF - 34654</notes>
    sequence="100"
   >
   <send>get sapphire</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="vandyne"
+   keep_evaluating="y"
+   match="A ring lies here\, its insignia obscured by layers of dust\."
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get ring
+wear ring</send>
   </trigger>
   <trigger
    enabled="y"
@@ -632,7 +644,7 @@ EnableTrigger("findcrystal", false)</send>
 <aliases
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-28 16:01:51"
+   date_saved="2024-01-07 00:09:21"
   >
   <alias
    match="$ei (.*)"
@@ -725,6 +737,16 @@ end
   >
   <send>EnableGroup("%1", false)
 </send>
+  </alias>
+  <alias
+   match="^dmgtype help (.*?)$"
+   enabled="y"
+   group="quicktools"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>help _filter %1 damtype</send>
   </alias>
   <alias
    match="^enable group (.+)$"
@@ -998,7 +1020,9 @@ DoAfter (116, "ship mark coordinateadd 20 972 669 Acid Ocean")</send>
   <send>sayto %1 straz
 sayto %1 mad baron
 sayto %1 oneiromancy
-sayto %1 automaton</send>
+sayto %1 automaton
+sayto %1 duke
+sayto %1 tourmaline duke</send>
   </alias>
 </aliases>
 
@@ -1007,7 +1031,7 @@ sayto %1 automaton</send>
 <timers
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-28 16:01:51"
+   date_saved="2024-01-07 00:09:21"
   >
   <timer name="resetlogs" enabled="y" second="0.00" offset_second="0.00"    send_to="10"
 at_time="y" group="logging" >
@@ -1027,7 +1051,7 @@ group="forthrak" >
 <macros
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-28 16:01:51"
+   date_saved="2024-01-07 00:09:21"
   >
 
   <macro name="up" type="send_now" >
@@ -1121,13 +1145,13 @@ group="forthrak" >
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-28 16:01:51"
+   date_saved="2024-01-07 00:09:21"
   >
   <variable name="allowed"></variable>
   <variable name="dropitems">a sickle shaped fellblade</variable>
-  <variable name="mxp_hp">3976</variable>
-  <variable name="mxp_sp">3275</variable>
-  <variable name="mxp_st">2353</variable>
+  <variable name="mxp_hp">4772</variable>
+  <variable name="mxp_sp">3775</variable>
+  <variable name="mxp_st">4131</variable>
   <variable name="tank">Vanea</variable>
 </variables>
 
@@ -1136,7 +1160,7 @@ group="forthrak" >
 <colours
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-28 16:01:51"
+   date_saved="2024-01-07 00:09:21"
   >
 
 <ansi>
@@ -1193,7 +1217,7 @@ group="forthrak" >
 <keypad
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-28 16:01:51"
+   date_saved="2024-01-07 00:09:21"
   >
 
   <key name="0" >
@@ -1317,7 +1341,7 @@ group="forthrak" >
 <printing
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2023-12-28 16:01:51"
+   date_saved="2024-01-07 00:09:21"
   >
 
 <ansi>
@@ -1355,7 +1379,6 @@ group="forthrak" >
 <include name="MM\ship_lookout.xml" plugin="y" />
 <include name="MM\affects_by_name.xml" plugin="y" />
 <include name="MM\kills_tnl.xml" plugin="y" />
-<include name="MM\latest_daily.xml" plugin="y" />
 <include name="MM\meh_pirates.xml" plugin="y" />
 <include name="MM\meh_prompt.xml" plugin="y" />
 <include name="MM\meh_timers.xml" plugin="y" />
@@ -1369,15 +1392,16 @@ group="forthrak" >
 <include name="MM\faux_sextant.xml" plugin="y" />
 <include name="Config_Option_Changer.xml" plugin="y" />
 <include name="MM\capture2dworld.xml" plugin="y" />
-<include name="MM\MM_GMCP_Mapper_GMCP.xml" plugin="y" />
 <include name="MM\plugins_updater_v3.xml" plugin="y" />
 <include name="MM\IMap_GMCP.xml" plugin="y" />
 <include name="MM\msp_lua.xml" plugin="y" />
 <include name="MM\vitals_bars_v2.xml" plugin="y" />
 <include name="MM\opponent_hp_sub.xml" plugin="y" />
 <include name="MM\tick.xml" plugin="y" />
-<include name="MM\capture2mini.xml" plugin="y" />
 <include name="MM\dpercent.xml" plugin="y" />
 <include name="MM\CrystalLocator.xml" plugin="y" />
 <include name="MM\events_mini.xml" plugin="y" />
+<include name="MM\capture2mini.xml" plugin="y" />
+<include name="MM\latest_daily.xml" plugin="y" />
+<include name="MM\MM_GMCP_Mapper_GMCP.xml" plugin="y" />
 </muclient>

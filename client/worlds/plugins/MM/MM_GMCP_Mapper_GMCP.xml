@@ -1513,13 +1513,15 @@ function get_room(uid)
   table.sort(texits)
 
   room.hovermessage = string.format(
-    "%s\tExits: %s\nGMCP #: %s\nFlags: %s\nTerrain: %s (%s)\nTags: %s\nBookmarks: %s",
+    "%s\tExits: %s\nGMCP #: %s\nFlags: %s\nTerrain: %s (%s)\n Coords: %s %s \nTags: %s\nBookmarks: %s",
     room.name,
     table.concat(texits, ", "),
     uid,
     flags,
     terrain,
     terraininfo,
+    xcoord,
+    ycoord,
     tags,
     notes
   )
@@ -2998,6 +3000,11 @@ function process_room()
 
       check_if_show_flags_and_terrain(roomflags, terrain)
 
+	-- Tamlin Mapping
+	 xcoord = gmcpval("coord.x")
+	 ycoord = gmcpval("coord.y")
+	 symbol = gmcpval("coord.sym")
+
       current_room = uid
 
       local room = rooms[current_room] or load_room_from_database(current_room)
@@ -3006,8 +3013,9 @@ function process_room()
         if (config2.do_map_wilds) -- we're mapping everything
         or ((not is_vmap(zone) or (is_road(terrain) and not is_cave(roomname)))) then -- it's not in the wilds
           db:exec("BEGIN TRANSACTION;")
+         
 
-          save_room_to_database(current_room, roomname, roomflags, zone, terrain, terraininfo)
+          save_room_to_database(current_room, roomname, roomflags, zone, terrain, terraininfo, xcoord, ycoord, symbol)
           save_exits_to_database(current_room, exits_str)
 
           db:exec("COMMIT;")
@@ -3033,7 +3041,7 @@ function process_room()
     or ((not is_vmap(zone) or (is_road(terrain) and not is_cave(roomname))))) then
   -- or we're in a part of the wilds that we always wanna map
 --    print(uid)
-    mapper_redraw() -- call mapper to draw this rom
+    mapper_redraw() -- call mapper to draw this room
   end
 end
 
@@ -3311,6 +3319,9 @@ function create_tables_new(use_db)
       terrain       TEXT,             -- terrain
       terraininfo   TEXT,             -- terrain info
       date_added    DATE,             -- date added to database
+      xcoord        INTEGER,          -- xcoordinate
+      ycoord        INTEGER,          -- ycoordinate
+      symbol	    TEXT,             -- symbol of the room
       UNIQUE(uid)
     );
 
@@ -3457,6 +3468,9 @@ function do_load_room(uid)
       terrain = row.terrain,
       terraininfo = row.terraininfo,
       date_added = row.date_added,
+      xcoord = row.xcoord,
+      ycoord = row.ycoord,
+      symbol = row.symbol
     }
 
     if (not compatibility) then
@@ -3593,7 +3607,7 @@ function map_add_room(name, line, wildcards)
 
   -- room isn't mapped yet
   db:exec("BEGIN TRANSACTION;")
-  save_room_to_database(id, Trim(name), Trim(flags), Trim(zone), Trim(terrain), Trim(terraininfo))
+  save_room_to_database(id, Trim(name), Trim(flags), Trim(zone), Trim(terrain), Trim(terraininfo), Trim(xcoord), Trim(ycoord), Trim(symbol))
   db:exec("COMMIT;")
 
   -- update in-memory table
@@ -3603,7 +3617,7 @@ function map_add_room(name, line, wildcards)
 end
 
 
-function save_room_to_database(uid, title, flags, area, terrain, terraininfo)
+function save_room_to_database(uid, title, flags, area, terrain, terraininfo, xcoord, ycoord, symbol)
   assert(uid, "No UID supplied to save_room_to_database")
   if (is_maze(uid)) then
     return
@@ -3615,14 +3629,17 @@ function save_room_to_database(uid, title, flags, area, terrain, terraininfo)
   end
 
   dbcheck(db:execute(string.format(
-    "INSERT INTO rooms(uid, name, %s, area, terrain, terraininfo, date_added) VALUES(%s, %s, %s, %s, %s, %s, DATETIME('NOW'));",
+    "INSERT INTO rooms(uid, name, %s, area, terrain, terraininfo, date_added, xcoord, ycoord, symbol) VALUES(%s, %s, %s, %s, %s, %s, DATETIME('NOW'), %s, %s, %s);",
       use_column,
       fixsql(uid),
       fixsql(title),
       fixsql(flags),
       fixsql(area),
       fixsql(terrain),
-      fixsql(terraininfo)
+      fixsql(terraininfo),
+      fixsql(xcoord),
+      fixsql(ycoord),
+      fixsql(symbol)
   )))
 
   use_column = "area"
@@ -4280,7 +4297,7 @@ function update_room(uid)
 
   db:exec("BEGIN TRANSACTION;")
 
-  local oldarea, zone, oldname, name, oldterrain, terrain, oldterraininfo, terraininfo, oldflags, flags, cflags
+  local oldarea, zone, oldname, name, oldterrain, terrain, oldterraininfo, terraininfo, oldflags, flags, cflags, oldxcoord, xcoord, oldycoord, ycoord, oldsymbol, symbol
 
   if (not uid) then
     uid = gmcpval("num")
@@ -4314,10 +4331,34 @@ function update_room(uid)
     room_update_terraininfo(uid, terraininfo)
   end
 
+ if (config2.do_map_wilds) -- we're mapping everything
+        and ((is_vmap(zone) or (not is_road(terrain) and is_cave(roomname)))) then -- it's in the wilds
+
+	  xcoord = gmcpval("coord.x")
+	  oldxcoord = rooms[uid].xcoord -- if coordinates changed then update add it
+
+	  if (oldxcoord ~= xcoord) then 
+	    room_update_xcoord(uid, xcoord)
+	  end
+
+	  ycoord = gmcpval("coord.y")
+	  oldycoord = rooms[uid].ycoord -- if coordinates changed then update add it
+	  if (oldycoord ~= ycoord) then 
+	    room_update_ycoord(uid, ycoord)
+	  end
+
+	  symbol = gmcpval("coord.sym")
+	  oldsymbol = rooms[uid].symbol -- if symbol changed then update add it
+	  if (oldsymbol ~= symbol) then 
+	    room_update_symbol(uid, symbol)
+	  end
+end
+
   flags = gmcpval("flags")
   if (flags == "_empty") then
     flags = ""
   end
+
   oldflags = (rooms[uid].flags or "") -- if flags have changed, then update/add them,
   cflags = flags
   if (zone == "Tellerium") then
@@ -4435,6 +4476,52 @@ function room_update_terraininfo(uid, terraininfo)
 end
 
 
+---------------------------------
+-- modify coordinates/symbol
+---------------------------------
+
+function room_update_xcoord(uid, xcoord)
+  dbcheck(db:execute(string.format(
+    "UPDATE rooms SET xcoord = %s WHERE uid = %s;",
+      fixsql(xcoord),
+      fixsql(uid)
+  )))
+
+  show_update(uid, "Room " .. uid .. " xcoord updated")
+
+  if (rooms[id]) then
+    rooms[uid].xcoord = xcoord
+  end
+end
+
+
+function room_update_ycoord(uid, ycoord)
+  dbcheck(db:execute(string.format(
+    "UPDATE rooms SET ycoord = %s WHERE uid = %s;",
+      fixsql(ycoord),
+      fixsql(uid)
+  )))
+
+  show_update(uid, "Room " .. uid .. " ycoord updated")
+
+  if (rooms[id]) then
+    rooms[uid].ycoord = ycoord
+  end
+end
+
+function room_update_symbol(uid, symbol)
+  dbcheck(db:execute(string.format(
+    "UPDATE rooms SET symbol = %s WHERE uid = %s;",
+      fixsql(symbol),
+      fixsql(uid)
+  )))
+
+  show_update(uid, "Room " .. uid .. " symbol updated")
+
+  if (rooms[id]) then
+    rooms[uid].symbol = symbol
+  end
+end
 
 -----------------
 -- modify flags
@@ -4845,6 +4932,21 @@ function show_room_info(name, line, wildcards)
   if (room.terraininfo) then
     Tell("terraininfo: ")
     ColourNote(fontcol, bgcol, room.terraininfo)
+  end
+
+  if (xcoord) then
+    Tell("xcoord: ")
+    ColourNote(fontcol, bgcol, xcoord)
+  end
+
+  if (ycoord) then
+    Tell("ycoord: ")
+    ColourNote(fontcol, bgcol, ycoord)
+  end
+
+  if (symbol) then
+    Tell("symbol: ")
+    ColourNote(fontcol, bgcol, symbol)
   end
 
   Tell("flags: ")

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Sunday, January 07, 2024, 12:09 AM -->
+<!-- Saved on Monday, January 01, 2024, 4:02 PM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
 
-<!-- Plugin state saved. Plugin: "faux_sextant". World: "Materia Magica GMCP". -->
+<!-- Plugin state saved. Plugin: "daily_auto". World: "Materia Magica GMCP". -->
 
 <muclient>
 
@@ -14,9 +14,7 @@
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-07 00:09:21"
+   date_saved="2024-01-01 16:02:01"
   >
-  <variable name="log_coords">true</variable>
-  <variable name="show_sextant">true</variable>
 </variables>
 </muclient>
