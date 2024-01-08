@@ -9,15 +9,15 @@
 
 <plugin
    name="latest_daily"
-   author="Ruthgul"
+   author="Ruthgul/Tamlin"
    id="29aff4e19e96d79f40ffcbd6"
    language="Lua"
    purpose="Shows you the time when you collected your latest daily rewards."
    save_state="y"
    date_written="2011-08-24 07:15:00"
-   date_modified="2014-04-11 09:06:52"
+   date_modified="2024-04-11 09:06:52"
    requires="4.71"
-   version="1.0"
+   version="2.7"
    >
 
 <description trim="y">
@@ -47,7 +47,7 @@ Syntax:
 
 * daily reset stats  - resets the above stats
 
-* daily auto - will run the NR, Xav, Tellerium, Sigil daily reps.
+* daily auto - will run the NR, Xav, Tellerium, Sigil daily reps.  :Tamlin:
 
 
 Author: Ruthgul
@@ -601,8 +601,8 @@ function run_dailies(where)
           DoAfterSpecial(6, "down", 0)
           DoAfterSpecial(7, "give sigil ganuk", 0)
  	  DoAfterSpecial(10, "mapper goto 27890", 10)
+          disable_auto(null,null,null)
      end
-     disable_auto(null,null,null)
    end
  end
 end
