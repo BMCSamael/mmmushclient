@@ -22,7 +22,7 @@
   date_written="2012-02-03 20:26:09"
   date_modified="2023-07-30 21:28:01"
   requires="4.71"
-  version="1.0"
+  version="2.7"
 >
 
 <description trim="y">
@@ -4527,7 +4527,7 @@ function room_update_symbol(uid, symbol)
       fixsql(symbol),
       fixsql(uid)
   )))
-print (symbol)
+
   show_update(uid, "Room " .. uid .. " symbol updated")
 
   if (rooms[id]) then
