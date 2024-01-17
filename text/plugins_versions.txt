@@ -1,8 +1,8 @@
 id = d553d532b7fd796f3c0759c8  hash = BCFFC68E800BFDE0C79775EE48BF82ED
-id = e8db9e0976d964b82332096b  hash = 0D88850D5ACCCC057DC786501D9DA6AC
+id = e8db9e0976d964b82332096b  hash = D39D271FAFCF14F841121DB4A3FC3D9C
 id = adc3a873d4e47348da7cb426  hash = AB1BD78A0DB213B52E07132F37D92483  aux_files = {   [1] = {     name = "arrow.png",     },   [2] = {     name = "circ.png",     },   [3] = {     name = "cross.png",     },   [4] = {     name = "custom.png",     },   [5] = {     name = "dest.png",     },   [6] = {     name = "horse.png",     },   [7] = {     name = "ship.png",     },   [8] = {     name = "alyria.png",     },   [9] = {     name = "alyria_spk_purple.png",     },   [10] = {     name = "alyria_spk_red.png",     },   [11] = {     name = "fp.png",     },   [12] = {     name = "lasler.png",     },   [13] = {     name = "social.png",     },   [14] = {     name = "sugxpanded.png",     },   [15] = {     name = "ug.png",     },   [16] = {     name = "verity.png",     },   }
 id = aedf0cb0be5bf045860d54b7  hash = 492249E859B0A62E0F445D16386732FA
-id = f973af093e715dece34dc25f  hash = 57B657FC71E94928D2E230DFC52F2533  aux_files = {   [1] = {     name = "mm_mapper.lua",     dest = "MUSH/lua",     },   }
+id = f973af093e715dece34dc25f  hash = 2D09D40ED601CC661084190A8446168D  aux_files = {   [1] = {     name = "mm_mapper.lua",     dest = "MUSH/lua",     },   }
 id = f67c4339ed0591a5b010d05b  hash = 19843325EE9DBAA5D4B629228EE0C9E5
 id = 925cdd0331023d9f0b8f05a7  hash = 5D9D4754247B6FC89E75296A5FA49AFE
 id = 463242566069ebfd1b379ec1  hash = 661C7BA2F78BCE66507A5DFD619F0BC1
@@ -32,7 +32,7 @@ id = a326b480b3f02b3ff6d58e7d  hash = 1FDEEDA61179DF786CE9F23BE2E259C1
 id = 97784abf5f30629a0d7e7307  hash = 1FB4EBDE61F109C1D0C2815E38EDA006
 id = d692e95c094853d2b2458f58  hash = D6803B37FA785DFBDBAB1C77CD0A9DBF
 id = 164db33914b912da8aac6ecc  hash = D80F101FB7D7B4B6238E2B8BE8D511A7
-id = 29aff4e19e96d79f40ffcbd6  hash = 7E0F86F17CE1E50FEFF336936421DE71
+id = 29aff4e19e96d79f40ffcbd6  hash = FAD3C2503EF99B026E01CA499FE7FD43
 id = ce9475a5d7acf80d07396cac  hash = 2714B0BDDB7F1A0421287EAF6DB85F92
 id = 0084625af85a3786d14c5b8d  hash = F5745C9CE6F1450D6D66A709F20217D0
 id = d83fdde9ed133fb0859936a6  hash = DB58EAA5FA1DFC5733DB8379190BC91B

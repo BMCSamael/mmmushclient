@@ -1494,6 +1494,16 @@ function get_room(uid)
     terraininfo = "-"
   end
 
+  local xcoord = room.xcoord
+  if (not xcoord) or (xcoord == "") then
+    xcoord = "-"
+  end
+
+  local ycoord = room.ycoord
+  if (not ycoord) or (ycoord == "") then
+    ycoord = "-"
+  end
+
   local notes = room.notes
   if (not room.notes) or (room.notes == "") then
     notes = "-"
@@ -3188,6 +3198,7 @@ function is_volatile(uid)
     ["68263"] = "Preacher Dan's House of Vandynity", -- Maldra Keep
     ["78413"] = "Maze Passageway [angel]", --  HH
     ["107527"] = "A Hidden Torture Room", -- Hellbent
+    ["26785"] = "Gourevitchs Hideaway", -- SUG
   }
 
   local x = volatile[tostring(uid)]
@@ -3492,7 +3503,6 @@ function do_load_room(uid)
 
       room.notes = row.notes
 
-      room.tags = ""
       room.tags = fix_tag(room.tags, row.shop, "shop")
       room.tags = fix_tag(room.tags, row.train, "trainer")
     end
@@ -3662,6 +3672,11 @@ function save_room_to_database(uid, title, flags, area, terrain, terraininfo, xc
       fixsql(title),
       fixsql(use_field)
   )))
+
+if string.match(terraininfo,"ship-only") then
+        tags = "no-speed"
+	save_tags_to_database(uid, tags)
+end
 
   room_not_in_database[uid] = nil
 
@@ -4960,24 +4975,24 @@ function show_room_info(name, line, wildcards)
     ColourNote(fontcol, bgcol, room.terraininfo)
   end
 
-  if (xcoord) then
+  if (room.xcoord) then
     Tell("xcoord: ")
-    ColourNote(fontcol, bgcol, xcoord)
+    ColourNote(fontcol, bgcol, room.xcoord)
   end
 
-  if (ycoord) then
+  if (room.ycoord) then
     Tell("ycoord: ")
-    ColourNote(fontcol, bgcol, ycoord)
+    ColourNote(fontcol, bgcol, room.ycoord)
   end
 
-  if (symbol) then
+  if (room.symbol) then
     Tell("symbol: ")
-    ColourNote(fontcol, bgcol, symbol)
+    ColourNote(fontcol, bgcol, room.symbol)
   end
 
-  if (symbol) then
+  if (room.rcolor) then
     Tell("room color: ")
-    ColourNote(fontcol, bgcol, rcolor)
+    ColourNote(fontcol, bgcol, room.rcolor)
   end
 
   Tell("flags: ")
@@ -5460,14 +5475,18 @@ function recreate_database(name, line, wildcards)
     end
 
     dbcheck(dbnew:execute(string.format(
-      "INSERT INTO rooms(uid, name, flags, area, terrain, terraininfo, date_added) VALUES(%s, %s, %s, %s, %s, %s, %s);",
+      "INSERT INTO rooms(uid, name, flags, area, terrain, terraininfo, date_added, xcoord, ycoord, symbol, rcolor) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
         fixsql(room.uid),
         fixsql(room.name),
         fixsql(room.flags),
         fixsql(room.area),
         fixsql(room.terrain),
         fixsql(room.terraininfo),
-        fixsql(room.date_added)
+        fixsql(room.date_added),
+        fixsql(room.xcoord),
+        fixsql(room.ycoord),
+        fixsql(room.symbol),
+        fixsql(room.rcolor)
     )))
 
     if (room.notes) and (room.notes ~= "") then

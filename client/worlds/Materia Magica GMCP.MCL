@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Sunday, January 07, 2024, 12:09 AM -->
+<!-- Saved on Wednesday, January 17, 2024, 5:56 AM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
@@ -8,9 +8,9 @@
 <world
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-07 00:09:21"
+   date_saved="2024-01-17 05:56:37"
 
-   auto_log_file_name="D:\Onedrive\Desktop\mushclient\worlds\plugins\MM\Logs\%d.%b.%y_Log.html"
+   auto_log_file_name=""
    auto_say_override_prefix="-"
    auto_say_string="say "
    chat_name="Name-not-set"
@@ -22,8 +22,8 @@
    new_activity_sound="(No sound)"
    output_font_name="Lucida Console"
    password_base64="y"
-   password="cjNzc2whbg=="
-   player="Tamlin"
+   password=""
+   player=""
    script_editor="notepad"
    script_editor_argument="%file"
    script_language="Lua"
@@ -123,7 +123,7 @@
    use_default_output_font="y"
    use_mxp="2"
    warn_if_scripting_inactive="y"
-   wrap_column="176"
+   wrap_column="151"
    write_world_name_to_log="y"
    > <!-- end of general world attributes -->
   <log_file_postamble>&lt;/font&gt;&lt;/code&gt;&lt;/pre&gt;
@@ -151,7 +151,7 @@ FBF - 34654</notes>
 <triggers
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-07 00:09:21"
+   date_saved="2024-01-17 05:56:37"
   >
   <trigger
    enabled="y"
@@ -575,6 +575,21 @@ k uni</send>
   <send>k kali</send>
   </trigger>
   <trigger
+   keep_evaluating="y"
+   match="^You lower the ship's anchor\.$"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>ship maintain
+ship wright
+n
+shop sell gold-ingot all
+shop cargo buy
+s
+ship wright</send>
+  </trigger>
+  <trigger
    group="PG"
    keep_evaluating="y"
    match="^You take (.*) from the corpse of .*\.$"
@@ -644,7 +659,7 @@ EnableTrigger("findcrystal", false)</send>
 <aliases
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-07 00:09:21"
+   date_saved="2024-01-17 05:56:37"
   >
   <alias
    match="$ei (.*)"
@@ -890,117 +905,117 @@ DoAfter (7, "ship mark coordinateadd 1 938 854 NE of PP")
 DoAfter (8, "ship mark coordinateadd 1 938 812 N of PP")
 DoAfter (9, "ship mark coordinateadd 1 949 814 Huaka Skull &gt;&gt;&gt;")
 DoAfter (10, "ship mark coordinateadd 1 958 805 Huaka Skull &gt;&gt;&gt;")
-DoAfter (10, "ship mark coordinateadd 1 966 805 E of PP Passed Huaka Skull &gt;&gt;&gt;")
-DoAfter (11, "ship mark coordinateadd 1 966 797 NE of PP")
-DoAfter (12, "ship mark coordinateadd 1 952 783 IWF NW of PP")
-DoAfter (13, "ship mark coordinateadd 1 952 768 Alyce's Folley")
-DoAfter (14, "ship mark coordinateadd 1 942 763 Rounding Alyce's Folley")
-DoAfter (15, "ship mark coordinateadd 1 931 758 Rounding Alyce's Folley")
-DoAfter (16, "ship mark coordinateadd 1 931 745 Rounding Alyce's Folley")
-DoAfter (17, "ship mark coordinateadd 1 947 729 N of Alyce's Folley")
-DoAfter (18, "ship mark coordinateadd 1 944 714 N of PP")
-DoAfter (19, "ship mark coordinateadd 1 938 708 NW of PP")
-DoAfter (20, "ship mark coordinateadd 1 951 706 Past &gt;&gt;&gt;")
-DoAfter (21, "ship mark coordinateadd 1 961 673 NE by North of PP")
-DoAfter (22, "ship mark coordinateadd 1 972 669 Acid Ocean")
-DoAfter (23, "ship mark coordinateadd 2 972 669 Acid Ocean to Renn")
-DoAfter (24, "ship mark coordinateadd 2 961 673 SW by South of PP")
-DoAfter (25, "ship mark coordinateadd 2 951 706 Approaching &gt;&gt;&gt;")
-DoAfter (26, "ship mark coordinateadd 2 938 708 SE of PP")
-DoAfter (27, "ship mark coordinateadd 2 944 714 S of PP")
-DoAfter (28, "ship mark coordinateadd 2 947 729 N of Alyce's Folley")
-DoAfter (29, "ship mark coordinateadd 2 931 745 Rounding Alyce's Folley")
-DoAfter (30, "ship mark coordinateadd 2 931 758 Rounding Alyce's Folley")
-DoAfter (31, "ship mark coordinateadd 2 942 763 Rounding Alyce's Folley")
-DoAfter (32, "ship mark coordinateadd 2 952 768 Alyce's Folley")
-DoAfter (33, "ship mark coordinateadd 2 952 783 IWF SE of PP")
-DoAfter (34, "ship mark coordinateadd 2 966 797 SW of PP")
-DoAfter (34, "ship mark coordinateadd 1 966 805 E of PP Passed Huaka Skull &gt;&gt;&gt;")
-DoAfter (35, "ship mark coordinateadd 2 958 805 SW of PP Approaching Huaka Skull &gt;&gt;&gt;")
-DoAfter (36, "ship mark coordinateadd 2 949 814 Passed Huaka Skull &gt;&gt;&gt;")
-DoAfter (37, "ship mark coordinateadd 2 938 812 S of PP")
-DoAfter (38, "ship mark coordinateadd 2 938 854 SW of PP")
-DoAfter (39, "ship mark coordinateadd 2 932 860 W of PP")
-DoAfter (40, "ship mark coordinateadd 2 864 863 Inkwell Fog S of PP")
-DoAfter (41, "ship mark coordinateadd 2 864 886 SE of PP Vertical Stratification")
-DoAfter (42, "ship mark coordinateadd 2 871 890 SE of PP")
-DoAfter (43, "ship mark coordinateadd 2 881 897 SE of PP")
-DoAfter (44, "ship mark coordinateadd 2 897 911 SE of PP")
-DoAfter (45, "ship mark coordinateadd 2 916 921 Renn Docks")
-DoAfter (46, "ship mark coordinateadd 4 1120 1075 Red WP to Renn")
-DoAfter (47, "ship mark coordinateadd 4 1102 1058 .")
-DoAfter (48, "ship mark coordinateadd 4 1039 1038 .")
-DoAfter (49, "ship mark coordinateadd 4 1008 1038 Lake Eerie")
-DoAfter (50, "ship mark coordinateadd 4 981 1023 .")
-DoAfter (51, "ship mark coordinateadd 4 979 1012 .")
-DoAfter (52, "ship mark coordinateadd 4 972 977 .")
-DoAfter (53, "ship mark coordinateadd 4 936 929 .")
-DoAfter (54, "ship mark coordinateadd 4 916 921 Renn")
-DoAfter (55, "ship mark coordinateadd 3 916 921 Renn to Red WP")
-DoAfter (56, "ship mark coordinateadd 3 936 929 .")
-DoAfter (57, "ship mark coordinateadd 3 972 977 .")
-DoAfter (58, "ship mark coordinateadd 3 979 1012 .")
-DoAfter (59, "ship mark coordinateadd 3 981 1023 .")
-DoAfter (60, "ship mark coordinateadd 3 1008 1038 Lake Eerie")
-DoAfter (61, "ship mark coordinateadd 3 1039 1038 .")
-DoAfter (61, "ship mark coordinateadd 3 1102 1058 .")
-DoAfter (62, "ship mark coordinateadd 3 1120 1075 Red Whirlpool")
-DoAfter (63, "ship mark coordinateadd 11 1192 960 PC to Beltane WP")
-DoAfter (64, "ship mark coordinateadd 11 1200 968 .")
-DoAfter (65, "ship mark coordinateadd 11 1198 970 .")
-DoAfter (66, "ship mark coordinateadd 11 1210 981 .")
-DoAfter (67, "ship mark coordinateadd 11 1217 981 .")
-DoAfter (68, "ship mark coordinateadd 11 1234 997 .")
-DoAfter (69, "ship mark coordinateadd 11 1235 997 .")
-DoAfter (70, "ship mark coordinateadd 11 1242 1003 .")
-DoAfter (71, "ship mark coordinateadd 11 1241 1013 .")
-DoAfter (72, "ship mark coordinateadd 11 1244 1018 .")
-DoAfter (73, "ship mark coordinateadd 11 1244 1020 .")
-DoAfter (74, "ship mark coordinateadd 11 1245 1020 .")
-DoAfter (75, "ship mark coordinateadd 11 1245 1030 .")
-DoAfter (76, "ship mark coordinateadd 11 1237 1038 .")
-DoAfter (77, "ship mark coordinateadd 11 1234 1038 .")
-DoAfter (77, "ship mark coordinateadd 11 1222 1046 .")
-DoAfter (78, "ship mark coordinateadd 11 1211 1056 .")
-DoAfter (79, "ship mark coordinateadd 11 1185 1054 .")
-DoAfter (80, "ship mark coordinateadd 11 1156 1054 .")
-DoAfter (81, "ship mark coordinateadd 11 1121 1083 Beltane WP")
-DoAfter (82, "ship mark coordinateadd 9 1121 1083 Beltane WP to PC")
-DoAfter (83, "ship mark coordinateadd 9 1156 1054 .")
-DoAfter (84, "ship mark coordinateadd 9 1185 1054 .")
-DoAfter (85, "ship mark coordinateadd 9 1211 1056 .")
-DoAfter (85, "ship mark coordinateadd 9 1222 1046 .")
-DoAfter (86, "ship mark coordinateadd 9 1234 1038 .")
-DoAfter (87, "ship mark coordinateadd 9 1237 1038 .")
-DoAfter (88, "ship mark coordinateadd 9 1245 1030 .")
-DoAfter (89, "ship mark coordinateadd 9 1245 1020 .")
-DoAfter (90, "ship mark coordinateadd 9 1244 1020 .")
-DoAfter (91, "ship mark coordinateadd 9 1244 1018 .")
-DoAfter (92, "ship mark coordinateadd 9 1241 1013 .")
-DoAfter (93, "ship mark coordinateadd 9 1242 1003 .")
-DoAfter (94, "ship mark coordinateadd 9 1235 997 .")
-DoAfter (95, "ship mark coordinateadd 9 1234 997 .")
-DoAfter (96, "ship mark coordinateadd 9 1217 981 .")
-DoAfter (97, "ship mark coordinateadd 9 1210 981 .")
-DoAfter (98, "ship mark coordinateadd 9 1198 970 .")
-DoAfter (99, "ship mark coordinateadd 9 1200 968 .")
-DoAfter (100, "ship mark coordinateadd 9 1192 960 PC from Beltane WP")
-DoAfter (101, "ship mark coordinateadd 19 972 669 Acid Ocean to Treant")
-DoAfter (102, "ship mark coordinateadd 19 1182 621 NE by E of PP")
-DoAfter (103, "ship mark coordinateadd 19 1230 557 Bath")
-DoAfter (104, "ship mark coordinateadd 19 1290 510 Bath Bay")
-DoAfter (105, "ship mark coordinateadd 19 1314 520 SE of PP")
-DoAfter (106, "ship mark coordinateadd 19 1341 520 E of PP")
-DoAfter (107, "ship mark coordinateadd 19 1382 501 NE of PP")
-DoAfter (108, "ship mark coordinateadd 19 1431 483 Treants Truce")
-DoAfter (109, "ship mark coordinateadd 20 1431 483 Treants to Acid Ocean")
-DoAfter (110, "ship mark coordinateadd 20 1382 501 SW of PP")
-DoAfter (111, "ship mark coordinateadd 20 1341 520 W of PP")
-DoAfter (112, "ship mark coordinateadd 20 1314 520 NW of PP")
-DoAfter (113, "ship mark coordinateadd 20 1290 510 Bath Bay")
-DoAfter (114, "ship mark coordinateadd 20 1230 557 Bath")
-DoAfter (115, "ship mark coordinateadd 20 1182 621 SW by W of PP")
-DoAfter (116, "ship mark coordinateadd 20 972 669 Acid Ocean")</send>
+DoAfter (11, "ship mark coordinateadd 1 966 805 E of PP Passed Huaka Skull &gt;&gt;&gt;")
+DoAfter (12, "ship mark coordinateadd 1 966 797 NE of PP")
+DoAfter (13, "ship mark coordinateadd 1 952 783 IWF NW of PP")
+DoAfter (14, "ship mark coordinateadd 1 952 768 Alyce's Folley")
+DoAfter (15, "ship mark coordinateadd 1 942 763 Rounding Alyce's Folley")
+DoAfter (16, "ship mark coordinateadd 1 931 758 Rounding Alyce's Folley")
+DoAfter (17, "ship mark coordinateadd 1 931 745 Rounding Alyce's Folley")
+DoAfter (18, "ship mark coordinateadd 1 947 729 N of Alyce's Folley")
+DoAfter (19, "ship mark coordinateadd 1 944 714 N of PP")
+DoAfter (20, "ship mark coordinateadd 1 938 708 NW of PP")
+DoAfter (21, "ship mark coordinateadd 1 951 706 Past &gt;&gt;&gt;")
+DoAfter (22, "ship mark coordinateadd 1 961 673 NE by North of PP")
+DoAfter (23, "ship mark coordinateadd 1 972 669 Acid Ocean")
+DoAfter (24, "ship mark coordinateadd 2 972 669 Acid Ocean to Renn")
+DoAfter (25, "ship mark coordinateadd 2 961 673 SW by South of PP")
+DoAfter (26, "ship mark coordinateadd 2 952 706 Approaching &gt;&gt;&gt;")
+DoAfter (27, "ship mark coordinateadd 2 938 708 SE of PP")
+DoAfter (28, "ship mark coordinateadd 2 944 714 S of PP")
+DoAfter (29, "ship mark coordinateadd 2 947 729 N of Alyce's Folley")
+DoAfter (30, "ship mark coordinateadd 2 931 745 Rounding Alyce's Folley")
+DoAfter (31, "ship mark coordinateadd 2 931 758 Rounding Alyce's Folley")
+DoAfter (32, "ship mark coordinateadd 2 942 763 Rounding Alyce's Folley")
+DoAfter (33, "ship mark coordinateadd 2 952 768 Alyce's Folley")
+DoAfter (34, "ship mark coordinateadd 2 952 783 IWF SE of PP")
+DoAfter (35, "ship mark coordinateadd 2 966 797 SW of PP")
+DoAfter (36, "ship mark coordinateadd 2 965 804 E of PP Passed Huaka Skull &gt;&gt;&gt;")
+DoAfter (37, "ship mark coordinateadd 2 953 816 Passed Huaka Skull &gt;&gt;&gt;")
+DoAfter (38, "ship mark coordinateadd 2 947 810 Passed Huaka Skull &gt;&gt;&gt;")
+DoAfter (39, "ship mark coordinateadd 2 938 814 S of PP")
+DoAfter (40, "ship mark coordinateadd 2 938 854 SW of PP")
+DoAfter (41, "ship mark coordinateadd 2 932 860 W of PP")
+DoAfter (42, "ship mark coordinateadd 2 864 863 Inkwell Fog S of PP")
+DoAfter (43, "ship mark coordinateadd 2 864 886 SE of PP Vertical Stratification")
+DoAfter (44, "ship mark coordinateadd 2 871 890 SE of PP")
+DoAfter (45, "ship mark coordinateadd 2 881 897 SE of PP")
+DoAfter (46, "ship mark coordinateadd 2 897 911 SE of PP")
+DoAfter (47, "ship mark coordinateadd 2 916 921 Renn Docks")
+DoAfter (48, "ship mark coordinateadd 4 1120 1075 Red WP to Renn")
+DoAfter (49, "ship mark coordinateadd 4 1102 1058 .")
+DoAfter (50, "ship mark coordinateadd 4 1039 1038 .")
+DoAfter (51, "ship mark coordinateadd 4 1008 1038 Lake Eerie")
+DoAfter (52, "ship mark coordinateadd 4 981 1023 .")
+DoAfter (53, "ship mark coordinateadd 4 979 1012 .")
+DoAfter (54, "ship mark coordinateadd 4 972 977 .")
+DoAfter (55, "ship mark coordinateadd 4 936 929 .")
+DoAfter (56, "ship mark coordinateadd 4 916 921 Renn")
+DoAfter (57, "ship mark coordinateadd 3 916 921 Renn to Red WP")
+DoAfter (58, "ship mark coordinateadd 3 936 929 .")
+DoAfter (59, "ship mark coordinateadd 3 972 977 .")
+DoAfter (60, "ship mark coordinateadd 3 979 1012 .")
+DoAfter (61, "ship mark coordinateadd 3 981 1023 .")
+DoAfter (62, "ship mark coordinateadd 3 1008 1038 Lake Eerie")
+DoAfter (63, "ship mark coordinateadd 3 1039 1038 .")
+DoAfter (64, "ship mark coordinateadd 3 1102 1058 .")
+DoAfter (65, "ship mark coordinateadd 3 1120 1075 Red Whirlpool")
+DoAfter (66, "ship mark coordinateadd 11 1192 960 PC to Beltane WP")
+DoAfter (67, "ship mark coordinateadd 11 1200 968 .")
+DoAfter (68, "ship mark coordinateadd 11 1198 970 .")
+DoAfter (69, "ship mark coordinateadd 11 1210 981 .")
+DoAfter (70, "ship mark coordinateadd 11 1217 981 .")
+DoAfter (71, "ship mark coordinateadd 11 1234 997 .")
+DoAfter (72, "ship mark coordinateadd 11 1235 997 .")
+DoAfter (73, "ship mark coordinateadd 11 1242 1003 .")
+DoAfter (74, "ship mark coordinateadd 11 1241 1013 .")
+DoAfter (75, "ship mark coordinateadd 11 1244 1018 .")
+DoAfter (76, "ship mark coordinateadd 11 1244 1020 .")
+DoAfter (77, "ship mark coordinateadd 11 1245 1020 .")
+DoAfter (78, "ship mark coordinateadd 11 1245 1030 .")
+DoAfter (79, "ship mark coordinateadd 11 1237 1038 .")
+DoAfter (80, "ship mark coordinateadd 11 1234 1038 .")
+DoAfter (81, "ship mark coordinateadd 11 1222 1046 .")
+DoAfter (82, "ship mark coordinateadd 11 1211 1056 .")
+DoAfter (83, "ship mark coordinateadd 11 1185 1054 .")
+DoAfter (84, "ship mark coordinateadd 11 1156 1054 .")
+DoAfter (85, "ship mark coordinateadd 11 1121 1083 Beltane WP")
+DoAfter (86, "ship mark coordinateadd 9 1121 1083 Beltane WP to PC")
+DoAfter (87, "ship mark coordinateadd 9 1156 1054 .")
+DoAfter (88, "ship mark coordinateadd 9 1185 1054 .")
+DoAfter (89, "ship mark coordinateadd 9 1211 1056 .")
+DoAfter (90, "ship mark coordinateadd 9 1222 1046 .")
+DoAfter (91, "ship mark coordinateadd 9 1234 1038 .")
+DoAfter (92, "ship mark coordinateadd 9 1237 1038 .")
+DoAfter (93, "ship mark coordinateadd 9 1245 1030 .")
+DoAfter (94, "ship mark coordinateadd 9 1245 1020 .")
+DoAfter (95, "ship mark coordinateadd 9 1244 1020 .")
+DoAfter (96, "ship mark coordinateadd 9 1244 1018 .")
+DoAfter (97, "ship mark coordinateadd 9 1241 1013 .")
+DoAfter (98, "ship mark coordinateadd 9 1242 1003 .")
+DoAfter (99, "ship mark coordinateadd 9 1235 997 .")
+DoAfter (100, "ship mark coordinateadd 9 1234 997 .")
+DoAfter (101, "ship mark coordinateadd 9 1217 981 .")
+DoAfter (102, "ship mark coordinateadd 9 1210 981 .")
+DoAfter (103, "ship mark coordinateadd 9 1198 970 .")
+DoAfter (104, "ship mark coordinateadd 9 1200 968 .")
+DoAfter (105, "ship mark coordinateadd 9 1192 960 PC from Beltane WP")
+DoAfter (106, "ship mark coordinateadd 19 972 669 Acid Ocean to Treant")
+DoAfter (107, "ship mark coordinateadd 19 1182 621 NE by E of PP")
+DoAfter (108, "ship mark coordinateadd 19 1230 557 Bath")
+DoAfter (109, "ship mark coordinateadd 19 1290 510 Bath Bay")
+DoAfter (110, "ship mark coordinateadd 19 1314 520 SE of PP")
+DoAfter (111, "ship mark coordinateadd 19 1341 520 E of PP")
+DoAfter (112, "ship mark coordinateadd 19 1382 501 NE of PP")
+DoAfter (113, "ship mark coordinateadd 19 1431 483 Treants Truce")
+DoAfter (114, "ship mark coordinateadd 20 1431 483 Treants to Acid Ocean")
+DoAfter (115, "ship mark coordinateadd 20 1382 501 SW of PP")
+DoAfter (116, "ship mark coordinateadd 20 1341 520 W of PP")
+DoAfter (117, "ship mark coordinateadd 20 1314 520 NW of PP")
+DoAfter (118, "ship mark coordinateadd 20 1290 510 Bath Bay")
+DoAfter (119, "ship mark coordinateadd 20 1230 557 Bath")
+DoAfter (120, "ship mark coordinateadd 20 1182 621 SW by W of PP")
+DoAfter (121, "ship mark coordinateadd 20 972 669 Acid Ocean")</send>
   </alias>
   <alias
    match="slow"
@@ -1031,7 +1046,7 @@ sayto %1 tourmaline duke</send>
 <timers
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-07 00:09:21"
+   date_saved="2024-01-17 05:56:37"
   >
   <timer name="resetlogs" enabled="y" second="0.00" offset_second="0.00"    send_to="10"
 at_time="y" group="logging" >
@@ -1051,7 +1066,7 @@ group="forthrak" >
 <macros
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-07 00:09:21"
+   date_saved="2024-01-17 05:56:37"
   >
 
   <macro name="up" type="send_now" >
@@ -1145,14 +1160,14 @@ group="forthrak" >
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-07 00:09:21"
+   date_saved="2024-01-17 05:56:37"
   >
   <variable name="allowed"></variable>
   <variable name="dropitems">a sickle shaped fellblade</variable>
-  <variable name="mxp_hp">4772</variable>
-  <variable name="mxp_sp">3775</variable>
-  <variable name="mxp_st">4131</variable>
-  <variable name="tank">Vanea</variable>
+  <variable name="mxp_hp">4641</variable>
+  <variable name="mxp_sp">3685</variable>
+  <variable name="mxp_st">1194</variable>
+  <variable name="tank">a soldier in a blue and grey uniform</variable>
 </variables>
 
 <!-- colours -->
@@ -1160,7 +1175,7 @@ group="forthrak" >
 <colours
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-07 00:09:21"
+   date_saved="2024-01-17 05:56:37"
   >
 
 <ansi>
@@ -1217,7 +1232,7 @@ group="forthrak" >
 <keypad
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-07 00:09:21"
+   date_saved="2024-01-17 05:56:37"
   >
 
   <key name="0" >
@@ -1341,7 +1356,7 @@ group="forthrak" >
 <printing
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-07 00:09:21"
+   date_saved="2024-01-17 05:56:37"
   >
 
 <ansi>
@@ -1379,7 +1394,6 @@ group="forthrak" >
 <include name="MM\ship_lookout.xml" plugin="y" />
 <include name="MM\affects_by_name.xml" plugin="y" />
 <include name="MM\kills_tnl.xml" plugin="y" />
-<include name="MM\meh_pirates.xml" plugin="y" />
 <include name="MM\meh_prompt.xml" plugin="y" />
 <include name="MM\meh_timers.xml" plugin="y" />
 <include name="MM\missing_affects.xml" plugin="y" />
@@ -1393,15 +1407,16 @@ group="forthrak" >
 <include name="Config_Option_Changer.xml" plugin="y" />
 <include name="MM\capture2dworld.xml" plugin="y" />
 <include name="MM\plugins_updater_v3.xml" plugin="y" />
-<include name="MM\IMap_GMCP.xml" plugin="y" />
 <include name="MM\msp_lua.xml" plugin="y" />
 <include name="MM\vitals_bars_v2.xml" plugin="y" />
 <include name="MM\opponent_hp_sub.xml" plugin="y" />
 <include name="MM\tick.xml" plugin="y" />
 <include name="MM\dpercent.xml" plugin="y" />
-<include name="MM\CrystalLocator.xml" plugin="y" />
 <include name="MM\events_mini.xml" plugin="y" />
-<include name="MM\capture2mini.xml" plugin="y" />
 <include name="MM\latest_daily.xml" plugin="y" />
 <include name="MM\MM_GMCP_Mapper_GMCP.xml" plugin="y" />
+<include name="MM\meh_pirates.xml" plugin="y" />
+<include name="MM\capture2mini.xml" plugin="y" />
+<include name="MM\CrystalLocator.xml" plugin="y" />
+<include name="MM\IMap_GMCP.xml" plugin="y" />
 </muclient>

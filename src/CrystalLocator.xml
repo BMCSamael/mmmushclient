@@ -41,6 +41,34 @@ CrystalLocator - Automatically finds the co-ords of a crystal, and updates IMap 
   >
   <send>EnableTrigger("findcrystal", true)</send>
   </trigger>
+
+  <trigger
+   group="crystallocator"
+   lines_to_match="23"
+   keep_evaluating="y"
+   match="The map includes the coordinates of the displayed area: (.?)\, (.?)\."
+   multi_line="y"
+   name="findsugcrystal"
+   regexp="y"
+   send_to="12"
+   sequence="100"
+  >
+  <send>
+    sugcrystalx = %1
+    sugcrystaly = %2
+    -- we check if iMap is installed + started
+    local result, imap_started = CallPlugin("adc3a873d4e47348da7cb426", "IsStarted")
+    if (result == 0) then -- it is installed
+      if (imap_started == false) then
+        -- it isn't started, so we start it
+        Execute("imap start")
+      end
+      Execute("imap dest ".. sugcrystalx .. "," .. sugcrystaly)
+	  Execute("imap desticon custom")
+     end</send>
+  </trigger>
+
+
   <trigger
    group="crystallocator"
    lines_to_match="23"
@@ -95,7 +123,8 @@ EnableTrigger("findcrystal", false)</send>
 <send>imap dest off
 </send>
 </trigger>
-  <trigger
+  
+<trigger
    enabled="y"
    group="crystallocator"
    keep_evaluating="y"
@@ -107,6 +136,17 @@ EnableTrigger("findcrystal", false)</send>
 </send>
 </trigger>
 
+<trigger
+   enabled="y"
+   group="crystallocator"
+   keep_evaluating="y"
+   match="You take a genuinely novel thought."
+   send_to="10"
+   sequence="100"
+  >
+<send>imap dest off
+</send>
+</trigger>
 
 </triggers>
 

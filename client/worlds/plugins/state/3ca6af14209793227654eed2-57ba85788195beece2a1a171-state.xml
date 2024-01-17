@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Sunday, January 07, 2024, 12:09 AM -->
+<!-- Saved on Wednesday, January 17, 2024, 5:56 AM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
@@ -14,17 +14,17 @@
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-07 00:09:21"
+   date_saved="2024-01-17 05:56:37"
   >
   <variable name="char_name">[a-zA-Z0-9 \-\,\.\']+</variable>
   <variable name="resource_wanted">resource_wanted = {
   ["medium cannonball"] = 0,
   ["heavy ballista bolt"] = 90,
-  ["black powder"] = 800,
-  ["sulfur mix"] = 46,
-  ["light ballista bolt"] = 160,
   ["basic cannonball"] = 500,
+  ["sulfur mix"] = 46,
   ["heavy cannonball"] = 0,
+  ["light ballista bolt"] = 160,
+  ["black powder"] = 800,
   }</variable>
   <variable name="services">services = {
   Decara = {
@@ -45,10 +45,10 @@
     },
   }</variable>
   <variable name="sh_locations">sh_locations = {
-  ["The Panty Dropper"] = "Alyrian Underworld: 801, 774",
+  ["The Panty Dropper"] = "Alyrian Underworld: 1524, 508",
   ["The Fishmobile"] = "Alyria: 482, 1226",
   ["Chromatuss bringer of DEATH"] = "Sigil Underground: 1502, 759",
-  ["Tamlins Dread"] = "Sigil Underground: 1429, 473",
+  ["Tamlins Dread"] = "Alyria: 1202, 949",
   ["Super Stinking Sporefolk"] = "Sigil Underground: 914, 923",
   ["Decara Skiff"] = "Alyrian Underworld: 1598, 839",
   ["Lunar Leviathan"] = "Sigil Underground: 1430, 473",
