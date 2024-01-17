@@ -905,9 +905,9 @@ function get_file(url, func_success, func_fail, tparams)
       SetStatus("Downloading file: " .. url .. "...")
 
       if (async_ok) then
-        repeat
-          wait.time(.5)
-        until (thread:alive())
+--        repeat
+--          wait.time(.5)
+--        until (thread:alive())
 
         res, file, status, headers, full_status = thread:join()
 
