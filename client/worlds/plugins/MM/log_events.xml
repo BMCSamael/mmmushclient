@@ -226,7 +226,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/log_events.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/log_events.xml",
   }
   return (table.concat(t, ";"))
 end

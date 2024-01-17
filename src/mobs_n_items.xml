@@ -375,7 +375,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/mobs_n_items.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/mobs_n_items.xml",
   }
   return (table.concat(t, ";"))
 end

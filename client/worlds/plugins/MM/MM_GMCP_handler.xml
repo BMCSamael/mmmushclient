@@ -398,7 +398,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/MM_GMCP_handler.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/MM_GMCP_handler.xml",
   }
   return (table.concat(t, ";"))
 end
@@ -406,8 +406,8 @@ end
 
 function plugin_update_aux_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/gmcphelper.lua,MUSH/lua",
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/res/sandbox.dune.net.MCL,MUSH/worlds",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/gmcphelper.lua,MUSH/lua",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/res/sandbox.dune.net.MCL,MUSH/worlds",
   }
   return (table.concat(t, ";"))
 end

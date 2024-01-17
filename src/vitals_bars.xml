@@ -244,7 +244,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/vitals_bars.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/vitals_bars.xml",
   }
   return (table.concat(t, ";"))
 end

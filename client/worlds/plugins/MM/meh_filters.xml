@@ -1168,7 +1168,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/meh_filters.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/meh_filters.xml",
   }
   return (table.concat(t, ";"))
 end

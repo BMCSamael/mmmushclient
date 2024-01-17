@@ -359,7 +359,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/terrain_o_vision.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/terrain_o_vision.xml",
   }
   return (table.concat(t, ";"))
 end

@@ -291,7 +291,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/tick.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/tick.xml",
   }
   return (table.concat(t, ";"))
 end
@@ -299,7 +299,7 @@ end
 
 function plugin_update_aux_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/res/tick.mp3,MUSH/sounds",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/res/tick.mp3,MUSH/sounds",
   }
   return (table.concat(t, ";"))
 end

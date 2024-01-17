@@ -115,7 +115,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/opponent_hp_sub.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/opponent_hp_sub.xml",
   }
   return (table.concat(t, ";"))
 end

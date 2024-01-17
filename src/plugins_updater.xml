@@ -193,7 +193,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/plugins_updater.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/plugins_updater.xml",
   }
   return (table.concat(t, ";"))
 end
@@ -303,7 +303,7 @@ end
 -- update stuff
 -----------------
 
---mydbpath = "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/"
+--mydbpath = "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/"
 
 function update_plugin(id)
   if (IsPluginInstalled(id)) then

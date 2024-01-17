@@ -118,7 +118,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/tutorial.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/tutorial.xml",
   }
   return (table.concat(t, ";"))
 end
@@ -126,8 +126,8 @@ end
 
 function plugin_update_aux_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/res/mm_boil.mp3,MUSH/sounds/msp",
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/res/mm_stream.mp3,MUSH/sounds/msp",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/res/mm_boil.mp3,MUSH/sounds/msp",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/res/mm_stream.mp3,MUSH/sounds/msp",
   }
   return (table.concat(t, ";"))
 end

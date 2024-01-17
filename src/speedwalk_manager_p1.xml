@@ -210,7 +210,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/speedwalk_manager_p1.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/speedwalk_manager_p1.xml",
   }
   return (table.concat(t, ";"))
 end
