@@ -485,7 +485,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/affects_by_name.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/affects_by_name.xml",
   }
   return (table.concat(t, ";"))
 end

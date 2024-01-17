@@ -335,7 +335,7 @@ end
 
 function plugin_update_url()
   local t = {
-    "https://raw.githubusercontent.com/MateriaMagicaLLC/mm-mushclient-scripts/master/src/latest_daily.xml",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/latest_daily.xml",
   }
   return (table.concat(t, ";"))
 end
@@ -597,7 +597,7 @@ function run_dailies(where)
      if (where == "New Rigel") then
        Note ("*Daily Run:  Xaventry")
           DoAfterSpecial(1, "mapper goto 2809518", 10)
-          DoAfterSpecial(5, "run xaventry", 0)
+          DoAfterSpecial(6, "run xaventry", 0)
  	  DoAfterSpecial(40, "mapper goto 73100", 10)
      end
      if (where == "Xaventry") then
@@ -615,8 +615,11 @@ function run_dailies(where)
           DoAfterSpecial(6, "down", 0)
           DoAfterSpecial(7, "give sigil ganuk", 0)
  	  DoAfterSpecial(10, "mapper goto 27890", 10)
-          disable_auto(null,null,null)
      end
+	 if (where == "Sigil") then
+	   Note ("*Daily Run: Complete*")
+	   disable_auto(null,null,null)
+	 end
    end
  end
 end

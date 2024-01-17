@@ -9,14 +9,14 @@
 
 <plugin
    name="IMap_GMCP"
-   author="Ruthgul"
+   author="Tamlin/Ruthgul"
    id="adc3a873d4e47348da7cb426"
    language="Lua"
    purpose="Shows your position in the vmap, to help you travel."
    save_state="y"
    date_written="2012-02-04 11:36:44"
    date_modified="2020-12-20 21:38:56"
-   version="1.0"
+   version="2.6"
    >
 
 <description trim="y">
