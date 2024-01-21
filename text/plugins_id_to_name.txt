@@ -54,8 +54,6 @@ a11c9d4e484b5fc428a49941 meh_timers.xml
 54846c23d8b15594e7eb4b8a output_functions.xml
 4327c10cd9ae383bef04a7fc play_sounds.xml
 cab11fa55cae7d04b2fe8b70 players_tagger.xml
-4b03d42b86ed2b802247c058 plugins_updater.xml
-fbd5b7cc1ef6acf827a3f4a1 plugins_updater_v2.xml
 ad02c292bb640b7aee9e4df0 quests.xml
 e377771aeee520a633f3dd4d quests_abridged.xml
 66f8ef96f2166bb586529087 read_captures.xml
