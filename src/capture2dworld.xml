@@ -1665,8 +1665,8 @@ function add_to_captures_world(who, type, recolor)
     end
 	
 	-- remove heard you say
-	if (string.find(txt, "clan members heard you say,")) then
-	  txt = string.gsub(txt, "clan members heard you say,", "You:")
+	if (string.find(txt, "heard you say,")) then
+	  txt = string.gsub(txt, " (.+) members heard you say,", "[%1] You:")
 	end
 
     -- we only apply word filters if it isn't the guide channel
