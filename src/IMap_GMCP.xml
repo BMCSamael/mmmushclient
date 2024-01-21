@@ -61,10 +61,10 @@ Syntax:
 * imap showlocation <place_name> [<text>]  - shows non-persistent text (or an "x") marking a city, dungeon, etc. - it requires a full city name, the text will vanish on movement
 
 
-Author: Ruthgul
+Author: Tamlin/Ruthgul
 
 Latest version:
-http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
+http://github.com/BMCSamael/mmmushclient/
 
 ]]>
 
