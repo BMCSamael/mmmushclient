@@ -88,8 +88,8 @@ id = efe96b7604c453d0a92110e0  hash = F3EABE074E776EFBE63D232B70E6660E
 id = 4f76c77c73affc51fa8fc841  hash = 44BFA393886EBB109479D2B5D738AB3A
 id = cb6469228f9f7e26129c1ebc  hash = 8DCA3FB6F1997BC1B0113B820A084CFF  aux_files = {   [1] = {     name = "world_miniwindow.lua",     dest = "MUSH/lua",     },   }
 id = 616b8084d0f246d12d54588b  hash = 943E69A84572C71D51E2BE2FB15B2B88  aux_files = {   [1] = {     name = "generic_miniwindow.lua",     dest = "MUSH/lua",     },   }
-name = alyria.png  hash = 5023E43A6CEAC6E4E60BD3B2135EC4A5
-name = alyria_spk_purple.png  hash = 4B4EE3F0DDD4D2FE85751B4E91647E64
+name = alyria.png  hash = 064BDDBD319F730562F29B259B1EB9CD
+name = alyria_spk_purple.png  hash = 6E5B665F474481C8C4FD4227978D72BF
 name = alyria_spk_red.png  hash = 5E8C1597EDA4D371152CAE90BA4B7247
 name = arrow.png  hash = 0F7BCC9C7B4CAFABE452F0E479FC02BD
 name = buttons.png  hash = BEC677A70A28EF45962A5A7D5D2084D1
@@ -103,7 +103,7 @@ name = lasler.png  hash = B0D8355FA695B460E32AB6BBE0F1C4EF
 name = ship.png  hash = 9D8F5C21E4ACEDC7EC1E324998504988
 name = social.png  hash = EC00E093C0ED89FF2E373CB8CCC2B053
 name = sugx.png  hash = 61213BB41BC2760BDD925A991F4D1048
-name = sugxpanded.png  hash = 1808DDF1743CB317B4E050172C6A07C7
-name = ug.png  hash = 3E2F8CC69040E259F007E2C74B850406
+name = sugxpanded.png  hash = 38AAFFC35D8041B738FBC738201EB8CD
+name = ug.png  hash = 9344BF9334EF37013D9E6A35F90175B4
 name = ug2x.png  hash = C7C6E62CD1AA71B5E876018B70157130
 name = verity.png  hash = 0346D57425CAA91EE6104C1CBE8593B9
