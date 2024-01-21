@@ -422,7 +422,7 @@ end
 
 similar_affects = {
   [1] = { "armor", "aegis", "guise of nature" },
-  [2] = { "detect invisibility", "radiance invocation" },
+  [2] = { "detect invisibility" },
   [3] = { "enhanced strength", "minerals invocation", "unnatural strength" },
   [4] = { "fireshield", "frostborne", "magma invocation" },
   [5] = { "haste", "lightning invocation", "whirlwind" },

@@ -199,7 +199,6 @@ end
   <send>save_daily("%&lt;place&gt;")
 update_stats("%&lt;place&gt;", "%&lt;item&gt;")
 set_unique_countdown(24, 0, 0, "%&lt;place&gt; daily reward", "latest_daily plugin")
-  run_dailies("%&lt;place&gt;")
 </send>
   </trigger>
 
@@ -245,7 +244,7 @@ set_unique_countdown(24, 0, 0, "%&lt;place&gt; daily reward", "latest_daily plug
    enabled="y"
    group="dailies"
    keep_evaluating="y"
-   match="^'You have visited all . Tourism Board representatives today\, for a .+-day streak\.$"
+   match="^\'You have visited all . Tourism Board representatives today\, for a .+-day streak\.$"
    regexp="y"
    script="disable_auto"
    sequence="100"
@@ -253,7 +252,20 @@ set_unique_countdown(24, 0, 0, "%&lt;place&gt; daily reward", "latest_daily plug
    <send>
    </send>
   </trigger>
-
+  
+    <trigger
+   enabled="y"
+   group="dailies"
+   keep_evaluating="y"
+   match="^\'When you visit all . Tourism Board representatives on the same day, you\'ll get a streak\!\' a representative from the (?P&lt;place&gt;.+) Tourism Board exclaims to you\. \'Only .+ to go\!'$"
+   regexp="y"
+   send_to="12"
+   sequence="100"
+  >
+   <send>run_dailies("%&lt;place&gt;")
+   </send>
+  </trigger>
+ 
 </triggers>
 
 
@@ -591,9 +603,7 @@ function run_dailies(where)
           DoAfterSpecial(6, "run newrigel", 0)
  	  DoAfterSpecial(30, "mapper goto 62036", 10)
    else
-     if (daily_auto=="auto") then 
        Execute("recall")
-     end
      if (where == "New Rigel") then
        Note ("*Daily Run:  Xaventry")
           DoAfterSpecial(1, "mapper goto 2809518", 10)
