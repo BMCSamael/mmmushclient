@@ -114,7 +114,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    group="affects"
    keep_evaluating="y"
    expand_variables="y"
-   match="^A bright light bursts from your Raymatus\' battle lantern\, bathing you in pure light\.$"
+   match="^A bright light bursts from your (?<spell>.+), bathing (?<who>.+) in pure light\.$"
    omit_from_output="y"
    regexp="y"
    sequence="100"
@@ -788,6 +788,9 @@ t_important_stuff = {
   ["lightning invocation off"] = {
     ["self"] = true,
   },
+  ["mysterious forces on"] = {
+    ["self"] = true,
+  },
   ["memory drain on"] = {
     ["self"] = true,
   },
@@ -908,10 +911,9 @@ end
 ---------------------
 
 function on_mysterious(name, line, wildcards)
-  local who = "you"
-  local spell = "mysterious forces"
-
-  show_other_stuff(who, spell, "on")
+  local who = wildcards.who or "you"
+  
+  categorize_and_show_affect(line, who, "mysterious forces", "on")
 end
 
 function on_mysterious_resist(name, line, wildcards)
