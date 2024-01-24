@@ -9,7 +9,7 @@
 
 <plugin
    name="tick"
-   author="Ruthgul"
+   author="Tamlin/Ruthgul"
    id="783cca60ac0d776ca859de57"
    language="Lua"
    purpose="countdown to next tick"
@@ -54,7 +54,7 @@ Syntax:
 * tick mute  - toggles SAPI announcements for ticks off / on
 
 
-Author: Ruthgul
+Author: Tamlin/Ruthgul
 
 Latest version:
 http://github.com/MateriaMagicaLLC/mm-mushclient-scripts

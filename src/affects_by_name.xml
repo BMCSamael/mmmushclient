@@ -590,17 +590,23 @@ t_buff_stuff = {
   ["blessing of ithrilis on"] = {
     ["self"] = true,
   },
-    ["mental clarity on"] = {
+  ["mental clarity on"] = {
     ["self"] = true,
   },
-    ["fire invocation off"] = {
+  ["fire invocation off"] = {
     ["self"] = true,
     ["others"] = true,
   },
   ["blessing of ithrilis off"] = {
     ["self"] = true,
   },
-    ["mental clarity off"] = {
+  ["mental clarity off"] = {
+    ["self"] = true,
+  },
+  ["frostborne on"] = {
+    ["self"] = true,
+  },
+  ["frostborne off"] = {
     ["self"] = true,
   },
 }
