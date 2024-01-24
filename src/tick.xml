@@ -34,6 +34,7 @@ It keeps track of game ticks, and lets you know when they're about to happen.
 
 - If MushReader is detected (and play_sounds is present), it will play a short sound 3 seconds before a tick.
 
+Game Setting ECHO-TICKS must be on -- echo-ticks - Echo a 'Tick' to your client every 15 seconds. Acts as a 'heartbeat' if your ISP doesn't obey keep-alive connections
 
 Syntax:
 
@@ -156,11 +157,25 @@ end
 <triggers>
 
   <trigger
+   enabled="n"
+   name="oldsync"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(A sudden\, strong gust of wind knocks you to the ground\!|The current pulls you along to the (.+)\.\.\.|A sudden torrent of lava sweeps you the (.+)\.|(You are|(@!char_name) is) buffeted to the (.+) by crosswinds\!|You shiver and suffer from the poison burning within\.|(@!char_name) shivers and suffers\.)$"
+   regexp="y"
+   send_to="12"
+   sequence="100"
+  >
+  <send>tick_happened("%0")
+</send>
+  </trigger>
+  
+    <trigger
    enabled="y"
    name="sync"
    keep_evaluating="y"
    expand_variables="y"
-   match="^(A sudden\, strong gust of wind knocks you to the ground\!|The current pulls you along to the (.+)\.\.\.|A sudden torrent of lava sweeps you the (.+)\.|(You are|(@!char_name) is) buffeted to the (.+) by crosswinds\!|You shiver and suffer from the poison burning within\.|(@!char_name) shivers and suffers\.)$"
+   match="^(Tick)$"
    regexp="y"
    send_to="12"
    sequence="100"

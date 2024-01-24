@@ -107,6 +107,34 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
 
 <!-- special cases -->
 
+<!-- Raymatus -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^A bright light bursts from your Raymatus\' battle lantern\, bathing you in pure light\.$"
+   omit_from_output="y"
+   regexp="y"
+   sequence="100"
+   script="on_mysterious"
+  >
+  </trigger>
+  
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?<who>.+) seems to resist (?<spell>.+)\'s magic\!$"
+   omit_from_output="y"
+   regexp="y"
+   sequence="100"
+   script="on_mysterious_resist"
+  >
+  </trigger>
+
 <!-- siphon, timepieces ... are they still needed? -->
 
   <trigger
@@ -878,6 +906,20 @@ end
 ---------------------
 -- special captures
 ---------------------
+
+function on_mysterious(name, line, wildcards)
+  local who = "you"
+  local spell = "mysterious forces"
+
+  show_other_stuff(who, spell, "on")
+end
+
+function on_mysterious_resist(name, line, wildcards)
+  local who = wildcards.who or "you"
+  local spell = wildcards.spell
+
+  show_other_stuff(who, spell.." resisted", line)
+end
 
 function on_siphon_or_tpdispel(name, line, wildcards)
   local who = wildcards.who or "you"
