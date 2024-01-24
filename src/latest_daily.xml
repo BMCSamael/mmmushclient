@@ -292,6 +292,8 @@ function OnPluginInstall()
 
     EnableTrigger("first_prompt", true)
     name = nil
+    EnableTriggerGroup("dailies", false)
+    SetVariable("dailyauto","none")
 
     -- give the plugins time to initialize
     wait.time(3)
@@ -303,6 +305,8 @@ end
 function OnPluginConnect()
   EnableTrigger("first_prompt", true)
   name = nil
+  EnableTriggerGroup("dailies", false)
+  SetVariable("dailyauto","none")
 end
 
 
