@@ -107,20 +107,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
 
 <!-- special cases -->
 
-<!-- Raymatus -->
-
-  <trigger
-   enabled="y"
-   group="affects"
-   keep_evaluating="y"
-   expand_variables="y"
-   match="^A bright light bursts from your (?<spell>.+), bathing (?<who>.+) in pure light\.$"
-   omit_from_output="y"
-   regexp="y"
-   sequence="100"
-   script="on_mysterious"
-  >
-  </trigger>
+<!-- Raymatus Lantern-->
   
     <trigger
    enabled="y"
@@ -538,7 +525,14 @@ function on_gmcp_generic_on()
   get_affect_application()
   who = gmcpval("target")
   spell = gmcpval("skill"):upper()
-  categorize_and_show_affect("", who, spell, "on")
+  affect = gmcpval("modifies")
+  modifier = gmcpval("modifier")
+  
+  if (who == "you") then
+    text = who .. ": Affect: " .. affect .. " by " .. modifier
+  end
+  
+  categorize_and_show_affect(text, who, spell, "on")
 end
 
 
@@ -571,6 +565,7 @@ end
 
 
 function categorize_and_show_affect(line, who, spell, onoff)
+
   local affect = spell .. " " .. onoff
   if (is_lethal(affect, who)) then
     show_lethal_stuff(who, affect, line)
@@ -580,11 +575,39 @@ function categorize_and_show_affect(line, who, spell, onoff)
     show_handicap_stuff(who, affect, line)
   elseif (is_important(affect, who)) then
     show_important_stuff(who, affect, line)
+  elseif (is_buff(affect, who)) then
+    show_buff_stuff(who, affect, line)
   else
     show_other_stuff(who, affect, line)
   end
 end
 
+t_buff_stuff = {
+  ["fire invocation on"] = {
+    ["self"] = true,
+    ["others"] = true,
+  },
+  ["blessing of ithrilis on"] = {
+    ["self"] = true,
+  },
+    ["mental clarity on"] = {
+    ["self"] = true,
+  },
+    ["fire invocation off"] = {
+    ["self"] = true,
+    ["others"] = true,
+  },
+  ["blessing of ithrilis off"] = {
+    ["self"] = true,
+  },
+    ["mental clarity off"] = {
+    ["self"] = true,
+  },
+}
+
+function is_buff(affect, who)
+  return is_category(t_buff_stuff, affect, who)
+end
 
 t_lethal_stuff = {
   ["fire invocation off"] = {
@@ -650,6 +673,9 @@ t_handicap_stuff = {
   ["mesmerize on"] = {
     ["self"] = true,
   },
+  ["mutilate on"] = {
+    ["self"] = true,
+  },
   ["pestilence on"] = {
     ["self"] = true,
   },
@@ -708,6 +734,9 @@ t_important_stuff = {
     ["self"] = true,
   },
   ["combat blink off"] = {
+    ["self"] = true,
+  },
+  ["combat blink on"] = {
     ["self"] = true,
   },
   ["detect illusion off"] = {
@@ -910,17 +939,11 @@ end
 -- special captures
 ---------------------
 
-function on_mysterious(name, line, wildcards)
-  local who = wildcards.who or "you"
-  
-  categorize_and_show_affect(line, who, "mysterious forces", "on")
-end
-
 function on_mysterious_resist(name, line, wildcards)
   local who = wildcards.who or "you"
   local spell = wildcards.spell
 
-  show_other_stuff(who, spell.." resisted", line)
+  show_critical_stuff(who, spell, "resisted")
 end
 
 function on_siphon_or_tpdispel(name, line, wildcards)
@@ -1022,9 +1045,23 @@ end
 
 function show_other_stuff(who, subtitle, line)
   -- colors we'll use to show it
-  local fgcolor = "blue"
-  local bgcolor = "black"
+  local fgcolor = "black"
+  local bgcolor = "gray"
 
+  show_affect(who, fgcolor, bgcolor, subtitle, line)
+end
+
+function show_buff_stuff(who, subtitle, line)
+  -- colors we'll use to show it
+  local fgcolor = "black"
+  local bgcolor = "plum"
+  
+  if (string.match(subtitle, " off")) then
+    bgcolor = "plum"
+  else
+	bgcolor = "lightgreen"
+  end 
+  
   show_affect(who, fgcolor, bgcolor, subtitle, line)
 end
 
@@ -1034,8 +1071,8 @@ function show_important_stuff(who, subtitle, line)
   -- an affect that is ok to land on opponents (eg, blindness, poison), but is bad on form members
 
   -- colors we'll use to show it
-  local fgcolor = "white"
-  local bgcolor = "mediumblue"
+  local fgcolor = "black"
+  local bgcolor = "goldenrod"
 
   show_affect(who, fgcolor, bgcolor, subtitle, line)
 end
@@ -1045,8 +1082,8 @@ function show_handicap_stuff(who, subtitle, line)
   -- an affect that disables me somehow (eg, silence, paralysis, sleep, slow), and there's nothing I can do about it
 
   -- colors we'll use to show it
-  local fgcolor = "white"
-  local bgcolor = "dimgray"
+  local fgcolor = "black"
+  local bgcolor = "sandybrown"
 
   show_affect(who, fgcolor, bgcolor, subtitle, line)
 end
@@ -1068,7 +1105,7 @@ function show_lethal_stuff(who, subtitle, line)
 
   -- colors we'll use to show it
   local fgcolor = "white"
-  local bgcolor = "red"
+  local bgcolor = "firebrick"
 
   show_affect(who, fgcolor, bgcolor, subtitle, line)
 end
@@ -1080,17 +1117,22 @@ end
 ------------
 
 function show_affect(who, fgcolor, bgcolor, subtitle, line)
+  local showtext = ""
   if (not reader_present) then
+	
     -- if MushReader isn't present, show subtitles + the affects line
     if (string.lower(who) ~= "you") then
-      ColourTell("whitesmoke", "black", who .. ": ")
+      showtext = showtext .. who .. ": "
     end
 
-    ColourTell(fgcolor, bgcolor, subtitle)
-    ColourTell("darkgray", "black", " > ")
+    showtext = showtext .. subtitle .. " > "
+    
     if (line) and (line ~= "") then
-      ColourNote("silver", "black", line)
+      showtext = showtext .. line
     end
+	
+    ColourTell(fgcolor, bgcolor, showtext .. "\r\n")
+	ColourTell("white", "black", "\r")
 
   else
     -- if MushReader is present, SAPI say the subtitles
@@ -1115,21 +1157,21 @@ function show_affect(who, fgcolor, bgcolor, subtitle, line)
   end
 
   -- add to events mini, if it's present
-  add_to_events_world(who, fgcolor, bgcolor, subtitle)
+  add_to_events_world(who, fgcolor, bgcolor, showtext)
 
   -- broadcast the info, for events_mini and similar plugins
   local t = {
     [1] = who,
     [2] = fgcolor,
     [3] = bgcolor,
-    [4] = subtitle,
+    [4] = showtext,
   }
   BroadcastPlugin(1, table.concat(t, ";"))
 
   if (debug)
-  and ((string.find(subtitle, "off"))
-  or (string.find(subtitle, "tick"))) then
-    AppendToNotepad("tick", "\r\n[" .. os.date("%H:%M:%S") .. "] " .. subtitle .. " ", "\r\n")
+  and ((string.find(showtext, "off"))
+  or (string.find(showtext, "tick"))) then
+    AppendToNotepad("tick", "\r\n[" .. os.date("%H:%M:%S") .. "] " .. showtext .. " ", "\r\n")
   end
 end
 
@@ -1144,11 +1186,11 @@ function add_to_events_world(who, fgcol, bgcol, subtitle)
   -- gotta check every time in case they close it
 
   if (events) then
-    if (string.lower(who) ~= "you") then
-      events:ColourTell("silver", "black", who .. ": ")
-    end
+    --if (string.lower(who) ~= "you") then
+    --  events:ColourTell("silver", "black", who .. ": ")
+    --end
 
-    --events:ColourNote(fgcol, bgcol, subtitle)
+    events:ColourNote(fgcol, bgcol, subtitle)
     events:ColourNote("silver", "black", subtitle)
   end
 end
