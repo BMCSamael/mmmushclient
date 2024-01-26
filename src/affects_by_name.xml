@@ -643,6 +643,9 @@ t_critical_stuff = {
     ["self"] = true,
     ["others"] = true,
   },
+  ["hinder off"] = {
+    ["others"] = true,
+  },
 }
 function is_critical(affect, who)
   return is_category(t_critical_stuff, affect, who)
@@ -785,9 +788,6 @@ t_important_stuff = {
   },
   ["hinder on"] = {
     ["self"] = true,
-    ["others"] = true,
-  },
-  ["hinder off"] = {
     ["others"] = true,
   },
   ["hinder magic on"] = {

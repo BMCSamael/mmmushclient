@@ -8,7 +8,7 @@ id = 925cdd0331023d9f0b8f05a7  hash = 64373D837A6FE470DB2E36995FB8669B
 id = 463242566069ebfd1b379ec1  hash = 512D7D73A30BAD8C1237451B63D9396E
 id = adf79802005a0d6186530bee  hash = 197889C4EE53A5E49372E3CB535C30B6
 id = f99134f19ea994a0cc0888d1  hash = 0DC21B0BA50609C3331359723FFFAF7E
-id = 6010f6bda5ebf2210998613d  hash = 2D43B28C965E96E596649B5EDE6A2FBC
+id = 6010f6bda5ebf2210998613d  hash = A8EEBAA8B769FDC4B4399708DA84F19A
 id = 118122989b315b5a97526fcc  hash = E0B21EFB9C3090F016D6B8077A5A33AC
 id = 366aa79676f9fb1941eb5f69  hash = DEFB89175344A7E43A8B7F043EE35A3D
 id = b2772cad800b33a6073d9377  hash = 0745D660971604E888C2EE10FC8E90D0  aux_files = {   [1] = {     name = "captures.MCL",     dest = "MUSH/worlds",     },   [2] = {     name = "announce.mp3",     dest = "MUSH/sounds",     },   }
@@ -74,7 +74,7 @@ id = 632048f8236c5a1319306ff6  hash = 055D701EBF83D4D7328AA828B91A8C67
 id = cd8aa6f67b9f78ab77e67ae3  hash = B40D0FD3EB7C8B6BF305490E374EB5F1  aux_files = {   [1] = {     name = "generic_miniwindow.lua",     dest = "MUSH/lua",     },   }
 id = d54ccc4800e5df1ad0ed0aac  hash = A101AC43B16B5FEA05457C741DCDB580
 id = d81aeca9c0a10f0270dfe0f4  hash = 1A513C06AA8909D98B42A0E2178D5359
-id = 783cca60ac0d776ca859de57  hash = B917FFC7E2886CC9A87591BA2603D425  aux_files = {   [1] = {     name = "tick.mp3",     dest = "MUSH/sounds",     },   }
+id = 783cca60ac0d776ca859de57  hash = D04D22DC12037812E4A194A4A82D3B0B  aux_files = {   [1] = {     name = "tick.mp3",     dest = "MUSH/sounds",     },   }
 id = d75d47db12b5271e7e063d46  hash = 83DD5DA9F6897959982416C604FA89B1
 id = 8e6a05d3e8bbd72d1f6a7ae8  hash = CD25289085DC36D009F83BCA165FC708  aux_files = {   [1] = {     name = "mm_boil.mp3",     dest = "MUSH/sounds/msp",     },   [2] = {     name = "mm_stream.mp3",     dest = "MUSH/sounds/msp",     },   }
 id = 0c85b0fa3ab1503d1eb123b4  hash = 3174471D7764D662A42C50AEC946444E  aux_files = {   [1] = {     name = "mm_boil.mp3",     dest = "MUSH/sounds/msp",     },   [2] = {     name = "mm_stream.mp3",     dest = "MUSH/sounds/msp",     },   }
