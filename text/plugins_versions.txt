@@ -12,7 +12,7 @@ id = 6010f6bda5ebf2210998613d  hash = A8EEBAA8B769FDC4B4399708DA84F19A
 id = 118122989b315b5a97526fcc  hash = E0B21EFB9C3090F016D6B8077A5A33AC
 id = 366aa79676f9fb1941eb5f69  hash = DEFB89175344A7E43A8B7F043EE35A3D
 id = b2772cad800b33a6073d9377  hash = 0745D660971604E888C2EE10FC8E90D0  aux_files = {   [1] = {     name = "captures.MCL",     dest = "MUSH/worlds",     },   [2] = {     name = "announce.mp3",     dest = "MUSH/sounds",     },   }
-id = 0d02361abda86a9c64488bf3  hash = F09C948A7B8BE6C6F8B0B2C2BE7223EC  aux_files = {   [1] = {     name = "generic_miniwindow.lua",     dest = "MUSH/lua",     },   }
+id = 0d02361abda86a9c64488bf3  hash = 252A607BE932BDF77C93D1DD4F3C738E  aux_files = {   [1] = {     name = "generic_miniwindow.lua",     dest = "MUSH/lua",     },   }
 id = 47150df0ca58b162ea22b396  hash = DDA6CCA16D4411009B46E0645F98C6BA
 id = fdebcc7a082dc4e7c6d4c306  hash = 03B876DE02681CCA37175B7CED6DEAA0  aux_files = {   [1] = {     name = "generic_miniwindow.lua",     dest = "MUSH/lua",     },   }
 id = 644c7a6e7d17a3195d0d025d  hash = C9CAE07BBAB50D6D32B870C60BEF1C24
