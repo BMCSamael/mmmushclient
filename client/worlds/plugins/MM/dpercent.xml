@@ -751,15 +751,15 @@ damage_dealt = {
     ["no"] = "IMNE", -- this never happens - I use it for invuln
     ["miss"] = "MISS", -- Misses
     ["pos"] = "FPOS", -- Form Position Unusable
-    ["undetectable"] = ".001%%%",
-    ["ephemeral"] = ".002%%%",
-    ["minuscule"] = ".003%%%", -- guess (not listed in help 2394)
-    ["intangible"] = ".005%%%",
-    ["imperceptible"] = ".010%%%",
+    ["undetectable"] = ".001%",
+    ["ephemeral"] = ".002%",
+    ["minuscule"] = ".003%", -- guess (not listed in help 2394)
+    ["intangible"] = ".005%",
+    ["imperceptible"] = ".01%%",
     ["no observable"] = ".015%%%",
-    ["no apparent"] = " .020%%%",
-    ["no evident"] = " .033%%%",
-    ["no obvious"] = " .05%%%",
+    ["no apparent"] = ".020%%",
+    ["no evident"] = ".033%",
+    ["no obvious"] = ".05%%%",
     ["unnoticeable"] = ".10%%%",
     ["infinitesimal"] = ".15%%%",
     ["insignificant"] = ".25%%%",
@@ -951,9 +951,9 @@ function inc_other_def(desc, tgt, who, type)
 	    space = math.floor((14-string.len(type))/2)
 		
         if (config.show_dmg_brief) then
-            newval = string.gsub(v.text, desc, "[ DEFN ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. tgt .. "]")
+            newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. tgt .. "]")
         else
-            newval = string.gsub(v.text, desc, "[ DEFN ] [" .. type .. "] " .. desc)
+            newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. type .. "] " .. desc)
         end
         ColourTell(RGBColourToName(v.textcolour), RGBColourToName(v.backcolour), newval)
     end -- for each style run
@@ -972,9 +972,9 @@ function inc_vs_me_def(desc, tgt, type)
 	    -- spacing
 	    space = math.floor((14-string.len(type))/2)
         if (config.show_dmg_brief) then
-            newval = string.gsub(v.text, desc, "[ DEFN ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. tgt .. "]")
+            newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. tgt .. "]")
         else
-            newval = string.gsub(v.text, desc, "[ DEFN ] [" .. type .. "] " .. desc)
+            newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. type .. "] " .. desc)
         end
         ColourTell(RGBColourToName(v.textcolour), RGBColourToName(v.backcolour), newval)
     end -- for each style run
@@ -993,9 +993,9 @@ function inc_my_def(desc, who, type)
 	    -- spacing
 	    space = math.floor((14-string.len(type))/2)
         if (config.show_dmg_brief) then
-            newval = string.gsub(v.text, desc, "[ DEFN ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. who .. "]")
+            newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. who .. "]")
         else
-            newval = string.gsub(v.text, desc, "[ DEFN ] [" .. type .. "] " .. desc)
+            newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. type .. "] " .. desc)
         end
         ColourTell(RGBColourToName(v.textcolour), RGBColourToName(v.backcolour), newval)
     end -- for each style run

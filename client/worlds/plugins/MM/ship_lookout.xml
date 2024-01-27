@@ -135,19 +135,6 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
 
   <trigger
    group="script-ship_lookout"
-   keep_evaluating="y"
-   match="^$"
-   name="endlookout"
-   regexp="y"
-   send_to="14"
-   sequence="100"
-  >
-  <send>end_lookout()
-</send>
-  </trigger>
-
-  <trigger
-   group="script-ship_lookout"
    match="^(.*?)(|\[(?P&lt;hposx&gt;[0-9]+)\, (?P&lt;hposy&gt;[0-9]+)\])(|\[SPK\])\([0-9]+hull (.+?)dir (ANCHOR|STOP|SLOW|HALF|FULL|FLANK) (.+?)wind(|( [0-9]+\%shld|)(| (?P&lt;obposx&gt;[0-9]+)\, (?P&lt;obposy&gt;[0-9]+)))\) $"
    name="lookout_imap"
    regexp="y"
@@ -395,6 +382,7 @@ function lookout_line(num, target, dist, dir, desc, ship, flag, pirate, flagt, c
   tconcat = table.concat(t, ",")
   --Note(tconcat)
   ArraySet("ashlookout", mainkey, tconcat)
+  end_lookout()
 end
 
 

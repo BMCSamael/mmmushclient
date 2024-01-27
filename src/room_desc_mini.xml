@@ -214,7 +214,7 @@ end
 
 function plugin_update_aux_url()
   local t = {
-    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/generic_miniwindow.lua,MUSH/lua",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/lua/generic_miniwindow.lua,MUSH/lua",
   }
   return (table.concat(t, ";"))
 end

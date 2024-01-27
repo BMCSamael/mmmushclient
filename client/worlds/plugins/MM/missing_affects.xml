@@ -9,14 +9,14 @@
 
 <plugin
    name="missing_affects"
-   author="Ruthgul"
+   author="Tamlin/Ruthgul"
    id="226fb67b0722e0f0ddc3a235"
    language="Lua"
    purpose="shows what affects you're missing"
    date_written="2012-04-28 11:03:49"
-   date_modified="2014-04-11 09:08:36"
+   date_modified="2024-04-11 09:08:36"
    requires="4.71"
-   version="1.0"
+   version="2.6"
    >
 
 <description trim="y">
@@ -163,7 +163,7 @@ end
   <trigger
    group="process-affects"
    keep_evaluating="y"
-   match="^(Spell|Prof)\:[ ]+(?P&lt;affect&gt;.+)[ ]+\- Level (.+)\, modifies (.+)[ ]+by[ ]+(.+)(| for (.+) minute(|s))\.$"
+   match="^(Spell|Affect|Prof)\:[ ]+(?P&lt;affect&gt;.+)[ ]+\- Level (.+)\, modifies (.+)[ ]+by[ ]+(.+)(| for (.+) minute(|s))(\.|\.\[.+\])$"
    regexp="y"
    send_to="12"
    sequence="100"
@@ -349,7 +349,7 @@ end
 
 function add_wanted_affect(affect)
   affect = Trim(affect) -- remove leading and trailing blanks
-  affect = string.sub(affect, 1, 20) -- names get cut to 20 chars in the affects list
+  affect = string.sub(affect, 1, 30) -- names get cut to 30 chars in the affects list
   affect = string.lower(affect) -- lowercase
 
   local waffects = GetVariable(name .. "_wanted_affects") or ""
@@ -379,7 +379,7 @@ function del_wanted_affect(affect)
 
   if (waffects ~= "") then
     affect = Trim(affect) -- remove leading and trailing blanks
-    affect = string.sub(affect, 1, 20) -- names get cut to 20 chars in the affects list
+    affect = string.sub(affect, 1, 30) -- names get cut to 20 chars in the affects list
     affect = string.lower(affect) -- lowercase
 
     local twaffects = utils.split(waffects, ",")

@@ -229,7 +229,7 @@ set_unique_countdown(24, 0, 0, "%&lt;place&gt; daily reward", "latest_daily plug
   </trigger>
 
   <trigger
-   enabled="y"
+   enabled="n"
    group="dailies"
    keep_evaluating="y"
    match="^A pretty half-elf woman with a ponytail smiles at you\.$"
@@ -241,10 +241,10 @@ set_unique_countdown(24, 0, 0, "%&lt;place&gt; daily reward", "latest_daily plug
   </trigger>
 
   <trigger
-   enabled="y"
+   enabled="n"
    group="dailies"
    keep_evaluating="y"
-   match="^\'You have visited all . Tourism Board representatives today\, for a .+-day streak\.$"
+   match="^\'You have visited all 4 Tourism Board representatives today\, for a (.+)\-day streak\.$"
    regexp="y"
    script="disable_auto"
    sequence="100"
@@ -254,7 +254,7 @@ set_unique_countdown(24, 0, 0, "%&lt;place&gt; daily reward", "latest_daily plug
   </trigger>
   
     <trigger
-   enabled="y"
+   enabled="n"
    group="dailies"
    keep_evaluating="y"
    match="^\'When you visit all . Tourism Board representatives on the same day, you\'ll get a streak\!\' a representative from the (?P&lt;place&gt;.+) Tourism Board exclaims to you\. \'Only .+ to go\!'$"
@@ -292,6 +292,8 @@ function OnPluginInstall()
 
     EnableTrigger("first_prompt", true)
     name = nil
+    EnableTriggerGroup("dailies", false)
+    SetVariable("dailyauto","none")
 
     -- give the plugins time to initialize
     wait.time(3)
@@ -303,6 +305,8 @@ end
 function OnPluginConnect()
   EnableTrigger("first_prompt", true)
   name = nil
+  EnableTriggerGroup("dailies", false)
+  SetVariable("dailyauto","none")
 end
 
 

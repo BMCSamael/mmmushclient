@@ -260,6 +260,7 @@ default_list = {
   ["numpad1"] = "southwest",
   ["numpad4"] = "west",
   ["numpad7"] = "northwest",
+  ["numpad5"] = "look",
   ["subtract"] = "up",
   ["add"] = "down",
 

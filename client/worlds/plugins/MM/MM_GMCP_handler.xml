@@ -406,7 +406,7 @@ end
 
 function plugin_update_aux_url()
   local t = {
-    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/gmcphelper.lua,MUSH/lua",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/lua/gmcphelper.lua,MUSH/lua",
     "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/res/sandbox.dune.net.MCL,MUSH/worlds",
   }
   return (table.concat(t, ";"))

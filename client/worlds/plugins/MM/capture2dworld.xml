@@ -1651,8 +1651,8 @@ function add_to_captures_world(who, type, recolor)
 
   for i = 1, #trigger_style_runs do
     txt = trigger_style_runs[i].text
-
-    -- shorten Novice clan name
+	
+	-- shorten Novice clan name
     if (string.find(txt, "Novice")) then
       txt = string.gsub(txt, "%[CLAN Novice Adventurers%]", "%[Novice%]")
       txt = string.gsub(txt, "Novice clan members", "Novices")
@@ -1663,6 +1663,11 @@ function add_to_captures_world(who, type, recolor)
     if (string.find(txt, "Vandemaar's Magic Mirror")) then
       txt = string.gsub(txt, "^You hear (.+) say through Vandemaar's Magic Mirror:", "%(mirror%) %1:")
     end
+	
+	-- remove heard you say
+	if (string.find(txt, "heard you say,")) then
+	  txt = string.gsub(txt, " (.+) members heard you say,", "[%1] You:")
+	end
 
     -- we only apply word filters if it isn't the guide channel
     if (type ~= "guide") then

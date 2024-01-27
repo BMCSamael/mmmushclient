@@ -16,7 +16,7 @@
    save_state="y"
    date_written="2012-02-04 11:36:44"
    date_modified="2020-12-20 21:38:56"
-   version="2.6"
+   version="2.7"
    >
 
 <description trim="y">
@@ -61,10 +61,10 @@ Syntax:
 * imap showlocation <place_name> [<text>]  - shows non-persistent text (or an "x") marking a city, dungeon, etc. - it requires a full city name, the text will vanish on movement
 
 
-Author: Ruthgul
+Author: Tamlin/Ruthgul
 
 Latest version:
-http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
+http://github.com/BMCSamael/mmmushclient/
 
 ]]>
 
