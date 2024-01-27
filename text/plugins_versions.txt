@@ -79,7 +79,7 @@ id = d75d47db12b5271e7e063d46  hash = 83DD5DA9F6897959982416C604FA89B1
 id = 8e6a05d3e8bbd72d1f6a7ae8  hash = CD25289085DC36D009F83BCA165FC708  aux_files = {   [1] = {     name = "mm_boil.mp3",     dest = "MUSH/sounds/msp",     },   [2] = {     name = "mm_stream.mp3",     dest = "MUSH/sounds/msp",     },   }
 id = 0c85b0fa3ab1503d1eb123b4  hash = 3174471D7764D662A42C50AEC946444E  aux_files = {   [1] = {     name = "mm_boil.mp3",     dest = "MUSH/sounds/msp",     },   [2] = {     name = "mm_stream.mp3",     dest = "MUSH/sounds/msp",     },   }
 id = 84399d3da75ce710a39635d6  hash = E6C1EB12FD5499C515827924B3D92FFF
-id = 017a906269344dcc9209af11  hash = 79AB088601C18E7B90895182AF09DEB8  aux_files = {   [1] = {     name = "MM_Glass_Jar_Falling.mp3",     dest = "MUSH/sounds",     },   }
+id = 017a906269344dcc9209af11  hash = 2D1A1489CC6F60078D2F0AF21ED283BE  aux_files = {   [1] = {     name = "MM_Glass_Jar_Falling.mp3",     dest = "MUSH/sounds",     },   }
 id = 3c56fcf3317c6230888de0f6  hash = 81EE211E507572CF18405D5A422C893E  aux_files = {   [1] = {     name = "buttons.png",     },   }
 id = a6ef71f61368df7da2fcf5a6  hash = 5A9825E9627A702DA21DCCA397C8113D
 id = efe96b7604c453d0a92110e0  hash = F3EABE074E776EFBE63D232B70E6660E
