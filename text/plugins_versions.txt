@@ -12,7 +12,7 @@ id = 6010f6bda5ebf2210998613d  hash = A8EEBAA8B769FDC4B4399708DA84F19A
 id = 118122989b315b5a97526fcc  hash = E0B21EFB9C3090F016D6B8077A5A33AC
 id = 366aa79676f9fb1941eb5f69  hash = DEFB89175344A7E43A8B7F043EE35A3D
 id = b2772cad800b33a6073d9377  hash = 0745D660971604E888C2EE10FC8E90D0  aux_files = {   [1] = {     name = "captures.MCL",     dest = "MUSH/worlds",     },   [2] = {     name = "announce.mp3",     dest = "MUSH/sounds",     },   }
-id = 0d02361abda86a9c64488bf3  hash = 252A607BE932BDF77C93D1DD4F3C738E  aux_files = {   [1] = {     name = "generic_miniwindow.lua",     dest = "MUSH/lua",     },   }
+id = 0d02361abda86a9c64488bf3  hash = 8FB537E60172A734CAC8E584CE5BEE1D  aux_files = {   [1] = {     name = "generic_miniwindow.lua",     dest = "MUSH/lua",     },   }
 id = 47150df0ca58b162ea22b396  hash = DDA6CCA16D4411009B46E0645F98C6BA
 id = fdebcc7a082dc4e7c6d4c306  hash = 03B876DE02681CCA37175B7CED6DEAA0  aux_files = {   [1] = {     name = "generic_miniwindow.lua",     dest = "MUSH/lua",     },   }
 id = 644c7a6e7d17a3195d0d025d  hash = C9CAE07BBAB50D6D32B870C60BEF1C24
@@ -86,44 +86,9 @@ id = efe96b7604c453d0a92110e0  hash = F3EABE074E776EFBE63D232B70E6660E
 id = 4f76c77c73affc51fa8fc841  hash = 44BFA393886EBB109479D2B5D738AB3A
 id = cb6469228f9f7e26129c1ebc  hash = 8872874766F98310A4EE902592761EDE  aux_files = {   [1] = {     name = "world_miniwindow.lua",     dest = "MUSH/lua",     },   }
 id = 616b8084d0f246d12d54588b  hash = B2D37BCE21F135EBC82D18959EE698C0  aux_files = {   [1] = {     name = "generic_miniwindow.lua",     dest = "MUSH/lua",     },   }
-name = InfoBox.lua  hash = B3C7FC806ADEE04EEDEB548C5DA4DE98
-name = addxml.lua  hash = AC99260919E08616EFE129AC1E847B12
-name = alphanum.lua  hash = 2817220524F82C58FED2B249A2CDC1F1
-name = async.lua  hash = BDC7BBACBBB218CF26DA6C7874D4AC3D
-name = check.lua  hash = BFD68C5A369C048C5FA6ACF52A185E91
-name = checkplugin.lua  hash = FA0D90DDA30A9EF6CE5B0426E1D58A99
-name = colors.lua  hash = B8CBE98EDE376D71A091B6C5874D6CC1
-name = commas.lua  hash = 294FFCE990E6E25D1267F630D67ABE59
-name = copytable.lua  hash = A27100E32E177A84F1E9DB70E9204B9E
-name = declare.lua  hash = 18F2165C7A917C891495BDF113D3070A
-name = gauge.lua  hash = E4513D47CBAEF8CBEAF79B147A089897
 name = generic_miniwindow.lua  hash = 5A513042110FA819E28B86E465D82563
-name = getlines.lua  hash = 2663594B99DCE4164E51B7449FFF1687
-name = getstyle.lua  hash = 0045D26B33276D6722F708D818ACF536
-name = getworld.lua  hash = 0FDAD55718531780875A7FD23A274CF8
 name = gmcphelper.lua  hash = 0952EFA28EDFD7CE56E94BEBABA18E85
-name = json.lua  hash = 46F065051AE3F407B1E544B53F28B1B4
-name = ltn12.lua  hash = E440044AFE6C761507A996B5B45AB0F9
-name = luacom5.lua  hash = D6DDDEFE91087570C4136EE29B5C7EA5
-name = mapper.lua  hash = 4DE33236EBF9C210304B1324A8FDD390
-name = mime.lua  hash = 4BFDAAAB9014FE129BC6388FD5687C8F
-name = mm_mapper.lua  hash = 7C8C6AFEFD496E7772D2E84751614624
-name = movewindow.lua  hash = 555B7B851A274CD43F920D802484A3F6
-name = mw.lua  hash = 3B2A01E9D477E62027140EF06D43E661
-name = pairsbykeys.lua  hash = B0E6BEFB9C8E46DD9957A5B6D3113493
-name = ppi.lua  hash = D5EEC65F2BA2FEF7BE8C94D9D30B543E
-name = re.lua  hash = C16B46269541D1E60EC1B012D518FAD9
-name = sandbox.lua  hash = F77E8408D50B45706C8E804503ECA645
-name = serialize.lua  hash = 0B56B9D398E68DD500397A692BEFB56B
-name = show_loaded.lua  hash = 29E57A3E24869352BABFB014B964580A
-name = socket.lua  hash = B5BD522C7B1E5CE7BBD9D8CA1B71EFFA
-name = ssl.lua  hash = 5749E5C5936DFA4471E5748A844987FC
-name = strict.lua  hash = 8057BDDF2311AB426BEA918E822930D4
-name = string_indexing.lua  hash = 920056BA7B5597B8F83206EE978D6EF2
-name = tprint.lua  hash = 7EE67B9B5AE9E872B9182ADC209E013A
-name = var.lua  hash = FB7617FE62C47B73CA0547F24EEB5035
-name = wait.lua  hash = 5CCD44A7A51EA2BA77BD7915007C72FC
-name = words_to_numbers.lua  hash = A1C60E3CC7C9D66F9EA29F3175D80527
+name = mm_mapper.lua  hash = 7C07AD98DE354838DE78D43FC755F44B
 name = world_miniwindow.lua  hash = 08868EA01E48C08BD4AA27962F655461
 name = alyria.png  hash = 064BDDBD319F730562F29B259B1EB9CD
 name = alyria_spk_purple.png  hash = 6E5B665F474481C8C4FD4227978D72BF

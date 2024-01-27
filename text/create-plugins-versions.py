@@ -13,7 +13,7 @@ base_url = 'https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/'
 
 def create_plugins_versions():
   process_plugins('../src', '*.xml')
-  process_other('../lua', '*.lua')
+  process_other('../lua/mmreq', '*.lua')
   process_other('../res', '*.png')
   process_other('../res', '*.db')
 

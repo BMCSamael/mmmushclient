@@ -2,7 +2,7 @@
 
 --[[
 
-Mods: Ruthgul, for Materia Magica
+Mods: Ruthgul,Tamlin for Materia Magica
 
 2020-12016
 * Added support for new LPK, NPK, CPK room flags
