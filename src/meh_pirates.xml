@@ -972,7 +972,8 @@ function end_salvage_capture()
         Note(" --")
 
       else
-        AppendToNotepad("salvage", coords .. "\r\n")
+		-- If reader present @Milandra Verify
+		Note("salvage " .. coords .. "\r\n")
       end
     end
   end
