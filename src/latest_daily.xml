@@ -244,7 +244,7 @@ set_unique_countdown(24, 0, 0, "%&lt;place&gt; daily reward", "latest_daily plug
    enabled="n"
    group="dailies"
    keep_evaluating="y"
-   match="^\'You have visited all . Tourism Board representatives today\, for a .+-day streak\.$"
+   match="^\'You have visited all 4 Tourism Board representatives today\, for a (.+)\-day streak\.$"
    regexp="y"
    script="disable_auto"
    sequence="100"

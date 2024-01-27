@@ -257,7 +257,7 @@ next_quest_in(min * 60)
   </trigger>
 
   <trigger
-   match="^$"
+   match="^You have (.+) Alyrian minute remaining to complete this quest\.$"
    keep_evaluating="y"
    name="quest_end"
    regexp="y"
