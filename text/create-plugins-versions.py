@@ -13,7 +13,7 @@ base_url = 'https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/'
 
 def create_plugins_versions():
   process_plugins('../src', '*.xml')
-  process_other('../lua/mmreq', '*.lua')
+  process_other('../src', '*.lua')
   process_other('../res', '*.png')
   process_other('../res', '*.db')
 
@@ -45,8 +45,8 @@ def calc_hash(filename, hash_factory = hashlib.md5, chunk_num_blocks = 128):
 def find_plugin_details(filepath):
   re_id = re.compile(r'^[ ]+id=\"([0-9a-f]+)\"$')
   re_begin_updates = re.compile(f"^{re.escape('function plugin_update_aux_url()')}$")
-  re_url_dest = re.compile(f'^[ ]+"{re.escape(base_url)}(src|lua|res)\/(.+),(.+)",$')
-  re_url = re.compile(f'^[ ]+"{re.escape(base_url)}(src|lua|res)\/(.+)",$')
+  re_url_dest = re.compile(f'^[ ]+"{re.escape(base_url)}(src|res)\/(.+),(.+)",$')
+  re_url = re.compile(f'^[ ]+"{re.escape(base_url)}(src|res)\/(.+)",$')
   re_end_updates = re.compile(r'^end$')
 
   updates_started = False
