@@ -48,7 +48,7 @@ Syntax:
 where <channel_type> is one of the following:
   alliance|announce|archon|auction|aucverb|clan|form|guide|irc|ircverb|notify|novice|page|relay|say|shout|talk|tell|yell
 
-where /depth/ is 5 by default, and can be changed via the read captures depth alias
+where /depth/ is 500 by default, and can be changed via the read captures depth alias
 
 * skip line  - stops reading the current line and advances to the next one
 
@@ -56,7 +56,7 @@ where /depth/ is 5 by default, and can be changed via the read captures depth al
 
 * notify when active  - toggles whether you want to be notified of incoming messages when the world window has focus (off by default)
 
-* read captures depth <number>  - choose how many lines from any specific capture type you want to read - it's 5 by default
+* read captures depth <number>  - choose how many lines from any specific capture type you want to read - it's 500 by default
 
 
 Author: Ruthgul
@@ -201,7 +201,7 @@ function OnPluginInstall()
     captures = {}
     captures_index = {}
 
-    depth = tonumber(GetVariable("depth") or "5")
+    depth = tonumber(GetVariable("depth") or "500")
     do_notify = ((GetVariable("do_notify") or "true") == "true")
     notify_when_active = ((GetVariable("notify_when_active") or "false") == "true")
 
