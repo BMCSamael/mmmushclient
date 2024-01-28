@@ -12,7 +12,7 @@ id = 6010f6bda5ebf2210998613d  hash = 3617166B8F5C49C468F37A4949F53CC0
 id = 118122989b315b5a97526fcc  hash = E0B21EFB9C3090F016D6B8077A5A33AC
 id = 366aa79676f9fb1941eb5f69  hash = DEFB89175344A7E43A8B7F043EE35A3D
 id = b2772cad800b33a6073d9377  hash = 0745D660971604E888C2EE10FC8E90D0  aux_files = {   [1] = {     name = "captures.MCL",     dest = "MUSH/worlds",     },   [2] = {     name = "announce.mp3",     dest = "MUSH/sounds",     },   }
-id = 0d02361abda86a9c64488bf3  hash = 8FB537E60172A734CAC8E584CE5BEE1D  aux_files = {   [1] = {     name = "generic_miniwindow.lua",     dest = "MUSH/lua",     },   }
+id = 0d02361abda86a9c64488bf3  hash = 8FB537E60172A734CAC8E584CE5BEE1D
 id = 47150df0ca58b162ea22b396  hash = DDA6CCA16D4411009B46E0645F98C6BA
 id = fdebcc7a082dc4e7c6d4c306  hash = 1268EE7D74990F9C8F75EFA5AC74D768  aux_files = {   [1] = {     name = "generic_miniwindow.lua",     dest = "MUSH/lua",     },   }
 id = 644c7a6e7d17a3195d0d025d  hash = C9CAE07BBAB50D6D32B870C60BEF1C24
@@ -53,7 +53,7 @@ id = 1d71bf1797912d451784ca21  hash = CD14A04272B27465B9A296D04377FB05
 id = 54846c23d8b15594e7eb4b8a  hash = 70178FAAA76F63173377C05BF9F350C0
 id = 4327c10cd9ae383bef04a7fc  hash = 6C300931F7C48FB9476EB520E3BF05D6
 id = cab11fa55cae7d04b2fe8b70  hash = 03303A2E587A4978E83D04CBBCBD7AE4
-id = 5945aedf1aacc09e42c48cef  hash = FB00CBF440358BBC49796759BD2DB60C  aux_files = {   [1] = {     name = "mime/core.dll",     dest = "MUSH",     },   [2] = {     name = "ssl.lua",     dest = "MUSH/lua",     },   [3] = {     name = "async.lua",     dest = "MUSH/lua",     },   [4] = {     name = "socket.lua",     dest = "MUSH/lua",     },   [5] = {     name = "ssl/https.lua",     dest = "MUSH/lua/ssl",     },   [6] = {     name = "socket/ftp.lua",     dest = "MUSH/lua/socket",     },   [7] = {     name = "socket/headers.lua",     dest = "MUSH/lua/socket",     },   [8] = {     name = "socket/http.lua",     dest = "MUSH/lua/socket",     },   [9] = {     name = "socket/smtp.lua",     dest = "MUSH/lua/socket",     },   [10] = {     name = "socket/tp.lua",     dest = "MUSH/lua/socket",     },   [11] = {     name = "socket/url.lua",     dest = "MUSH/lua/socket",     },   }
+id = 5945aedf1aacc09e42c48cef  hash = 92F197983D475C1335E90FB4250752AB
 id = ad02c292bb640b7aee9e4df0  hash = 3D9265D0239CCA5AD62F30092CDBD245
 id = e377771aeee520a633f3dd4d  hash = 454AA8F39327FD10E069B1481D9A62C1
 id = 66f8ef96f2166bb586529087  hash = 30FD7D72EC241E7B5BB5362878F875DA
@@ -109,14 +109,3 @@ name = sugxpanded.png  hash = 3AF32ADA2C598CB67F797320C8741084
 name = ug.png  hash = 9344BF9334EF37013D9E6A35F90175B4
 name = ug2x.png  hash = C7C6E62CD1AA71B5E876018B70157130
 name = verity.png  hash = 0346D57425CAA91EE6104C1CBE8593B9
-name = audio.dll  hash = 0269747AEFE99C8DE723ED7BE196F676
-name = bass.dll  hash = B2F3A33416A83666A59470539E9D3701
-name = dolapi.dll  hash = 849F18A565179B8C7698F6F2DB41C3B3
-name = llthreads2.dll  hash = FA10225142EC5AA9BF6422EB682EF8B5
-name = lua5.1.dll  hash = CC59120400AC54E8D96C803A535EECC0
-name = lua51.dll  hash = 134D066D54FBD5E7D705C78D0327E15A
-name = msvcr100.dll  hash = 53E17C3EEDCB0479971FBBE99FA9C0A0
-name = mushReader.dll  hash = 7986AD6CA6644DB1B5CA467FAD7AB749
-name = nvdaControllerClient32.dll  hash = 265328A72DB21A54A74D1B0DCFD6EF9F
-name = openssl.dll  hash = 37E11E7EC20A01FAC00F7CF6D367CC85
-name = ssl.dll  hash = 23D126ADE7C482FCBA66A421A23AC319
