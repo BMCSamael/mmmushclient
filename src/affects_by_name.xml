@@ -2143,10 +2143,15 @@ end
 
 
 function on_gmcp_generic_off()
-  get_affect_application()
+  get_affect_removal()
   who = gmcpval("target")
   spell = gmcpval("skill"):upper()
-  categorize_and_show_affect("", who, spell, "off")
+  
+  if (who == "you") then
+    text = who .. ": Affect: " .. affect 
+  end
+  
+  categorize_and_show_affect(who, who, spell, "off")
 end
 
 
@@ -2156,6 +2161,11 @@ function get_affect_application()
   assert(loadstring(luastmt or ""))()
 end
 
+function get_affect_removal()
+  local res, gmcparg = CallPlugin("f67c4339ed0591a5b010d05b", "gmcpval", "char.affect_removal_msg")
+  luastmt = "gmcpdata = " .. gmcparg
+  assert(loadstring(luastmt or ""))()
+end
 
 
 ---------------------
