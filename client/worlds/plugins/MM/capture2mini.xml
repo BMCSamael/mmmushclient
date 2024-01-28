@@ -9,7 +9,7 @@
 
 <plugin
    name="capture2mini"
-   author="Ruthgul"
+   author="Tamlin/Ruthgul"
    id="0d02361abda86a9c64488bf3"
    language="Lua"
    purpose="mini-window for channels"
@@ -17,7 +17,7 @@
    date_written="2013-04-03 09:19:09"
    date_modified="2014-08-16 13:22:52"
    requires="4.71"
-   version="1.0"
+   version="2.6"
    >
 
 <description trim="y">
@@ -206,7 +206,7 @@ end
 
 function plugin_update_aux_url()
   local t = {
-    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/generic_miniwindow.lua,MUSH/lua",
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/lua/generic_miniwindow.lua,MUSH/lua",
   }
   return (table.concat(t, ";"))
 end

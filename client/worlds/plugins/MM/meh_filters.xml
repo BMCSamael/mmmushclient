@@ -14,7 +14,7 @@
    language="Lua"
    purpose="Gags the score, skills, spells, marks, and personal log output, and shows only what's required."
    date_written="2013-12-17 12:28:14"
-   date_modified="2016-08-12 17:20:29"
+   date_modified="2017-01-08 13:01:04"
    requires="4.71"
    version="1.0"
    >
@@ -92,8 +92,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    send_to="12"
    sequence="100"
   >
-  <send>check_score("%&lt;key&gt;")
-</send>
+  <send>check_score("%&lt;key&gt;")</send>
   </alias>
 
   <alias
@@ -103,8 +102,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    send_to="12"
    sequence="100"
   >
-  <send>check_skills("%&lt;key&gt;")
-</send>
+  <send>check_skills("%&lt;key&gt;")</send>
   </alias>
 
   <alias
@@ -114,8 +112,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    send_to="12"
    sequence="100"
   >
-  <send>check_spells("%&lt;key&gt;")
-</send>
+  <send>check_spells("%&lt;key&gt;")</send>
   </alias>
 
   <alias
@@ -124,8 +121,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    regexp="y"
    send_to="12"
    sequence="100"
-  >
-  <send>check_marks("%&lt;key&gt;")
+  ><send>check_marks("%&lt;key&gt;")
 </send>
   </alias>
 
@@ -136,8 +132,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    send_to="12"
    sequence="100"
   >
-  <send>check_log("%&lt;key&gt;")
-</send>
+  <send>check_log("%&lt;key&gt;")</send>
   </alias>
 
   <alias
@@ -147,8 +142,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    send_to="12"
    sequence="100"
   >
-  <send>check_scan("%&lt;what&gt;")
-</send>
+  <send>check_scan("%&lt;what&gt;")</send>
   </alias>
 
 
@@ -161,8 +155,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    send_to="12"
    sequence="100"
   >
-  <send>list_score_keys()
-</send>
+  <send>list_score_keys()</send>
   </alias>
 
   <alias
@@ -172,8 +165,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    send_to="12"
    sequence="100"
   >
-  <send>list_log_keys()
-</send>
+  <send>list_log_keys()</send>
   </alias>
 
   <alias
@@ -183,8 +175,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    send_to="12"
    sequence="100"
   >
-  <send>list_gmcp_char_groups()
-</send>
+  <send>list_gmcp_char_groups()</send>
   </alias>
 
 
@@ -198,8 +189,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    send_to="12"
    sequence="100"
   >
-  <send>check_gmcp_char("%&lt;key&gt;")
-</send>
+  <send>check_gmcp_char("%&lt;key&gt;")</send>
   </alias>
 
 
@@ -232,8 +222,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    send_to="14"
    sequence="100"
   >
-  <send>auto_cont()
-</send>
+  <send>auto_cont()</send>
   </trigger>
 
 
@@ -247,8 +236,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    send_to="12"
    sequence="100"
   >
-  <send>on_prompt()
-</send>
+  <send>on_prompt()</send>
   </trigger>
 
 
@@ -263,14 +251,13 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    send_to="12"
    sequence="100"
   >
-  <send>add_to_score("name", "%&lt;name&gt;")
-</send>
+  <send>add_to_score("name", "%&lt;name&gt;")</send>
   </trigger>
 
   <trigger
    group="score"
    keep_evaluating="y"
-   match="^[ ]+Hours Played\:[ ]+(?P&lt;hours&gt;[^ ]+)[ ]+Age\:[ ]+(?P&lt;age&gt;[^ ]+) years[ ]+\(Born (?P&lt;bdate&gt;[^ ]+)\)$"
+   match="^[ ]+Hours Played\:[ ]+(?P&lt;hours&gt;[^ ]+)[ ]+Age\:[ ]+(?P&lt;age&gt;[^ ]+) years[ ]+\(Born (?P&lt;bdate&gt;[^ ]+)\).*$"
    omit_from_output="y"
    regexp="y"
    send_to="12"
@@ -459,7 +446,7 @@ add_to_score("max personality", "%&lt;tpers&gt;")
    send_to="12"
    sequence="100"
   >
-  <send>add_to_score("scc", "%&lt;scc&gt;%")
+  <send>
 </send>
   </trigger>
 
@@ -476,13 +463,14 @@ add_to_score("max personality", "%&lt;tpers&gt;")
   <trigger
    group="score"
    keep_evaluating="y"
-   match="^[ ]+Wea\:[ ]+(?P&lt;wea&gt;[^ ]+)\%[ ]+Def\:[ ]+(?P&lt;def&gt;[^ ]+)\%[ ]+Com\:[ ]+(?P&lt;com&gt;[^ ]+)\%[ ]+Tek\:[ ]+(?P&lt;tek&gt;[^ ]+)\%[ ]+Mys\:[ ]+(?P&lt;mys&gt;[^ ]+)\%$"
+   match="^\*[ ]SCC\:[ ]+(?P&lt;scc&gt;[^ ]+)[ ]WEA\:[ ]+(?P&lt;wea&gt;[^ ]+)[ ]+DEF\:[ ]+(?P&lt;def&gt;[^ ]+)[ ]+COM\:[ ]+(?P&lt;com&gt;[^ ]+)[ ]+TEK\:[ ]+(?P&lt;tek&gt;[^ ]+)[ ]+MYS\:[ ]+(?P&lt;mys&gt;[^ ]+)$"
    omit_from_output="y"
    regexp="y"
    send_to="12"
    sequence="100"
   >
-  <send>add_to_score("pcc weaponry", "%&lt;wea&gt;%")
+  <send>add_to_score("scc", "%&lt;scc&gt;%")
+add_to_score("pcc weaponry", "%&lt;wea&gt;%")
 add_to_score("pcc defense", "%&lt;def&gt;%")
 add_to_score("pcc combat", "%&lt;com&gt;%")
 add_to_score("pcc technical", "%&lt;tek&gt;%")
@@ -493,7 +481,7 @@ add_to_score("pcc mystical", "%&lt;mys&gt;%")
   <trigger
    group="score"
    keep_evaluating="y"
-   match="^[ ]+Class Path\: 1st\: (?P&lt;first&gt;[^ ]+)[ ]+2nd\: (?P&lt;second&gt;[^ ]+)[ ]+3rd\: (?P&lt;third&gt;[^ ]+)[ ]+4th\: (?P&lt;fourth&gt;[^ ]+)$"
+   match="^\*[ ]+Class Path\: 1st\: (?P&lt;first&gt;[^ ]+)[ ]+2nd\: (?P&lt;second&gt;[^ ]+)[ ]+3rd\: (?P&lt;third&gt;[^ ]+)[ ]+4th\: (?P&lt;fourth&gt;[^ ]+)$"
    omit_from_output="y"
    regexp="y"
    send_to="12"
@@ -537,27 +525,27 @@ add_to_score("ap tnl", "%&lt;req_ap&gt;")
   <trigger
    group="score"
    keep_evaluating="y"
-   match="^\* You have killed (?P&lt;npcs&gt;[^ ]+) creature(|s) and (?P&lt;pcs&gt;[^ ]+) player(|s) in combat\.$"
+   match="^\* You have killed (?P&lt;npcs&gt;[^ ]+) and been killed by (?P&lt;tot&gt;[^ ]+) creature(|s)\.$"
    omit_from_output="y"
    regexp="y"
    send_to="12"
    sequence="100"
   >
   <send>add_to_score("npc kills", "%&lt;npcs&gt;")
-add_to_score("pk kills", "%&lt;pcs&gt;")
+add_to_score("total deaths", "%&lt;tot&gt;")
 </send>
   </trigger>
 
   <trigger
    group="score"
    keep_evaluating="y"
-   match="^\* You have been killed (?P&lt;tot&gt;[^ ]+) time(|s)\, (?P&lt;pk&gt;[^ ]+) in player kill combat\.$"
+   match="^\* You have killed (?P&lt;pcs&gt;[^ ]+) and been killed by (?P&lt;pk&gt;[^ ]+) player(|s)\.$"
    omit_from_output="y"
    regexp="y"
    send_to="12"
    sequence="100"
   >
-  <send>add_to_score("total deaths", "%&lt;tot&gt;")
+  <send>add_to_score("pk kills", "%&lt;pcs&gt;")
 add_to_score("pk deaths", "%&lt;pk&gt;")
 </send>
   </trigger>
@@ -579,6 +567,16 @@ add_to_score("arena losses", "%&lt;losses&gt;")
   <trigger
    group="score"
    keep_evaluating="y"
+   match="^\* If CPKed, your hoard would be valued at (.+) gp\.$"
+   omit_from_output="y"
+   regexp="y"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   group="score"
+   keep_evaluating="y"
    match="^\* You are carrying (?P&lt;num&gt;[^ ]+) item(|s) weighing (?P&lt;stones&gt;[^ ]+) stone(|s) and (?P&lt;pebbles&gt;[^ ]+) pebble(|s)\.$"
    omit_from_output="y"
    regexp="y"
@@ -593,7 +591,7 @@ add_to_score("weight carried", "%&lt;stones&gt; st %&lt;pebbles&gt; pb")
   <trigger
    group="score"
    keep_evaluating="y"
-   match="^\* You have attained (?P&lt;marks&gt;[^ ]+) mark(|s)\, (?P&lt;honors&gt;[^ ]+) honor(|s)\, and (?P&lt;rels&gt;[^ ]+) relationship(|s)\.$"
+   match="^\* You have attained (?P&lt;marks&gt;[^ ]+) mark(|s)|(\, (?P&lt;honors&gt;[^ ]+) honor(|s)\,) and (?P&lt;rels&gt;[^ ]+) relationship(|s)\.$"
    omit_from_output="y"
    regexp="y"
    send_to="12"
@@ -685,7 +683,27 @@ add_to_score("ru", "%&lt;ru&gt;")
   <trigger
    group="score"
    keep_evaluating="y"
-   match="^\* You are on the quest\: \'(.+)\'$"
+   match="^\* Death insurance policies remaining: .+$"
+   omit_from_output="y"
+   regexp="y"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   group="score"
+   keep_evaluating="y"
+   match="^\* The next phase of quest #.+ is\: .+\. ?$"
+   omit_from_output="y"
+   regexp="y"
+   sequence="100"
+  >
+  </trigger>
+  
+  <trigger
+   group="score"
+   keep_evaluating="y"
+   match="^\* You may ask Tadamir for another map at\: (.+)$"
    omit_from_output="y"
    regexp="y"
    sequence="100"
@@ -731,7 +749,7 @@ add_to_score("ru", "%&lt;ru&gt;")
   <trigger
    group="skillspell"
    keep_evaluating="y"
-   match="^[ ]+(?P&lt;num&gt;[0-9]+)[ ]+(?P&lt;name&gt;.+)[ ]+(?&lt;type&gt;(WEA|TEK|COM|DEF|MYS))[ ]+(?P&lt;cmplx&gt;[0-9]+)\%[ ]+(?P&lt;lrnd&gt;[0-9]+)\%[ ]*$"
+   match="^[ ]+(?P&lt;num&gt;[0-9]+)[ ]+(?P&lt;name&gt;.+)[ ]+(?&lt;type&gt;(WEA|TEK|COM|DEF|MYS|ART|PHY|SPD|MRP|OBJ))[ ]+(?P&lt;cmplx&gt;[0-9]+)\%[ ]+(?P&lt;lrnd&gt;[0-9]+)\%[ ]+|(\(Inactive\))$"
    match_text_colour="y"
    omit_from_output="y"
    regexp="y"
@@ -746,7 +764,7 @@ add_to_score("ru", "%&lt;ru&gt;")
   <trigger
    group="skillspell"
    keep_evaluating="y"
-   match="^[ ]+(?P&lt;num&gt;[0-9]+)[ ]+(?P&lt;name&gt;.+)[ ]+(?P&lt;school&gt;(ABJ|ALT|CHA|CON|DIV|ELE|ENC|EVO|FUN|ILL|INV|NEC|SUM|THO))[ ]+(?P&lt;sp&gt;[0-9]+)[ ]+(?P&lt;cmplx&gt;[0-9]+)\%[ ]+(?P&lt;lrnd&gt;[0-9]+)\%[ ]*$"
+   match="^[ ]+(?P&lt;num&gt;[0-9]+)[ ]+(?P&lt;name&gt;.+)[ ]+(?P&lt;school&gt;(ABJ|ALT|CHA|CON|DIV|ELE|ENC|EVO|FUN|ILL|INV|NEC|SUM|THO))[ ]+(?P&lt;sp&gt;[0-9]+)[ ]+(?P&lt;cmplx&gt;[0-9]+)\%[ ]+(?P&lt;lrnd&gt;[0-9]+)\%[ ]+|(\(Pos Alt\))$"
    match_text_colour="y"
    omit_from_output="y"
    regexp="y"
@@ -1119,11 +1137,11 @@ add_to_log("hangman losses", "&lt;%losses&gt;")
   </trigger>
 
 <!-- non-empty line -->
-
+  
   <trigger
    group="scan"
    expand_variables="y"
-   match="^(|\* )(?P&lt;what&gt;(@!char_name)) (|\[Player\] )(|is )(?P&lt;dist&gt;(right here|close by|not far off|a brief walk away|rather far off|in the distance|almost out of sight)) (to the (.+)|upwards|downwards)\.$"
+   match="^(|\* )(?P&lt;what&gt;(@!char_name)) (|\[.+\] )(|is )(?P&lt;dist&gt;(right here|close by|not far off|a brief walk away|rather far off|in the distance|almost out of sight)) (to the (.+)|upwards|downwards)\.$"
    omit_from_output="y"
    regexp="y"
    send_to="14"
@@ -1206,7 +1224,7 @@ function on_prompt()
   elseif (checking == "log") then
     end_log_capture()
     show_log()
-
+    
   elseif (checking == "scan") then
     end_scan()
   end
@@ -1230,7 +1248,7 @@ end
 
 function show_htable(t)
   local tres = {}
-
+  
   for key, value in pairs(t) do
     if (type(value) ~= "table") then
       tres[#tres + 1] = key .. ": " .. value
@@ -1238,7 +1256,7 @@ function show_htable(t)
       tres[#tres + 1] = key .. ": [" .. subht_as_string(value) .. "]"
     end
   end
-
+  
   table.sort(tres)
 
   for i = 1, #tres do
@@ -1587,7 +1605,7 @@ function check_gmcp_char(name)
     Execute("sendgmcp char.worth")
 
     gmcpdata = nil
-
+    
     while (not gmcpdata) do
       wait.time(.5)
       get_gmcp_char()
@@ -1623,7 +1641,7 @@ end
 function get_gmcp_char()
   local res, gmcparg = CallPlugin("f67c4339ed0591a5b010d05b", "gmcpval", "char")
   luastmt = "gmcpdata = " .. gmcparg
-
+  
   assert(loadstring(luastmt or ""))()
 end
 
@@ -1644,7 +1662,7 @@ function check_scan(what)
   EnableTrigger("continue", true)
   EnableTrigger("a_prompt", true)
   EnableTriggerGroup("scan", true)
-  SendNoEcho("scan")
+  SendNoEcho("sca")
 end
 
 
@@ -1658,7 +1676,7 @@ function process_scan(line, what, dist)
     ["in the distance"] = "6",
     ["almost out of sight"] = "7"
   }
-
+  
   local dist_as_num, desc
 
   if (string.find(string.lower(what), scan_checking)) then
@@ -1669,7 +1687,7 @@ function process_scan(line, what, dist)
       else
         desc = " rooms away"
       end
-
+      
       line = string.gsub(line, dist, dist_as_num .. desc)
     end
 

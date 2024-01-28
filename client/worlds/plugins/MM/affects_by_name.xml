@@ -9,14 +9,14 @@
 
 <plugin
    name="affects_by_name"
-   author="Ruthgul"
+   author="Tamlin/Ruthgul"
    id="6010f6bda5ebf2210998613d"
    language="Lua"
    purpose="Subtitles affects. Not all of them. :x"
    date_written="2011-08-24 07:35:19"
-   date_modified="2020-10-01 10:22:11"
+   date_modified="2024-01-01 10:22:11"
    requires="4.71"
-   version="1.0"
+   version="2.7"
    >
 
 <description trim="y">
@@ -162,8 +162,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    script="on_siphon_or_tpdispel"
   >
   </trigger>
-
-
+ 
 <!-- blindness -->
 
   <trigger
@@ -190,7 +189,188 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    script="on_disrupt_sight_resist"
   >
   </trigger>
+  
+  -- others
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) (appears to be blinded\.|is blinded by the smoke\!|has been blinded\!|staggers suddenly(.+) by (.+) mind control\.)$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_important_stuff("%&lt;who&gt;", "BLINDNESS", "%0")
+</send>
+  </trigger>
 
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^(A brilliant flare of white light erupts in front of|(A dense black|Black) smoke(| rises from nowhere and) swirls in front of|a cloud of dust into) (?P&lt;who&gt;.+)('\s eyes\.|\'s eyes\!|\, obscuring (.+) vision\.)$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_important_stuff("%&lt;who&gt;", "BLINDNESS", "%0")
+</send>
+  </trigger>
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name))( suddenly looks more confident as the haze clouding (.+) vision is lifted| is no longer blinded|\'s eyebrows go crazy as (.+) sight returns|rubs the smoke from (.+) eyes\, regaining the ability to see)\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_important_stuff("%&lt;who&gt;", "BLINDNESS off", "%0")
+</send>
+  </trigger>  
+
+<!-- camoflauge -->
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^You notice (?P&lt;who&gt;.+) emerge from your peripheral vision\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "CAMOUFLAGE off", "%0")
+</send>
+  </trigger>
+  
+<!-- change sex -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) doesn\'t look like (him|her|it)self anymore\.\.\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "CHANGE SEX on", "%0")
+</send>
+  </trigger>
+  
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name))\'s body suddenly changes shape\, and an eldritch glimmer drifts off into the atmosphere\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "CHANGE SEX off", "%0")
+</send>
+  </trigger>
+  
+<!-- condemn --> 
+ <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(You|(@!char_name)) condemn(|s) (?P&lt;who&gt;.+) and (his|her|its) armor\, casting (him|her|it) out\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "CONDEMN armor on", "%0")
+</send>
+  </trigger>
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(You|(@!char_name)) condemn(|s) (?P&lt;who&gt;.+) and (his|her|its) magic\, casting (him|her|it) out\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "CONDEMN magic on", "%0")
+</send>
+  </trigger>
+  
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The condemnation wracking (?P&lt;who&gt;.+)\'s conscience fades\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "CONDEMN off", "%0")
+</send>
+  </trigger>
+  
+<!-- confusion -->
+ <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) staggers and steps backwards\, shaking (his|her|its) head in confusion\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "CONFUSION on", "%0")
+</send>
+  </trigger>
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^There is a low rumble of thunder as the space surrounding (?P&lt;who&gt;.+) warps and distorts\, as if in pain(.*?)$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "CONFUSION on", "%0")
+</send>
+  </trigger>
+  
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) no longer seems bewildered by (his|her|its) surroundings\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "CONFUSION off", "%0")
+</send>
+  </trigger>
 
 <!-- curse -->
 
@@ -206,8 +386,145 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    script="on_curse_resist"
   >
   </trigger>
+  
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) glows briefly with a dark crimson aura\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "CURSE on", "%0")
+</send>
+  </trigger>
 
+<trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) looks less afflicted\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "CURSE off", "%0")
+</send>
+  </trigger>
+ 
+<!-- deafen -->
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) stumbles and shakes (.+) head\, as if in pain\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "DEAFEN on", "%0")
+</send>
+  </trigger>
+  
+<!-- death grip -->
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name))\'s grip on (his|her|its) weapon loosens\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "DEATH GRIP off", "%0")
+</send>
+  </trigger>
 
+<!-- desecrate armor - needs strings? -->
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^You perform an unsightly ritual in front of (?P&lt;who&gt;.+)\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "DESECRATE ARMOR on", "%0")
+</send>
+  </trigger>
+  
+<!-- disjunction -->
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) staggers suddenly\, and is outlined by a faint amber glow\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "DISJUNCTION on", "%0")</send>
+  </trigger>
+  
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) shakes (his|her|its) head as the disjunction affecting (him|her|it) fades away\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "DISJUNCTION off", "%0")
+</send>
+  </trigger>
+ 
+<!-- electrogenic growth - needs strings --> 
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(@!char_name) coats (?P&lt;who&gt;.+) with a glob of mucus\, leaving (him|her|it) conductive but unharmed\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "ELECTROGENIC GROWTH on", "%0")
+</send>
+  </trigger>
+  
+<!-- elemental shield -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The rainbow aura surrounding (?P&lt;who&gt;.+) flickers and vanishes\.$"
+   omit_from_output="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "ELEMENTAL SHIELD off", "%0")
+</send>
+  </trigger>
+  
 <!-- energy orb -->
 
   <trigger
@@ -234,7 +551,68 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
   >
   </trigger>
 
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The electrical energy cracking through (?P&lt;who&gt;.+)\'s body is grounded\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "ENERGY ORB off", "%0")
+</send>
+  </trigger>
+  
+ <!-- etheric pollution -->
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name))\'s connection to the twin moons\' etheric energy has been disrupted\!$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_handicap_stuff("%&lt;who&gt;", "ETHERIC POLLUTION on", "%0")
+</send>
+  </trigger>
 
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) shines with the sudden return of energy from the twin moons\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_handicap_stuff("%&lt;who&gt;", "ETHERIC POLLUTION off", "%0")
+</send>
+  </trigger>
+  
+<!-- evil eye -->
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) stumbles and almost falls\, and a low gasp escapes from (.+)\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "EVIL EYE on", "%0")
+</send>
+  </trigger>
+  
+  
 <!-- extinction -->
 
   <trigger
@@ -262,7 +640,250 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
   >
   </trigger>
 
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) glows briefly with a maleficent citrine aura\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_critical_stuff("%&lt;who&gt;", "EXTINCTION on", "%0")
+</send>
+  </trigger>
 
+<!-- faerie fire -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) is (outlined by a faint pink glow|surrounded by a pink outline)\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "FAERIE FIRE on", "%0")</send>
+  </trigger>
+  
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The pink glow surrounding (?P&lt;who&gt;.+) slowly fades away\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "FAERIE FIRE off", "%0")
+</send>
+  </trigger>
+  
+<!-- faminee --> 
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^Your fingertips brush (?P&lt;who&gt;.+), causing (.+) to gasp in shock\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "FAMINE on", "%0")
+</send>
+  </trigger>
+
+ <!-- fatigue --> 
+ 
+ <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) is moving more lethargically\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "FATIGUE on", "%0")
+</send>
+  </trigger>
+  
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) seems refreshed as (his|her|its) focus returns\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "FATIGUE off", "%0")
+</send>
+  </trigger>
+
+<!-- fire invocation -->
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The elemental flames surrounding (?P&lt;who&gt;.+)\'s body wisp into the ether\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_lethal_stuff("%&lt;who&gt;", "FIRE INVOCATION off", "%0")
+</send>
+  </trigger>
+
+<!-- fireshield -->
+  <trigger
+   colour_change_type="1"
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The shield of flames surrounding (?P&lt;who&gt;.+) sputters and goes out\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "FIRESHIELD off", "%0")
+</send>
+  </trigger>
+
+<!-- flintstrike - needs strings -->
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) is coated with tinder\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "FLINTSTRIKE on", "%0")
+</send>
+  </trigger>
+  
+<!-- force field -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The air around (?P&lt;who&gt;.+) becomes less dense\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "FORCE FIELD off", "%0")
+</send>
+  </trigger>
+  
+<!-- frost -->
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) turns blue and shivers\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "FROST on", "%0")
+</send>
+  </trigger> 
+  
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The frost covering (?P&lt;who&gt;.+) thaws\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "FROST off", "%0")
+</send>
+  </trigger>
+  
+<!-- fungal growth - needs strings -->
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The fungus leeches into (?P&lt;who&gt;.+)\'s skin\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "FUNGAL GROWTH on", "%0")
+</send>
+  </trigger>
+
+<!-- haste -->
+ <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) is no longer moving quickly\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "HASTE off", "%0")
+</send>
+  </trigger>
+
+<!-- herald bloodthirst -->
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^Shrieking mightily\, (?P&lt;who&gt;.+) heralds (his|her|its) own bloodthirstiness\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "HERALD BLOODTHIRST on", "%0")</send>
+  </trigger>
+  
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The crazed look in (?P&lt;who&gt;.+)\'s bloodshot eyes fades away\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "HERALD BLOODTHIRST off", "%0")
+</send>
+  </trigger>
+  
 <!-- hex -->
 
   <trigger
@@ -278,6 +899,34 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
   >
   </trigger>
 
+<trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) glows briefly with an ominous crimson aura\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "HEX on", "%0")
+</send>
+  </trigger>
+  
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The hex placed upon (?P&lt;who&gt;.+) finally loses its hold\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "HEX off", "%0")
+</send>
+  </trigger>  
 
 <!-- jinx -->
 
@@ -294,6 +943,352 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
   >
   </trigger>
 
+<!-- ice invocation -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The air around (?P&lt;who&gt;.+)'s seems clearer\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "ICE INVOCATION off", "%0")
+</send>
+  </trigger>
+
+<!-- immobilize -->
+ <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) gasps as the power of your gaze affects (.+)\!$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "IMMOBILIZE on", "%0")
+</send>
+  </trigger>  
+  
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name))\'s knees nearly buckle as (he|she|it) regains (his|her|its) balance\, no long immobilized\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "IMMOBILIZE off", "%0")
+</send>
+  </trigger>
+  
+<!-- impede movement -->
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) stumbles and staggers under the additional weight (.+) bestowed upon (.+)\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "IMPEDE MOVEMENT", "%0")
+</send>
+  </trigger>
+  
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) staggers as (.+) legs start to function properly again\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "IMPEDE MOVEMENT off", "%0")
+</send>
+  </trigger> 
+  
+<!-- induce aggression -->
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) changes (his|her|its) stance and suddenly seems quite a bit more aggressive\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "INDUCE AGGRESSION", "%0")
+</send>
+  </trigger>
+  
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) seems to have adopted a less aggressive stance\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "INDUCE AGGRESSION off", "%0")
+</send>
+  </trigger>
+
+<!-- insanity -->
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) flails (.+) arms about wildly\, and gibbers\, shrieking about voices in (.+) head\!$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "INSANITY on", "%0")
+</send>
+  </trigger>
+  
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name))\'s eyes look less vacant as the shrieking voices in (.+) head recede\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "INSANITY off", "%0")
+</send>
+  </trigger>
+
+ <!-- inspirational hymn -->
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name))\'s ears perk up as (he|she|it) hears the word of the hymn\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "INSPIRATIONAL HYMN on", "%0")
+</send>
+  </trigger>
+  
+<!-- jinx -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) glows with a malevolent mauve aura\, but it fades too quickly\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "JINX resisted on", "%0")
+</send>
+  </trigger>
+  
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) glows briefly with a malevolent mauve aura\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "JINX on", "%0")
+</send>
+  </trigger>
+
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) appears less burdened by misfortune\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "JINX off", "%0")
+</send>
+  </trigger>
+  
+<!-- lava walk -->  
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The protective clumps of smoldering lava on (?P&lt;who&gt;.+)\'s feet solidify and crumble off\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "LAVA WALK off", "%0")
+</send>
+  </trigger>
+
+<!-- leech conduit - needs strings -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The vampiric conduit wavering from (?P&lt;who&gt;.+)\'s chest dissipates\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "LEECH CONDUIT off", "%0")
+</send>
+  </trigger>
+
+<!-- levitation -->  
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;.(@!char_name)) slowly settles back to the ground\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "LEVITATION off", "%0")
+</send>
+  </trigger>
+
+<!-- lightning invocation -->
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The lightning speeding up (?P&lt;who&gt;.+) discharges to the ground\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "LIGHTNING INVOCATION off", "%0")
+</send>
+  </trigger>
+  
+<!-- lightning shroud -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The prismatic shroud of lightning surrounding (?P&lt;who&gt;.+) surges\, then discharges harmlessly to the ground\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "LIGHTNING SHROUD off", "%0")
+</send>
+  </trigger>
+
+
+<!-- magma invocation -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The flames surrounding (?P&lt;who&gt;.+) flicker and vanish\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "MAGMA INVOCATION off", "%0")
+</send>
+  </trigger>
+
+
+<!-- malediction -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) glows with a malevolent fuchsia aura\, but it fades quickly\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "MALEDICTION resisted", "%0")
+</send>
+  </trigger>
+
+<!-- for malediction landing on self, see curse -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) glows briefly with a malevolent fuchsia aura\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "MALEDICTION on", "%0")
+</send>
+  </trigger>
+
+ <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^Malevolent energy rises from (?P&lt;who&gt;.+) and slowly dissipate(.*?)$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "MALEDICTION off", "%0")
+</send>
+  </trigger> 
 
 <!-- malignancy -->
 
@@ -308,7 +1303,38 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    script="on_malignancy_resist"
   >
   </trigger>
+  
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) is outlined with a sickly green glow\, briefly\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "MALIGNANCY on", "%0")
+</send>
+  </trigger>
 
+<!-- memory drain -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^You extend your senses into the astral plane\, working on (?P&lt;who&gt;.+)\'s memories\.\.\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "MEMORY DRAIN", "%0")
+</send>
+  </trigger>
+  
 
 <!-- mental disruption - needs strings -->
 
@@ -324,7 +1350,115 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
   >
   </trigger>
 
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) staggers suddenly as (his|her|its) mind is disrupted by your mental power\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_handicap_stuff("%&lt;who&gt;", "MENTAL DISRUPTION", "%0")
+</send>
+  </trigger>
+  
+<!-- mutilate -->
 
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^A patina of caustic acid washes over (?P&lt;who&gt;.+) before melting away (.+) skin\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "MUTILATE", "%0")
+</send>
+  </trigger>
+
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The hideous scars covering (?P&lt;who&gt;.+)'s face spontaneously heal themselves\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "MUTILATE off", "%0")
+</send>
+  </trigger>
+  
+ <!-- ooze invocation -->
+ 
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The ooze surrounding (?P&lt;who&gt;.+)\'s form evaporates into the air\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "OOZE INVOCATION off", "%0")
+</send>
+  </trigger>
+  
+<!-- paralysis -->
+
+ <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) staggers and steps back\, (clutching (his|her|its) head|seemingly winded)\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_critical_stuff("%&lt;who&gt;", "PARALYSIS on", "%0")
+</send>
+  </trigger>
+  
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) looks less rigid\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "PARALYSIS off", "%0")
+</send>
+  </trigger>  
+  
+<!-- pestilence -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The pestilential lesions covering (?P&lt;who&gt;.+) recede with time\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_important_stuff("%&lt;who&gt;", "PESTILENCE off", "%0")
+</send>
+  </trigger>  
+  
 <!-- plague -->
 
   <trigger
@@ -340,6 +1474,95 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
   >
   </trigger>
 
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^(Ghastly looking sores|More sores) start cropping up on (?P&lt;who&gt;.+)\'s body (.+)\!$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "PLAGUE on", "%0")
+</send>
+  </trigger>
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) gasps as (.+) inhales some of the disease-ridden vapor\!$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "PLAGUE on", "%0")
+</send>
+  </trigger>
+  
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The sores covering (?P&lt;who&gt;.+) suddenly vanish\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_important_stuff("%&lt;who&gt;", "PLAGUE off", "%0")
+</send>
+  </trigger>
+  
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) looks relieved as (.+) (disease|plague) is (cured|burned from (.+) body)\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_important_stuff("%&lt;who&gt;", "PLAGUE off", "%0")
+</send>
+  </trigger>
+  
+<!-- plodding fugue --> 
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) suddenly looks worn out and exhausted\, as though by a drudging slog\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "PLODDING FUGUE on", "%0")
+</send>
+  </trigger>
+  
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) seems to perk up a bit\, dancing a merry little jig\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "PLODDING FUGUE off", "%0")
+</send>
+  </trigger> 
 
 <!-- poison -->
 
@@ -354,7 +1577,103 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    script="on_poison_resist"
   >
   </trigger>
+  
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^A noxious cloud of green gas pours from (.+) fingertips\, swirling about (?P&lt;who&gt;.+)\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>if ("%&lt;who&gt;" ~= "you") then
+  show_important_stuff("%&lt;who&gt;", "POISON on", "%0")
+end
+</send>
+  </trigger>
+  
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) (looks very ill|appears to be poisoned|coughs and chokes from the toxic gasses wafting through the air)\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_important_stuff("%&lt;who&gt;", "POISON on", "%0")
+</send>
+  </trigger>
 
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) (appears to look much better|looks relieved as the poison is burned from (.+) body)\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_important_stuff("%&lt;who&gt;", "POISON off", "%0")
+</send>
+  </trigger>
+  
+<!-- sanctuary -->
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The white aura surrounding (?P&lt;who&gt;.+) fades away\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_lethal_stuff("%&lt;who&gt;", "SANCTUARY off", "%0")
+</send>
+  </trigger>
+  
+<!-- shield -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name))\'s force shield dissipates\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "SHIELD off", "%0")
+</send>
+  </trigger>  
+  
+  <!-- silence -->
+  
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) (is now|has been) silenced\!$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_important_stuff("%&lt;who&gt;", "SILENCE on", "%0")
+</send>
+  </trigger>
+  
+ <!-- sleep -->
 
 <!-- slow ... needs to be separated from hinder, help required -->
 
@@ -371,6 +1690,95 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
   >
   </trigger>
 
+<trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) is moving in slow motion\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "SLOW on", "%0")
+</send>
+  </trigger>
+  
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) (seems to be moving at a normal pace again|shrugs off (.+) sluggishness)\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_important_stuff("%&lt;who&gt;", "SLOW off", "%0")
+</send>
+  </trigger>
+
+ <!-- slow magic -->
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^You create a very small temporospatial claudication directly around (?P&lt;who&gt;.+)'s body, and (.+) time field becomes slightly out of sync with everyone else\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "SLOW MAGIC on", "%0")
+</send>
+  </trigger>
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) appears to be moving much slower\, creating an odd rippling effect in the air around (.+)\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "SLOW MAGIC on", "%0")
+</send>
+  </trigger> 
+  
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The rippling effect in the space about (?P&lt;who&gt;.+) seems to dissipate\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "SLOW MAGIC off", "%0")
+</send>
+  </trigger>
+  
+<!-- smoke invocation -->
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^(?P&lt;who&gt;(@!char_name)) fades into existence\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "SMOKE INVOCATION off", "%0")
+</send>
+  </trigger>
 
 <!-- soothing nocturne - needs strings -->
 
@@ -386,7 +1794,132 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    script="on_soothing_nocturne_resist"
   >
   </trigger>
+  
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) falters\, distracted by the beauty of the nocturne\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "SOOTHING NOCTURNE on", "%0")
+</send>
+  </trigger>
+  
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^Catching a lucky break\, (?P&lt;who&gt;.+) trips over a crack and is startled out of the nocturne\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "SOOTHING NOCTURNE off", "%0")
+</send>
+  </trigger>
+ 
+<!-- spell shield -->
 
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The shimmering bands of light surrounding (?P&lt;who&gt;.+) fade and vanish\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "SPELL SHIELD off", "%0")
+</send>
+  </trigger>
+  
+<!-- stone curse -->
+
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The curse of stone affecting (?P&lt;who&gt;.+) wears off suddenly\, and (.+) begins to move again\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "STONE CURSE off", "%0")
+</send>
+  </trigger>
+
+ <!-- steam invocation --> 
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) becomes more opaque as (his|her|its) steamy form solidifies\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "STEAM INVOCATION off", "%0")
+</send>
+  </trigger>
+
+<!-- stone skin -->
+
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name))\'s skin looks normal again\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "STONE SKIN off", "%0")
+</send>
+  </trigger>
+
+ <!-- weaken --> 
+ 
+   <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) shudders\, staggers\, and almost falls\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "WEAKEN on", "%0")
+</send>
+  </trigger>
+  
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) appears to feel stronger\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "WEAKEN off", "%0")
+</send>
+  </trigger> 
 
 <!-- web - needs new mesmerize wear off strings -->
 
@@ -402,10 +1935,83 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
    script="on_web_resist"
   >
   </trigger>
+  
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) (is enmeshed in thick webbing produced by the spiders\!|stares deeply into (.+) eyes\, seemingly unable to move\.)$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_important_stuff("%&lt;who&gt;", "WEB on", "%0")
+</send>
+  </trigger>
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^(The ground cracks and splits\, and thick\, dark green vines sprout from the earth\, restraining|A thick\, meshy web falls from somewhere above) (?P&lt;who&gt;.+)(\!|\, entangling (him|her|it) with sticky ropes\.)$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_important_stuff("%&lt;who&gt;", "WEB on", "%0")
+</send>
+  </trigger> 
+  
+    <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   match="^The (vines|webs) (binding|wrapped around) (?P&lt;who&gt;.+) (dissolve|wither and loosen)\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "WEB off", "%0")
+</send>
+  </trigger>
+
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) (breaks free from the webs holding (.+) in place\!|can now move about freely again as the forces affecting (.+) subside\.)$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "WEB off", "%0")
+</send>
+  </trigger>
+  
+  <!-- whirlwind -->
+  
+  <trigger
+   enabled="y"
+   group="affects"
+   keep_evaluating="y"
+   expand_variables="y"
+   match="^(?P&lt;who&gt;(@!char_name)) stops moving as though empowered by a whirlwind\.$"
+   omit_from_output="y"
+   regexp="y"
+   send_to="14"
+   sequence="100"
+  >
+  <send>show_other_stuff("%&lt;who&gt;", "WHIRLWIND off", "%0")
+</send>
+  </trigger>
 
 </triggers>
-
-
 
 <!--  Aliases  -->
 
@@ -537,10 +2143,15 @@ end
 
 
 function on_gmcp_generic_off()
-  get_affect_application()
+  get_affect_removal()
   who = gmcpval("target")
   spell = gmcpval("skill"):upper()
-  categorize_and_show_affect("", who, spell, "off")
+  
+  if (who == "you") then
+    text = who .. ": Affect: " .. affect 
+  end
+  
+  categorize_and_show_affect(who, who, spell, "off")
 end
 
 
@@ -550,6 +2161,11 @@ function get_affect_application()
   assert(loadstring(luastmt or ""))()
 end
 
+function get_affect_removal()
+  local res, gmcparg = CallPlugin("f67c4339ed0591a5b010d05b", "gmcpval", "char.affect_removal_msg")
+  luastmt = "gmcpdata = " .. gmcparg
+  assert(loadstring(luastmt or ""))()
+end
 
 
 ---------------------
@@ -609,6 +2225,16 @@ t_buff_stuff = {
   ["frostborne off"] = {
     ["self"] = true,
   },
+    ["glacierskin off"] = {
+    ["self"] = true,
+  },
+    ["glacierskin off"] = {
+    ["self"] = true,
+  },  
+  ["armor on"] = {
+    ["self"] = true,
+    ["others"] = true,
+  },
 }
 
 function is_buff(affect, who)
@@ -624,6 +2250,10 @@ t_lethal_stuff = {
     ["self"] = true,
     ["others"] = true,
   },
+   ["paralysis off"] = {
+    ["self"] = true,
+	["others"] = true,
+  },
 }
 function is_lethal(affect, who)
   return is_category(t_lethal_stuff, affect, who)
@@ -636,10 +2266,6 @@ t_critical_stuff = {
     ["others"] = true,
   },
   ["extinction on"] = {
-    ["self"] = true,
-    ["others"] = true,
-  },
-  ["paralysis on"] = {
     ["self"] = true,
     ["others"] = true,
   },

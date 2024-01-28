@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE muclient>
-<!-- Saved on Wednesday, January 17, 2024, 5:56 AM -->
+<!-- Saved on Sunday, January 28, 2024, 4:26 PM -->
 <!-- MuClient version 5.03 -->
 <!-- Written by Nick Gammon -->
 <!-- Home Page: http://www.mushclient.com/ -->
@@ -8,9 +8,9 @@
 <world
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-17 05:56:37"
+   date_saved="2024-01-28 16:26:10"
 
-   auto_log_file_name=""
+   auto_log_file_name="D:\Onedrive\Desktop\mushclient\worlds\plugins\MM\Logs\%d.%b.%y_Log.html"
    auto_say_override_prefix="-"
    auto_say_string="say "
    chat_name="Name-not-set"
@@ -22,8 +22,8 @@
    new_activity_sound="(No sound)"
    output_font_name="Lucida Console"
    password_base64="y"
-   password=""
-   player=""
+   password="cjNzc2whbg=="
+   player="Tamlin"
    script_editor="notepad"
    script_editor_argument="%file"
    script_language="Lua"
@@ -121,9 +121,8 @@
    unpause_on_send="y"
    use_default_input_font="y"
    use_default_output_font="y"
-   use_mxp="2"
    warn_if_scripting_inactive="y"
-   wrap_column="151"
+   wrap_column="153"
    write_world_name_to_log="y"
    > <!-- end of general world attributes -->
   <log_file_postamble>&lt;/font&gt;&lt;/code&gt;&lt;/pre&gt;
@@ -151,7 +150,7 @@ FBF - 34654</notes>
 <triggers
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-17 05:56:37"
+   date_saved="2024-01-28 16:26:10"
   >
   <trigger
    enabled="y"
@@ -543,6 +542,28 @@ k uni</send>
   </trigger>
   <trigger
    enabled="y"
+   group="BOSS"
+   keep_evaluating="y"
+   match="^The (.+) begins glowing with a brilliant light\!$"
+   regexp="y"
+   send_to="2"
+   sequence="100"
+  >
+  <send>ANNIHILATE!</send>
+  </trigger>
+  <trigger
+   enabled="y"
+   group="BOSS"
+   keep_evaluating="y"
+   match="^The (.+) begins muttering an incantation\.\.\.$"
+   regexp="y"
+   send_to="2"
+   sequence="100"
+  >
+  <send>RUN AWAY!</send>
+  </trigger>
+  <trigger
+   enabled="y"
    group="Kali"
    keep_evaluating="y"
    match="^The dread pirate Kali jumps through the air\, landing a foot on"
@@ -551,6 +572,16 @@ k uni</send>
    sequence="100"
   >
   <send>k kali</send>
+  </trigger>
+  <trigger
+   group="PG"
+   keep_evaluating="y"
+   match="^There\'s still some loot in the corpse \- empty it first\.$"
+   regexp="y"
+   send_to="10"
+   sequence="100"
+  >
+  <send>get all.tourm cor</send>
   </trigger>
   <trigger
    enabled="y"
@@ -611,6 +642,26 @@ ship wright</send>
   </trigger>
   <trigger
    enabled="y"
+   group="ScatterMobs"
+   keep_evaluating="y"
+   match="^\*\*\*A short\, gi-wearing warrior stands here defiantly\.$"
+   regexp="y"
+   sequence="100"
+   sound="D:\Onedrive\Desktop\mushclient\sounds\msp\mm_cowbell.mp3"
+  >
+  </trigger>
+  <trigger
+   enabled="y"
+   group="ScatterMobs"
+   keep_evaluating="y"
+   match="^\[Boss\] \*\*\*\*A skitterish monkey hobbles around on a crippled foot\, peering about suspiciously\.$"
+   regexp="y"
+   sequence="100"
+   sound="D:\Onedrive\Desktop\mushclient\sounds\msp\mm_cowbell.mp3"
+  >
+  </trigger>
+  <trigger
+   enabled="y"
    group="Crystal"
    lines_to_match="24"
    keep_evaluating="y"
@@ -659,7 +710,7 @@ EnableTrigger("findcrystal", false)</send>
 <aliases
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-17 05:56:37"
+   date_saved="2024-01-28 16:26:10"
   >
   <alias
    match="$ei (.*)"
@@ -838,7 +889,6 @@ mix 'prophylactic draught'
 mix 'beast of burden'
 mix 'alchemical attunement'
 mix 'halflings herb'
-mix 'essence of youth'
 wear severed
 put grind pouch</send>
   </alias>
@@ -931,8 +981,8 @@ DoAfter (33, "ship mark coordinateadd 2 952 768 Alyce's Folley")
 DoAfter (34, "ship mark coordinateadd 2 952 783 IWF SE of PP")
 DoAfter (35, "ship mark coordinateadd 2 966 797 SW of PP")
 DoAfter (36, "ship mark coordinateadd 2 965 804 E of PP Passed Huaka Skull &gt;&gt;&gt;")
-DoAfter (37, "ship mark coordinateadd 2 953 816 Passed Huaka Skull &gt;&gt;&gt;")
-DoAfter (38, "ship mark coordinateadd 2 947 810 Passed Huaka Skull &gt;&gt;&gt;")
+DoAfter (37, "ship mark coordinateadd 2 955 812 Passed Huaka Skull &gt;&gt;&gt;")
+DoAfter (38, "ship mark coordinateadd 2 947 812 Passed Huaka Skull &gt;&gt;&gt;")
 DoAfter (39, "ship mark coordinateadd 2 938 814 S of PP")
 DoAfter (40, "ship mark coordinateadd 2 938 854 SW of PP")
 DoAfter (41, "ship mark coordinateadd 2 932 860 W of PP")
@@ -1046,9 +1096,9 @@ sayto %1 tourmaline duke</send>
 <timers
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-17 05:56:37"
+   date_saved="2024-01-28 16:26:10"
   >
-  <timer name="resetlogs" enabled="y" second="0.00" offset_second="0.00"    send_to="10"
+  <timer name="resetlogs" enabled="y" second="0.00" offset_second="0.00"    send_to="12"
 at_time="y" group="logging" >
   <send>CloseLog ()
 OpenLog ("", true)</send>
@@ -1066,7 +1116,7 @@ group="forthrak" >
 <macros
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-17 05:56:37"
+   date_saved="2024-01-28 16:26:10"
   >
 
   <macro name="up" type="send_now" >
@@ -1160,14 +1210,14 @@ group="forthrak" >
 <variables
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-17 05:56:37"
+   date_saved="2024-01-28 16:26:10"
   >
   <variable name="allowed"></variable>
   <variable name="dropitems">a sickle shaped fellblade</variable>
-  <variable name="mxp_hp">4641</variable>
-  <variable name="mxp_sp">3685</variable>
-  <variable name="mxp_st">1194</variable>
-  <variable name="tank">a soldier in a blue and grey uniform</variable>
+  <variable name="mxp_hp">4732</variable>
+  <variable name="mxp_sp">3775</variable>
+  <variable name="mxp_st">2016</variable>
+  <variable name="tank">a hideous y'Goth</variable>
 </variables>
 
 <!-- colours -->
@@ -1175,7 +1225,7 @@ group="forthrak" >
 <colours
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-17 05:56:37"
+   date_saved="2024-01-28 16:26:10"
   >
 
 <ansi>
@@ -1232,7 +1282,7 @@ group="forthrak" >
 <keypad
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-17 05:56:37"
+   date_saved="2024-01-28 16:26:10"
   >
 
   <key name="0" >
@@ -1356,7 +1406,7 @@ group="forthrak" >
 <printing
    muclient_version="5.03"
    world_file_version="15"
-   date_saved="2024-01-17 05:56:37"
+   date_saved="2024-01-28 16:26:10"
   >
 
 <ansi>
@@ -1386,37 +1436,37 @@ group="forthrak" >
 <include name="MM\global_vars.xml" plugin="y" />
 <include name="MM\detect_globals.xml" plugin="y" />
 <include name="Repeat_Command.xml" plugin="y" />
-<include name="MM\world_mini.xml" plugin="y" />
 <include name="MM\speedwalk_manager_gmcp_p2.xml" plugin="y" />
-<include name="MM\switch_maps.xml" plugin="y" />
 <include name="MM\sequencer.xml" plugin="y" />
+<include name="Config_Option_Changer.xml" plugin="y" />
+<include name="MM\msp_lua.xml" plugin="y" />
+<include name="MM\CrystalLocator.xml" plugin="y" />
+<include name="MM\switch_maps.xml" plugin="y" />
 <include name="MM\ship_kp.xml" plugin="y" />
-<include name="MM\ship_lookout.xml" plugin="y" />
-<include name="MM\affects_by_name.xml" plugin="y" />
 <include name="MM\kills_tnl.xml" plugin="y" />
 <include name="MM\meh_prompt.xml" plugin="y" />
 <include name="MM\meh_timers.xml" plugin="y" />
-<include name="MM\missing_affects.xml" plugin="y" />
 <include name="MM\play_sounds.xml" plugin="y" />
-<include name="MM\quests.xml" plugin="y" />
 <include name="MM\quests_abridged.xml" plugin="y" />
 <include name="MM\terrain_o_vision.xml" plugin="y" />
 <include name="MM\transport_kp.xml" plugin="y" />
 <include name="MM\vitals_changes.xml" plugin="y" />
 <include name="MM\faux_sextant.xml" plugin="y" />
-<include name="Config_Option_Changer.xml" plugin="y" />
-<include name="MM\capture2dworld.xml" plugin="y" />
-<include name="MM\plugins_updater_v3.xml" plugin="y" />
-<include name="MM\msp_lua.xml" plugin="y" />
 <include name="MM\vitals_bars_v2.xml" plugin="y" />
 <include name="MM\opponent_hp_sub.xml" plugin="y" />
+<include name="MM\capture2dworld.xml" plugin="y" />
 <include name="MM\tick.xml" plugin="y" />
 <include name="MM\dpercent.xml" plugin="y" />
-<include name="MM\events_mini.xml" plugin="y" />
-<include name="MM\latest_daily.xml" plugin="y" />
-<include name="MM\MM_GMCP_Mapper_GMCP.xml" plugin="y" />
-<include name="MM\meh_pirates.xml" plugin="y" />
-<include name="MM\capture2mini.xml" plugin="y" />
-<include name="MM\CrystalLocator.xml" plugin="y" />
+<include name="MM\affects_by_name.xml" plugin="y" />
+<include name="MM\quests.xml" plugin="y" />
 <include name="MM\IMap_GMCP.xml" plugin="y" />
+<include name="MM\latest_daily.xml" plugin="y" />
+<include name="MM\missing_affects.xml" plugin="y" />
+<include name="MM\ship_lookout.xml" plugin="y" />
+<include name="MM\meh_pirates.xml" plugin="y" />
+<include name="MM\world_mini.xml" plugin="y" />
+<include name="MM\events_mini.xml" plugin="y" />
+<include name="MM\MM_GMCP_Mapper_GMCP.xml" plugin="y" />
+<include name="MM\capture2mini.xml" plugin="y" />
+<include name="MM\plugins_updater_v3.xml" plugin="y" />
 </muclient>

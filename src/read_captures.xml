@@ -9,15 +9,15 @@
 
 <plugin
    name="read_captures"
-   author="Ruthgul"
+   author="Tamlin/Milandra/Ruthgul"
    id="66f8ef96f2166bb586529087"
    language="Lua"
    purpose="Reads channel captures switching focus from the world window."
    save_state="y"
    date_written="2013-11-03 14:41:30"
-   date_modified="2016-02-11 14:13:31"
+   date_modified="2024-02-11 14:13:31"
    requires="4.71"
-   version="1.0"
+   version="2.7"
    >
 
 <description trim="y">

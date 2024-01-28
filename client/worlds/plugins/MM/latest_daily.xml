@@ -604,31 +604,31 @@ function run_dailies(where)
    if (where == "none") then
       Note("* beginning daily run to: New Rigel")
           DoAfterSpecial(1, "mapper goto 2809518", 10)
-          DoAfterSpecial(6, "run newrigel", 0)
- 	  DoAfterSpecial(30, "mapper goto 62036", 10)
+          DoAfterSpecial(8, "run newrigel", 0)
+ 	  DoAfterSpecial(33, "mapper goto 62036", 10)
    else
        Execute("recall")
      if (where == "New Rigel") then
        Note ("*Daily Run:  Xaventry")
           DoAfterSpecial(1, "mapper goto 2809518", 10)
-          DoAfterSpecial(6, "run xaventry", 0)
- 	  DoAfterSpecial(40, "mapper goto 73100", 10)
+          DoAfterSpecial(8, "run xaventry", 0)
+ 	  DoAfterSpecial(43, "mapper goto 73100", 10)
      end
      if (where == "Xaventry") then
        Note ("*Daily Run:  Tellerium")
           DoAfterSpecial(1, "mapper goto 10636", 10)
-          DoAfterSpecial(5, "sh buy tellerium", 0)
-          DoAfterSpecial(6, "down", 0)
-          DoAfterSpecial(7, "give tellerium ganuk", 0)
- 	  DoAfterSpecial(10, "mapper goto 41790", 10)
+          DoAfterSpecial(8, "sh buy tellerium", 0)
+          DoAfterSpecial(9, "down", 0)
+          DoAfterSpecial(10, "give tellerium ganuk", 0)
+ 	  DoAfterSpecial(13, "mapper goto 41790", 10)
      end
      if (where == "Tellerium") then
        Note ("*Daily Run: Sigil")
           DoAfterSpecial(1, "mapper goto 10636", 10)
-          DoAfterSpecial(5, "sh buy sigil", 0)
-          DoAfterSpecial(6, "down", 0)
-          DoAfterSpecial(7, "give sigil ganuk", 0)
- 	  DoAfterSpecial(10, "mapper goto 27890", 10)
+          DoAfterSpecial(8, "sh buy sigil", 0)
+          DoAfterSpecial(9, "down", 0)
+          DoAfterSpecial(10, "give sigil ganuk", 0)
+ 	  DoAfterSpecial(13, "mapper goto 27890", 10)
      end
 	 if (where == "Sigil") then
 	   Note ("*Daily Run: Complete*")
