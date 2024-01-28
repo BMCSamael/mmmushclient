@@ -25,8 +25,10 @@
 <![CDATA[
 
 .----------.
- | dpercent |
+| dpercent |
 `----------'
+
+If MushReader is detected (and play_sounds is present), it will also play a short sound when it detects the end of a combat round.
 
 Shows the % of damage at the beginning of the combat line
 
@@ -703,8 +705,9 @@ function OnPluginListChanged()
 end
 
 function detect_plugins()
-    use_events_mini = events_mini_installed()
-    reader_present = reader_plugin_present()
+  use_events_mini = events_mini_installed()
+  reader_present = reader_plugin_present()
+  play_sounds_present = play_sounds_plugin_present()
 end
 
 function is_plugin_present(name, id)
@@ -1110,8 +1113,26 @@ function inc_my_dmg(desc, who, bpart, type, dmg)
     end
 end
 
+----------
+-- sound
+----------
+
+function make_noise()
+  -- if MushReader detected, + if play_sounds is installed + 'ping.mp3' file exists, play it
+
+  if (reader_present) and (play_sounds_present) then
+    Execute("play a sound ping.mp3")
+  end
+end
+
+
+function play_sounds_plugin_present()
+  return is_plugin_present("play_sounds", "4327c10cd9ae383bef04a7fc")
+end
+
+
 function reader_plugin_present()
-    return is_plugin_present("MushReader", "925cdd0331023d9f0b8f05a7")
+  return is_plugin_present("MushReader", "925cdd0331023d9f0b8f05a7")
 end
 
 ]]>
