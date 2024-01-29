@@ -951,7 +951,7 @@ function inc_other_def(desc, tgt, who, type)
 	    v.text = string.gsub(v.text, "-", " ")
             desc = string.gsub(desc, "-", " ")
 	    -- spacing
-	    space = math.floor((14-string.len(type))/2)
+	    space = math.floor((20-string.len(type))/2)
 		
         if (config.show_dmg_brief) then
             newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. tgt .. "]")
@@ -973,7 +973,7 @@ function inc_vs_me_def(desc, tgt, type)
 	    v.text = string.gsub(v.text, "-", " ")
             desc = string.gsub(desc, "-", " ")
 	    -- spacing
-	    space = math.floor((14-string.len(type))/2)
+	    space = math.floor((20-string.len(type))/2)
         if (config.show_dmg_brief) then
             newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. tgt .. "]")
         else
@@ -994,7 +994,7 @@ function inc_my_def(desc, who, type)
 	    v.text = string.gsub(v.text, "-", " ")
             desc = string.gsub(desc, "-", " ")
 	    -- spacing
-	    space = math.floor((14-string.len(type))/2)
+	    space = math.floor((20-string.len(type))/2)
         if (config.show_dmg_brief) then
             newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. who .. "]")
         else
@@ -1017,7 +1017,7 @@ end
 
 function inc_other_dmg(desc, who, bpart, type, dmg)
    who = string.lower(Trim(who)) 
-    local newval, space
+    local newval, space, attacktype
 
     if (damage_dealt[dmg]) then
         for k, v in ipairs(trigger_style_runs) do
@@ -1025,13 +1025,15 @@ function inc_other_dmg(desc, who, bpart, type, dmg)
 	    v.text = string.gsub(v.text, "-", " ")
             desc = string.gsub(desc, "-", " ")
 	    -- spacing
-	    space = math.floor((14-string.len(type))/2)
+		
+	    space = math.floor((20-string.len(type .. " - " .. bpart))/2)
+		attacktype = type .. " - " .. bpart
             if (config.show_dmg_brief) then
                 newval =
                     string.gsub(
                     v.text,
                     desc,
-                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. who .. "] [" .. bpart .. "]"
+                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. attacktype .. (" "):rep(space+(string.len(attacktype)%2)) .. "] [" .. who .. "]"
                 )
             else
                 newval = string.gsub(v.text, desc, "[  " .. damage_dealt[dmg] .. "  ] " .. desc)
@@ -1048,23 +1050,25 @@ end
 
 function inc_vs_me_dmg(desc, who, bpart, type, dmg)
     who = string.lower(Trim(who))
-    local newval, space
+    local newval, space, attacktype
 
     if (damage_dealt[dmg]) then
         for k, v in ipairs(trigger_style_runs) do
-            -- clean up dashes (temp to function)
+              -- clean up dashes (temp to function)
 	    v.text = string.gsub(v.text, "-", " ")
             desc = string.gsub(desc, "-", " ")
 	    -- spacing
-	    space = math.floor((14-string.len(type))/2)
+		
+	    space = math.floor((20-string.len(type .. " - " .. bpart))/2)
+		attacktype = type .. " - " .. bpart
             if (config.show_dmg_brief) then
                 newval =
                     string.gsub(
                     v.text,
                     desc,
-                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. who .. "] [" .. bpart .. "]"
+                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. attacktype .. (" "):rep(space+(string.len(attacktype)%2)) .. "] [" .. who .. "]"
                 )
-            else
+            else 
                 newval = string.gsub(v.text, desc, "[  " .. damage_dealt[dmg] .. "  ] " .. desc)
             end
             ColourTell(RGBColourToName(v.textcolour), RGBColourToName(v.backcolour), newval)
@@ -1086,20 +1090,23 @@ end
 function inc_my_dmg(desc, who, bpart, type, dmg)
     who = string.lower(Trim(who))
 
-    local newval, space
+    local newval, space, attacktype
+
     if (damage_dealt[dmg]) then
         for k, v in ipairs(trigger_style_runs) do
-            -- clean up dashes (temp to function)
+              -- clean up dashes (temp to function)
 	    v.text = string.gsub(v.text, "-", " ")
             desc = string.gsub(desc, "-", " ")
 	    -- spacing
-	    space = math.floor((14-string.len(type))/2)
+		
+	    space = math.floor((20-string.len(type .. " - " .. bpart))/2)
+		attacktype = type .. " - " .. bpart
             if (config.show_dmg_brief) then
                 newval =
                     string.gsub(
                     v.text,
                     desc,
-                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. who .. "] [" .. bpart .. "]"
+                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. attacktype .. (" "):rep(space+(string.len(attacktype)%2)) .. "] [" .. who .. "]"
                 )
             else
                 newval = string.gsub(v.text, desc, "[" .. damage_dealt[dmg] .. "] " .. desc)
