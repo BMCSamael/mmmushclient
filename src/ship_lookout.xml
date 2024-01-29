@@ -382,7 +382,6 @@ function lookout_line(num, target, dist, dir, desc, ship, flag, pirate, flagt, c
   tconcat = table.concat(t, ",")
   --Note(tconcat)
   ArraySet("ashlookout", mainkey, tconcat)
-  end_lookout()
 end
 
 
@@ -571,6 +570,7 @@ function plot_lookout(hposx, hposy, obposx, obposy)
     end
   end)
   EnableTrigger("lookout_imap", false)
+  end_lookout()
 end
 
 
