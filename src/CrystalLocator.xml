@@ -39,15 +39,17 @@ CrystalLocator - Automatically finds the co-ords of a crystal, and updates IMap 
    send_to="12"
    sequence="100"
   >
-  <send>EnableTrigger("findcrystal", true)</send>
+  <send>EnableTrigger("findcrystal", true)
+  EnableTrigger("findrealcrystal", true)
+  </send>
   </trigger>
 
   <trigger
    group="crystallocator"
-   lines_to_match="23"
    keep_evaluating="y"
    match="The map includes the coordinates of the displayed area: (.?)\, (.?)\."
    multi_line="y"
+   lines_to_match="23"
    name="findsugcrystal"
    regexp="y"
    send_to="12"
@@ -68,6 +70,50 @@ CrystalLocator - Automatically finds the co-ords of a crystal, and updates IMap 
      end</send>
   </trigger>
 
+  <trigger
+   group="crystallocator"
+   lines_to_match="24"
+   keep_evaluating="y"
+   match="near one corner\.\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n"
+   multi_line="y"
+   name="findrealcrystal"
+   regexp="y"
+   send_to="12"
+   sequence="100"
+  >
+   <send>http = require "socket.http"
+local mylines = "%1\\r\\n%2\\r\\n%3\\r\\n%4\\r\\n%5\\r\\n%6\\r\\n%7\\r\\n%8\\r\\n%9\\r\\n%&lt;10&gt;\\r\\n%&lt;11&gt;\\r\\n%&lt;12&gt;\\r\\n%&lt;13&gt;\\r\\n%&lt;14&gt;\\r\\n%&lt;15&gt;\\r\\n%&lt;16&gt;\\r\\n%&lt;17&gt;\\r\\n%&lt;18&gt;\\r\\n%&lt;19&gt;\\r\\n%&lt;20&gt;\\r\\n%&lt;21&gt;\\r\\n%&lt;22&gt;\\r\\n"
+page, retcode, header = http.request("http://mmatlas.dune.net/find-crystal-guild-vi.pl","map=".. mylines)
+print (mylines)
+if (retcode == 200) then
+  cstart = string.find(page, "(", 0, true)
+
+  if (cstart ~= nil) then
+    cend = string.find(page, ")", 0, true)
+    crystal = string.sub(page, cstart + 1, cend - 1)
+    Note("Your crystal is located at ".. crystal)
+
+    -- we check if iMap is installed + started
+    local result, imap_started = CallPlugin("adc3a873d4e47348da7cb426", "IsStarted")
+    if (result == 0) then -- it is installed
+      if (imap_started == false) then
+        -- it isn't started, so we start it
+        Execute("imap start")
+      end
+      Execute("imap dest ".. crystal)
+	  Execute("imap desticon custom")
+     end
+
+  else
+    Note("MMAtlas: " .. page)
+  end
+
+else
+  Note("error accessing MMAtlas - code: " .. retcode)
+end
+EnableTrigger("findrealcrystal", false)</send>
+  </trigger>
+  
 
   <trigger
    group="crystallocator"
@@ -80,6 +126,7 @@ CrystalLocator - Automatically finds the co-ords of a crystal, and updates IMap 
    send_to="12"
    sequence="100"
   >
+ 
   <send>http = require "socket.http"
 local mylines = "%1\\r\\n%2\\r\\n%3\\r\\n%4\\r\\n%5\\r\\n%6\\r\\n%7\\r\\n%8\\r\\n%9\\r\\n%&lt;10&gt;\\r\\n%&lt;11&gt;\\r\\n%&lt;12&gt;\\r\\n%&lt;13&gt;\\r\\n%&lt;14&gt;\\r\\n%&lt;15&gt;\\r\\n%&lt;16&gt;\\r\\n%&lt;17&gt;\\r\\n%&lt;18&gt;\\r\\n%&lt;19&gt;\\r\\n%&lt;20&gt;\\r\\n%&lt;21&gt;\\r\\n%&lt;22&gt;"
 page, retcode, header = http.request("http://mmatlas.dune.net/find-crystal-guild-vi.pl","map=".. mylines)
@@ -175,7 +222,8 @@ end</send>
    send_to="12"
    sequence="100"
   >
-  <send>EnableTrigger("findcrystal", false)</send>
+  <send>EnableTrigger("findcrystal", false)
+  EnableTrigger("findrealcrystal", false)</send>
   </alias>
   <alias
    match="^crystal on$"
@@ -185,7 +233,8 @@ end</send>
    send_to="12"
    sequence="100"
   >
-  <send>EnableTrigger("findcrystal", true)</send>
+  <send>EnableTrigger("findcrystal", true)
+  EnableTrigger("findrealcrystal", true)</send>
   </alias>
 </aliases>
 
