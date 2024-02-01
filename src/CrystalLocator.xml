@@ -84,7 +84,7 @@ CrystalLocator - Automatically finds the co-ords of a crystal, and updates IMap 
    <send>http = require "socket.http"
 local mylines = "%1\\r\\n%2\\r\\n%3\\r\\n%4\\r\\n%5\\r\\n%6\\r\\n%7\\r\\n%8\\r\\n%9\\r\\n%&lt;10&gt;\\r\\n%&lt;11&gt;\\r\\n%&lt;12&gt;\\r\\n%&lt;13&gt;\\r\\n%&lt;14&gt;\\r\\n%&lt;15&gt;\\r\\n%&lt;16&gt;\\r\\n%&lt;17&gt;\\r\\n%&lt;18&gt;\\r\\n%&lt;19&gt;\\r\\n%&lt;20&gt;\\r\\n%&lt;21&gt;\\r\\n%&lt;22&gt;\\r\\n"
 page, retcode, header = http.request("http://mmatlas.dune.net/find-crystal-guild-vi.pl","map=".. mylines)
-print (mylines)
+
 if (retcode == 200) then
   cstart = string.find(page, "(", 0, true)
 

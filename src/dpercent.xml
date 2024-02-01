@@ -207,14 +207,14 @@ inc_my_def("%0", "%&lt;who&gt;", "parry")
    enabled="y"
    group="script-sbrief"
    keep_evaluating="y"
-   match="^You catch (.+) on (.+)\.$"
+   match="^You catch (?P&lt;who&gt;.+)\'s (.+) on (.+)\.$"
    regexp="y"
    omit_from_output="y"
    send_to="14"
    sequence="100"
   >
   <send>trigger_style_runs = TriggerStyleRuns
-inc_my_def("%0", "me", "shield_block")
+inc_my_def("%0", "%&lt;who&gt;", "shield_block")
 </send>
   </trigger>
 
@@ -432,14 +432,14 @@ inc_other_def("%0", "%&lt;tgt&gt;", "%&lt;who&gt;", "parry")
    group="script-sbrief"
    keep_evaluating="y"
    expand_variables="y"
-   match="^(?P&lt;tgt&gt;(@!char_name)) catches (.+) on (.+)\.$"
+   match="^(?P&lt;tgt&gt;(@!char_name)) catches (?P&lt;who&gt;.+)\'s (.+) on (.+)\.$"
    regexp="y"
    omit_from_output="y"
    send_to="14"
    sequence="100"
   >
   <send>trigger_style_runs = TriggerStyleRuns
-inc_other_def("%0", "%&lt;tgt&gt;", "?", "shield_block")
+inc_other_def("%0", "%&lt;tgt&gt;", "%&lt;who&gt;", "shield_block")
 </send>
   </trigger>
 
@@ -488,7 +488,7 @@ inc_other_def("%0", "%&lt;tgt&gt;", "%&lt;who&gt;", "tk_shield")
    sequence="100"
   >
   <send>trigger_style_runs = TriggerStyleRuns
-check_other_dmg("%0", "%&lt;who&gt;", "none", "fail", "miss")
+check_other_dmg("%0", "%&lt;who&gt;", "%&lt;tgt&gt;", "none", "fail", "miss")
 </send>
   </trigger>
 
@@ -520,7 +520,7 @@ check_other_dmg("%0", "%&lt;who&gt;", "none", "fail", "miss")
    sequence="100"
   >
   <send>trigger_style_runs = TriggerStyleRuns
-   inc_other_dmg("%0", "%&lt;tgt&gt;", "%&lt;bpart&gt;", "flames", "%&lt;how_much&gt;")
+   inc_other_dmg("%0", "%&lt;who&gt;", "%&lt;tgt&gt;", "%&lt;bpart&gt;", "flames", "%&lt;how_much&gt;")
 </send>
   </trigger>
 
@@ -529,14 +529,14 @@ check_other_dmg("%0", "%&lt;who&gt;", "none", "fail", "miss")
    group="script-dpercent"
    keep_evaluating="y"
    expand_variables="y"
-   match="(?P&lt;who&gt;(@!char_name))\'s (|(@!ordinal) )attack didn\'t seem to have any effect on (.+)\.$"
+   match="(?P&lt;who&gt;(@!char_name))\'s (|(@!ordinal) )attack didn\'t seem to have any effect on (?P&lt;tgt&gt;.+)\.$"
    regexp="y"
    omit_from_output="y"
    send_to="14"
    sequence="100"
   >
   <send>trigger_style_runs = TriggerStyleRuns
-   check_other_dmg("%0", "%&lt;who&gt;", "none", "immune", "no")
+   check_other_dmg("%0", "%&lt;who&gt;", "%&lt;tgt&gt;", "none", "immune", "no")
 </send>
   </trigger>
 
@@ -552,7 +552,7 @@ check_other_dmg("%0", "%&lt;who&gt;", "none", "fail", "miss")
    sequence="100"
   >
   <send>trigger_style_runs = TriggerStyleRuns
-   check_other_dmg("%0", "%&lt;tgt&gt;", "%&lt;bpart&gt;", "%&lt;type&gt;", "%&lt;how_much&gt;")
+   check_other_dmg("%0", "%&lt;who&gt;", "%&lt;tgt&gt;", "%&lt;bpart&gt;", "%&lt;type&gt;", "%&lt;how_much&gt;")
 </send>
   </trigger>
 
@@ -954,7 +954,7 @@ function inc_other_def(desc, tgt, who, type)
 	    space = math.floor((20-string.len(type))/2)
 		
         if (config.show_dmg_brief) then
-            newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. tgt .. "]")
+            newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [ " .. who .. " ] > [ " .. tgt .. " ]")
         else
             newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. type .. "] " .. desc)
         end
@@ -975,7 +975,7 @@ function inc_vs_me_def(desc, tgt, type)
 	    -- spacing
 	    space = math.floor((20-string.len(type))/2)
         if (config.show_dmg_brief) then
-            newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. tgt .. "]")
+            newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [ you ] > [ " .. tgt .. " ]")
         else
             newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. type .. "] " .. desc)
         end
@@ -996,7 +996,7 @@ function inc_my_def(desc, who, type)
 	    -- spacing
 	    space = math.floor((20-string.len(type))/2)
         if (config.show_dmg_brief) then
-            newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [" .. who .. "]")
+            newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. (" "):rep(space) .. type .. (" "):rep(space+(string.len(type)%2)) .. "] [ " .. who .. " ] > [ you ]")
         else
             newval = string.gsub(v.text, desc, "[  DEFN  ] [" .. type .. "] " .. desc)
         end
@@ -1010,12 +1010,12 @@ end
 -- attacks --
 -----------------------
 
-function check_other_dmg(desc, who, bpart, type, dmg)
+function check_other_dmg(desc, who, target, bpart, type, dmg)
     who = string.lower(Trim(who))
-    inc_other_dmg(desc, who, bpart, type, dmg)
+    inc_other_dmg(desc, who, target, bpart, type, dmg)
 end
 
-function inc_other_dmg(desc, who, bpart, type, dmg)
+function inc_other_dmg(desc, who, target, bpart, type, dmg)
    who = string.lower(Trim(who)) 
     local newval, space, attacktype
 
@@ -1033,7 +1033,7 @@ function inc_other_dmg(desc, who, bpart, type, dmg)
                     string.gsub(
                     v.text,
                     desc,
-                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. attacktype .. (" "):rep(space+(string.len(attacktype)%2)) .. "] [" .. who .. "]"
+                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. attacktype .. (" "):rep(space+(string.len(attacktype)%2)) .. "] [ " .. who .. " ] > [" .. target .. "]"
                 )
             else
                 newval = string.gsub(v.text, desc, "[  " .. damage_dealt[dmg] .. "  ] " .. desc)
@@ -1066,7 +1066,7 @@ function inc_vs_me_dmg(desc, who, bpart, type, dmg)
                     string.gsub(
                     v.text,
                     desc,
-                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. attacktype .. (" "):rep(space+(string.len(attacktype)%2)) .. "] [" .. who .. "]"
+                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. attacktype .. (" "):rep(space+(string.len(attacktype)%2)) .. "] [ " .. who .. " ] > [ You ]"					
                 )
             else 
                 newval = string.gsub(v.text, desc, "[  " .. damage_dealt[dmg] .. "  ] " .. desc)
@@ -1106,7 +1106,7 @@ function inc_my_dmg(desc, who, bpart, type, dmg)
                     string.gsub(
                     v.text,
                     desc,
-                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. attacktype .. (" "):rep(space+(string.len(attacktype)%2)) .. "] [" .. who .. "]"
+                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. attacktype .. (" "):rep(space+(string.len(attacktype)%2)) .. "] [ You ] > [ " .. who .. " ]"
                 )
             else
                 newval = string.gsub(v.text, desc, "[" .. damage_dealt[dmg] .. "] " .. desc)

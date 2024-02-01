@@ -48,6 +48,8 @@ Syntax:
 * imap recolor spk [on|off]  - toggles recolor for Alyria's SPK waters on/off (on by default)
 * imap spk color {purple|red}  - selects a color for SPK waters in Alyria (purple by default)
 
+* imap zoom [on|off] - toggles the imap to zoom in or not (off by default)
+
 * imap icon {arrow|circ|cross|ship|horse}  - selects an icon type to be used while walking, riding, etc. (default = arrow)
 * imap shipicon {arrow|circ|cross|ship|horse}  - selects an icon type to be used while aboard a ship (default = cross)
 
@@ -121,6 +123,18 @@ http://github.com/BMCSamael/mmmushclient/
    sequence="100"
   >
   <send>imap_set_gamma("%&lt;status&gt;")
+</send>
+  </alias>
+  
+<!-- Zoom Map -->
+  <alias
+    enabled="y"
+    match="^imap[ ]+zoom(|[ ]+(?P&lt;status&gt;(on|off)))$"
+    regexp="y"
+    send_to="12"
+    sequence="100"
+  >
+  <send>toggle_map_zoom("%&lt;status&gt;")
 </send>
   </alias>
 
@@ -330,6 +344,20 @@ require "movewindow"
 require "wait"
 require "gmcphelper"
 
+-- colours
+background_colour = ColourNameToRGB "lightskyblue"
+frame_colour      = ColourNameToRGB "mediumorchid"
+title_bar_colour  = ColourNameToRGB "palegoldenrod"
+title_colour      = ColourNameToRGB "mediumblue"
+tab_colour        = ColourNameToRGB "green"
+tab_text_colour   = ColourNameToRGB "white"
+
+-- Initialize game coordinate positions
+posx = 0
+posy = 0
+pos_offset_x = 0
+pos_offset_y = 0
+pos_ratio_yx = 1499/2399
 
 -----------------
 -- plugin stuff
@@ -484,6 +512,9 @@ function load_config()
     spk_color = GetVariable("spk_color") or "purple",
     imap_icon = GetVariable("imap_icon") or "arrow",
     imap_shipicon = GetVariable("imap_shipicon") or "cross",
+	
+-- Zoom Map config
+     map_zoom = ((GetVariable("map_zoom") or "true") == "true"),	
   }
 end
 
@@ -494,6 +525,7 @@ function save_config()
   SetVariable("spk_color", config.spk_color)
   SetVariable("imap_icon", config.imap_icon)
   SetVariable("imap_shipicon", config.imap_shipicon)
+  SetVariable("map_zoom", tostring(config.map_zoom))
 
   SaveState()
 end
@@ -905,7 +937,7 @@ end
 
 function process_room()
   if (imap_started) and (imap_shown) then
-    local posx, posy -- coords in Game
+
     posx = gmcpval("coord.x")
     posy = gmcpval("coord.y")
 
@@ -915,15 +947,22 @@ function process_room()
     if (posx > 0) then
       redraw_map()
 
+     if (not config.map_zoom) then
       -- show label?
       if (text_posx) then
         show_text(text_posx, text_posy, "Trebuchet MS", 7, text_color, nil, "right", text_text)
       end
 
       -- show destination icon?
-      if (dest_posx) then
+      if (dest_posx)  then
         show_icon(dest_posx, dest_posy, "idest", imap_img_dest, "dncenter")
       end
+	else
+	  -- This is the coords for the middle all the time
+	  -- Temporary until i can fix the calculations
+	  posx=654
+	  posy=427
+	end
 
       -- show icon
       local icon_pos = {
@@ -938,7 +977,7 @@ function process_room()
         show_icon(posx, posy, "iicon", imap_img_ship, icon_pos[config.imap_shipicon])
       else
         show_icon(posx, posy, "iicon", imap_img_noship, icon_pos[config.imap_icon])
-      end
+      end 
     end
   end
 end
@@ -966,45 +1005,57 @@ end
 -- -----------
 
 function setplane(plane, maxx, maxy, startx, starty, filename)
-  local old_mode, old_top, old_left, old_flags
+  local old_mode, old_top, old_left, old_flags, font_id
 
   -- (re-)create window
 
   iwin = "imap_" .. GetPluginID()
-
+  
   WindowCreate(iwin, 0, 0, 0, 0, 0, 0, 0)
 
   windowinfo = movewindow.install(iwin, miniwin.pos_top_right)
   old_mode, old_top, old_left, old_flags, iwin_width, iwin_height = init_old(windowinfo)
 
-  WindowCreate(iwin, old_left, old_top, iwin_width, iwin_height, old_mode, old_flags, ColourNameToRGB("black"))
+  WindowCreate(iwin, old_left, old_top , iwin_width, iwin_height, old_mode, old_flags, ColourNameToRGB("black"))
 
   -- let them move it around
   movewindow.add_drag_handler(iwin, 0, 0, iwin_width, 15, miniwin.cursor_both_arrow)
 
   -- draw 3D box
-  DrawThemed3DRect(iwin, 0, 0, iwin_width, iwin_height, true)
+  DrawThemed3DRect(iwin, 0, 0, iwin_width, iwin_height + font_height + 2, true)
 
   -- set global variables
   imap_plane = plane
   planemaxx = maxx
   planemaxy = maxy
 
-  imap_startx = startx
-  imap_starty = starty
+  if (config.map_zoom) then
+	startx = posx - iwin_width
+	starty = posy - iwin_height
+  else 
+	imap_startx = startx
+	imap_starty = starty
+  end
 
   -- load map, show it
   imap_img_map = load_image(filename)
 
   WindowLoadImageMemory(iwin, "imap", imap_img_map)
-  WindowDrawImage(iwin, "imap", 3, 3, iwin_width - 4, iwin_height - 4, miniwin.image_stretch)
-  -- WindowImageOp(iwin, miniwin.image_fill_rectangle, 7, 6, width - 13, height - 12, 0,    miniwin.pen_null, 0, 0, "imap")
-  -- WindowDrawImage(iwin, "imap", startx, starty, 0, 0, miniwin.image_stretch)
+  WindowDrawImage(iwin, "imap", 0, 0, iwin_width - 4, iwin_height - 4, miniwin.image_stretch)
+   
 end
 
 
 function init_old(windowinfo)
   local old_mode, old_top, old_left, old_flags, old_width, old_height
+  
+  -- font info
+  font_id = "fn"
+  font_name = "Lucida Console"    -- the font name
+  
+  -- Set Font/Heights
+  WindowFont (iwin, font_id, font_name, 8, false, false, false, false, 0, 0)  -- normal  
+  font_height = WindowFontInfo (iwin, font_id, 1)  -- height
 
   if (windowinfo) then
     old_mode = windowinfo.window_mode or miniwin.pos_top_right
@@ -1027,30 +1078,60 @@ end
 
 
 function redraw_map()
+
   if (not imap_startx) then -- defaults to Alyria
-    imap_startx = 0
-    imap_starty = 0
+	  imap_startx = 0
+      imap_starty = 0
   end
 
   -- (re)draw 3D box
-  DrawThemed3DRect(iwin, 0, 0, iwin_width, iwin_height, true)
+  DrawThemed3DRect(iwin, 0, 0, iwin_width, iwin_height + font_height + 2, true)
 
   -- recolor Alyria's SPK waters?
   local img = imap_img_map
   if (imap_plane == "alyria") and (atsea) and (config.color_spk) then
     img = imap_img_spk
   end
-
+  
   -- (re)draw map
   WindowLoadImageMemory(iwin, "imap", img)
-  WindowDrawImage(iwin, "imap", 3, 3, iwin_width - 4, iwin_height - 4, miniwin.image_stretch)
-  --WindowImageOp(iwin, miniwin.image_fill_rectangle, 3, 3, width - 3, height - 3, 0,   miniwin.pen_null, 0, 0, "imap")
-  --WindowDrawImage(iwin, "imap", imap_startx, imap_starty, 0, 0, miniwin.image_stretch)
+ 
+  if (config.map_zoom) then
+    local newtop, newleft, newbottom, newright
+	
+	-- calculate original image offset to focus on original image area (SOMETHING VERY FLAKY HERE, MATHS)
+	newleft = -1 * (posx - iwin_width/2)
+	newright = -1 * (posx - iwin_width/2)
+	newtop = -1 * (posy - iwin_height/2)
+	newbottom = -1 * (posy - iwin_height/2)
+	
+	-- Note("Left: " .. newleft .. " Top:" .. newtop .. " newright:" .. newright .. " newbottom:" .. newbottom)
+	
+    WindowDrawImage(iwin, "imap", newleft, newtop, newright , newbottom, 1)
+  else
+    WindowDrawImage(iwin, "imap", 3, 3, iwin_width - 4, iwin_height - 4, miniwin.image_stretch)
+  end
+
 
   -- apply gamma?
   if (config.imap_gamma) then
     WindowFilter(iwin, 0, 0, 0, 0, miniwin.filter_gamma, 0.6)
   end
+  
+-- Tamlin Frame up header
+ 
+    -- draw drag bar rectangle
+  WindowRectOp (iwin, miniwin.rect_fill, 1, 1, 0, font_height + 2, title_bar_colour)
+  
+  mwtitle = plane .. " [" .. posx .. "," .. posy .. "]"
+
+    -- find title width so we can center it
+  title_width = WindowTextWidth (iwin, font_id, mwtitle)
+  
+  -- draw title
+  WindowText(iwin, font_id, mwtitle, (iwin_width - title_width )/ 2 + 1, 1, 0, 0, title_colour)
+   
+-- Add Resize Icon BR
 
   add_resizer()
 
@@ -1058,6 +1139,42 @@ function redraw_map()
 end
 
 
+-- ------------------
+-- map zoom stuff
+-- ------------------
+
+function toggle_map_zoom(status)
+ if ((imap_enabled)) then
+  config.map_zoom = do_toggle(config.map_zoom, status)
+
+  if (config.map_zoom) then
+    Note("-- IMap: Zoom Map: ON - Don't stay in this mode as it will be slower until I finish --")
+	
+    posx = gmcpval("coord.x")
+    posy = gmcpval("coord.y")
+
+    posx = tonumber(posx)
+    posy = tonumber(posy)
+	
+	redraw_map()
+  else
+    Note("-- IMap: Zoom Map: OFF --")
+	
+    posx = gmcpval("coord.x")
+    posy = gmcpval("coord.y")
+
+    posx = tonumber(posx)
+    posy = tonumber(posy)
+	
+	redraw_map()
+  end
+
+  save_config()
+  redraw_map()
+ else
+	Note("-- IMap is currently disabled or hidden. --")
+ end
+end
 
 -- ------------------
 -- spk waters stuff
@@ -1151,11 +1268,15 @@ end
 -- ------------
 
 function imap_show_destination(posx, posy)
-  dest_posx = posx
-  dest_posy = posy
+  if (config.map_zoom) then
+    Note("Show Destination doesn't work in zoomed mode.  imap zoom off will disable zoom")
+  else
+	dest_posx = posx
+	dest_posy = posy
 
-  -- load destination icon, don't show it yet
-  imap_desticon("arrow")
+	-- load destination icon, don't show it yet
+	imap_desticon("arrow")
+  end
 end
 
 
@@ -1189,29 +1310,50 @@ end
 function calc_pixpos(posx, posy)
 --  Note("posx: " .. posx)
 --  Note("posy: " .. posy)
+  local startx, starty, maxx, maxy, pixmaxx, pixmaxy, pixposx, pixposy
 
-  local startx = (imap_startx or 0) -- defaults to Alyria
-  local starty = (imap_starty or 0)
---  Note("startx: " .. startx)
---  Note("starty: " .. starty)
+-- ZOOM COORDS NEED WORK,  DISABLED FOR NOW
+  if (config.map_zoom) then
+	startx = posx - iwin_width
+	starty = posy - iwin_height
+	maxx = posx + iwin_width
+	maxy = posy + iwin_height
+	pixmaxx = iwin_width -- in pixels
+	pixmaxy = iwin_height
+	pixposx = ((posx + startx) * pixmaxx / maxx) -- pixels on map
+    pixposy = ((posy + starty) * pixmaxy / maxy)  
+  else 
+	startx = (imap_startx or 0) -- defaults to Alyria
+	starty = (imap_starty or 0)
+	maxx = planemaxx or 2299 -- default for Alyria and UG
+	maxy = planemaxy or 1499
+	pixmaxx = iwin_width - 4 -- in pixels
+	pixmaxy = iwin_height - 4
 
-  local maxx = planemaxx or 2299 -- default for Alyria and UG
-  local maxy = planemaxy or 1499
---  Note("maxx: " .. maxx)
---  Note("maxy: " .. maxy)
+	pixposx = ((posx + startx) * pixmaxx / maxx) -- pixels on map
+	pixposy = ((posy + starty) * pixmaxy / maxy)  
+  end
 
-  local pixmaxx = iwin_width - 4 -- in pixels
-  local pixmaxy = iwin_height - 4
---  Note("pixmaxx: " .. pixmaxx)
---  Note("pixmaxy: " .. pixmaxy)
+-- Leaving these for now so I can debug later the issues with calculations
+  --Note("startx: " .. startx)
+  --Note("starty: " .. starty)
+  --Note("maxx: " .. maxx)
+  --Note("maxy: " .. maxy)
 
---  Note("posx + startx: " .. posx + startx)
---  Note("posy + starty: " .. posy + starty)
+  --Note("pixmaxx: " .. pixmaxx)
+  --Note("pixmaxy: " .. pixmaxy)
 
-  local pixposx = 3 + ((posx + startx) * pixmaxx / maxx) -- pixels on map
-  local pixposy = 3 + ((posy + starty) * pixmaxy / maxy)
---  Note("pixposx: " .. pixposx)
---  Note("pixposy: " .. pixposy)
+  --Note("posx + startx: " .. posx + startx)
+  --Note("posy + starty: " .. posy + starty)
+
+  --Note("pixposx: " .. pixposx)
+  --Note("pixposy: " .. pixposy)
+  
+  --Note ("Scalex: " .. maxx/pixmaxx)
+  --Note ("Scaley: " .. maxy/pixmaxy)
+  
+  --Note ("X Shift: " .. -1 * (posx - (iwin_width/2)))
+  --Note ("Y Shift: " .. -1 * (posy - (iwin_height/2)))
 
   return pixposx, pixposy
 end
