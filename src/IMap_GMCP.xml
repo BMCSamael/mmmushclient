@@ -1292,8 +1292,8 @@ end
 
 
 function calc_pixpos(posx, posy)
-  Note("posx: " .. posx)
-  Note("posy: " .. posy)
+  --Note("posx: " .. posx)
+  --Note("posy: " .. posy)
   local startx, starty, maxx, maxy, pixmaxx, pixmaxy, pixposx, pixposy
 
 	startx = (imap_startx or 0) -- defaults to Alyria

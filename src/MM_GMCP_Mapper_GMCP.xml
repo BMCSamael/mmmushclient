@@ -2914,7 +2914,7 @@ function map_spore(name, line, wildcards)
 		 end  -- while
 
 		-- OUTPUT FINAL RESULT
-		 if haveroom and room.area ~= "Alyria" and room.area ~= "Faerie Plane Wilderness" and room.area ~= "Sigil Underground" then 
+		 if haveroom and room.area ~= "Alyria" and room.area ~= "Faerie Plane Wilderness" and room.area ~= "Sigil Underground" and room.area ~= "Great Alyrian Underground" then 
  				room = get_room(id)
 				sporenote(id,"FOUND", safe[sr])
 		 end -- if
@@ -2927,13 +2927,13 @@ function sporenote(id, status, saferoom)
 
 room = get_room(id)
 if room then
-    if room.area ~= "Alyria" and room.area ~= "Faerie Plane Wilderness" and room.area ~= "Sigil Underground" then 
+    if room.area ~= "Alyria" and room.area ~= "Faerie Plane Wilderness" and room.area ~= "Sigil Underground" and room.area ~= "Great Alyrian Underground" then 
 	  if status == "FOUND" then 
 	   	ColourTell("green",bgcol,"SPORE FOUND: ")
 	  elseif status == "NOTFOUND" then
 		ColourTell("red",bgcol,"SPORE NOT FOUND: ")
 	  end -- if
-	
+	  
 	  if (room.area ~= "-") then
 	      Tell("area: ")
 	      ColourTell(fontcol, bgcol, room.area)
@@ -2953,6 +2953,9 @@ if room then
 	  Tell(" ")
 	  Hyperlink ("mapper goto " .. saferoom, "RECALL", "", "white", "black", false)
 	
+	  if (string.match(room.area,"Clan Hall") or string.match(room.area,"Realty")) then
+		ColourTell("red",bgcol," - (UNLIKELY)")
+	  end
 	  Note("")
 	else
 	  --Note("ROOM OUTSIDE: " .. id)
