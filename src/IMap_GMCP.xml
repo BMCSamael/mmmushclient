@@ -514,7 +514,7 @@ function load_config()
     imap_shipicon = GetVariable("imap_shipicon") or "cross",
 	
 -- Zoom Map config
-     map_zoom = ((GetVariable("map_zoom") or "true") == "true"),	
+     map_zoom = ((GetVariable("map_zoom") or "false") == "true"),	
   }
 end
 
@@ -958,12 +958,6 @@ function process_room()
         show_icon(dest_posx, dest_posy, "idest", imap_img_dest, "dncenter")
       end
 	else
-	  -- This is the coords for the middle all the time
-	  -- Temporary until i can fix the calculations
-	  posx=654
-	  posy=427
-	end
-
       -- show icon
       local icon_pos = {
         ["arrow"] = "upleft",
@@ -979,6 +973,7 @@ function process_room()
         show_icon(posx, posy, "iicon", imap_img_noship, icon_pos[config.imap_icon])
       end 
     end
+   end
   end
 end
 
