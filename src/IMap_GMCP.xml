@@ -1113,9 +1113,25 @@ local newtop, newleft, newbottom, newright = 0
   
   -- draw title
   WindowText(iwin, font_id, mwtitle, (iwin_width - title_width )/ 2 + 1, 1, 0, 0, title_colour)
+
+  -- Add zoom shortcut
+  zoom_width = WindowTextWidth (iwin, font_id, "Zoom")
+  WindowRectOp (iwin, miniwin.rect_fill, 6, iwin_height - 20, 8 + zoom_width, iwin_height - 20 + font_height + 2, title_bar_colour)
+  WindowText(iwin, font_id, "Zoom", 7, iwin_height - 20, 0, 0, title_colour)
+  if (WindowHotspotInfo(iwin, "zoomer", 1) == nil) then
+    WindowAddHotspot(iwin, "zoomer", 7, iwin_height - 20, 0, 0,
+                     "", "",  -- MouseOver
+                     "toggle_map_zoom", "",  -- MouseDown 
+                     "", -- MouseUp
+					 "Toggle Zoom", -- tooltip
+                     miniwin.cursor_hand,
+                     0)
+  else
+    WindowMoveHotspot(iwin, "zoomer",  7, iwin_height - 20, 0, 0)
+  end
+  
    
 -- Add Resize Icon BR
-
   add_resizer()
 
   WindowShow(iwin, true)
