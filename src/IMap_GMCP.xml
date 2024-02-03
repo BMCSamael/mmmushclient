@@ -953,7 +953,7 @@ function process_room()
 
       -- show destination icon?
       if (dest_posx) then
-        show_icon(dest_posx, dest_posy, "idest", imap_img_dest, "dncenter")
+        show_icon(dest_posx, dest_posy, "estates", imap_img_dest, "dncenter")
       end
 
       -- show icon
@@ -1086,8 +1086,8 @@ local newtop, newleft, newbottom, newright = 0
   if (config.map_zoom) then
 	
 	-- calculate original image offset to focus on original image area
-	newleft = posx - iwin_width/2 - 4
-	newtop = posy - iwin_height/2 - 4
+	newleft = posx - iwin_width/2 - 2
+	newtop = posy - iwin_height/2 - 2
 	newright = posx + iwin_width/2
 	newbottom = posy + iwin_height/2
 	
@@ -1268,14 +1268,14 @@ end
 
 function imap_show_destination(posx, posy)
 	
-  if (imap_shown and imap_enabled and not config.map_zoom) then
+  if (imap_shown and imap_enabled) then
 	dest_posx = posx
 	dest_posy = posy
 
 	-- load destination icon, don't show it yet
 	imap_desticon("arrow")
   else
-    Note("Destination Points cannot currently be set in Zoom Mode")
+    Note("IMAP Disabled or Hidden")
   end	
 end
 
@@ -1308,27 +1308,32 @@ end
 
 
 function calc_pixpos(posx, posy)
-  --Note("posx: " .. posx)
-  --Note("posy: " .. posy)
-  local startx, starty, maxx, maxy, pixmaxx, pixmaxy, pixposx, pixposy
-
-	startx = (imap_startx or 0) -- defaults to Alyria
-	starty = (imap_starty or 0)
-	maxx = planemaxx or 2299 -- default for Alyria and UG
-	maxy = planemaxy or 1499
-	pixmaxx = iwin_width - 4 -- in pixels
-	pixmaxy = iwin_height - 4
-	pixposx = ((posx - startx) * pixmaxx / maxx) -- pixels on map
-	pixposy = ((posy - starty) * pixmaxy / maxy)  
+  local startx, starty, maxx, maxy, pixmaxx, pixmaxy, pixposx, pixposy, myposx, myposy
+  
+  startx = (imap_startx or 0) -- defaults to Alyria
+  starty = (imap_starty or 0)
+  maxx = planemaxx or 2299 -- default for Alyria and UG
+  maxy = planemaxy or 1499
+  pixmaxx = iwin_width - 4 -- in pixels
+  pixmaxy = iwin_height - 4
+  pixposx = ((posx - startx) * pixmaxx / maxx) -- pixels on map
+  pixposy = ((posy - starty) * pixmaxy / maxy)  
     
 -- Handle Map Zoom Offsets
+  myposx = gmcpval("coord.x")
+  myposy = gmcpval("coord.y")
+  
   if (config.map_zoom) then
-	  --Note("ORIGIN XC Test: " .. (posx-startx) * pixmaxx / maxx) --  (553 - 0) * 653 / 2299 = 157
-	  --Note("ORIGIN YC Test: " .. (posy-starty) * pixmaxy / maxy) -- (1247 - 0) * 425 / 1499 = 353
-	  --Note("New XC Test: " .. posx - (posx - iwin_width/2 - 4))
-	  --Note("New Test: " ..   posy - (posy - iwin_height/2 - 4))
-	  pixposx = posx - (posx - iwin_width/2 - 4)
-	  pixposy = posy - (posy - iwin_height/2 - 4)
+	--Note("ORIGIN XC Test: " .. (posx-startx) * pixmaxx / maxx) --  (553 - 0) * 653 / 2299 = 157
+	--Note("ORIGIN YC Test: " .. (posy-starty) * pixmaxy / maxy) -- (1247 - 0) * 425 / 1499 = 353
+	--Note("New XC Test: " .. posx - (myposx - iwin_width/2))
+	--Note("New Test: " ..  posy - (myposy - iwin_height/2))
+  
+	--Note("  POSX: " .. posx .. "   POSY: ".. posy)
+	--Note("myPOSX: " .. myposx .. " myPOSY: ".. myposy)
+
+ 	pixposx = posx - (myposx - iwin_width/2 - 4)
+	pixposy = posy - (myposy - iwin_height/2 - 4)
   end
   
   return pixposx, pixposy
