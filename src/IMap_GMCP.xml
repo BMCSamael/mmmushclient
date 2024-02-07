@@ -954,11 +954,11 @@ function process_room()
 
       -- show destination icon?
       if (dest_posx) then
-        show_icon(dest_posx, dest_posy, "estates", imap_img_dest, "dncenter")
+        show_icon(dest_posx, dest_posy, "idest", imap_img_dest, "dncenter")
       end
 
       -- show icon
-	  if (map_zoom) then
+	  if (config.map_zoom and planemaxx >= 2299) then
 	    icon_pos = {
           ["arrow"] = "upleft",
           ["circ"] = "midcenter",
@@ -1094,7 +1094,7 @@ function redraw_map()
   WindowLoadImageMemory(iwin, "imap", img)
 
 local newtop, newleft, newbottom, newright = 0
-  if (config.map_zoom) then
+  if (config.map_zoom and planemaxx >= 2299) then
 	
 	-- calculate original image offset to focus on original image area
 	newleft = posx - iwin_width/2 - 2
@@ -1103,9 +1103,12 @@ local newtop, newleft, newbottom, newright = 0
 	newbottom = posy + iwin_height/2
 	
 	 --Note("Left: " .. newleft .. " Top:" .. newtop .. " newright:" .. newright .. " newbottom:" .. newbottom)
+	WindowDrawImage(iwin, "imap", 3, 3, iwin_width - 4, iwin_height - 4, miniwin.image_stretch, newleft, newtop, newright, newbottom)
+  else
+    WindowDrawImage(iwin, "imap", 3, 3, iwin_width - 4, iwin_height - 4, miniwin.image_stretch)
   end
  
-    WindowDrawImage(iwin, "imap", 3, 3, iwin_width - 4, iwin_height - 4, miniwin.image_stretch, newleft, newtop, newright, newbottom)
+    
 
   -- apply gamma?
   if (config.imap_gamma) then
@@ -1126,19 +1129,21 @@ local newtop, newleft, newbottom, newright = 0
   WindowText(iwin, font_id, mwtitle, (iwin_width - title_width )/ 2 + 1, 1, 0, 0, title_colour)
 
   -- Add zoom shortcut
-  zoom_width = WindowTextWidth (iwin, font_id, "Zoom")
-  WindowRectOp (iwin, miniwin.rect_fill, 6, iwin_height - 20, 8 + zoom_width, iwin_height - 20 + font_height + 2, title_bar_colour)
-  WindowText(iwin, font_id, "Zoom", 7, iwin_height - 20, 0, 0, title_colour)
-  if (WindowHotspotInfo(iwin, "zoomer", 1) == nil) then
-    WindowAddHotspot(iwin, "zoomer", 7, iwin_height - 20, 0, 0,
+  if (planemaxx >= 2299) then 
+    zoom_width = WindowTextWidth (iwin, font_id, "Zoom")
+    WindowRectOp (iwin, miniwin.rect_fill, 6, iwin_height - 20, 8 + zoom_width, iwin_height - 20 + font_height + 2, title_bar_colour)
+    WindowText(iwin, font_id, "Zoom", 7, iwin_height - 20, 0, 0, title_colour)
+    if (WindowHotspotInfo(iwin, "zoomer", 1) == nil) then
+      WindowAddHotspot(iwin, "zoomer", 7, iwin_height - 20, 0, 0,
                      "", "",  -- MouseOver
                      "toggle_map_zoom", "",  -- MouseDown 
                      "", -- MouseUp
 					 "Toggle Zoom", -- tooltip
                      miniwin.cursor_hand,
                      0)
-  else
-    WindowMoveHotspot(iwin, "zoomer",  7, iwin_height - 20, 0, 0)
+    else
+      WindowMoveHotspot(iwin, "zoomer",  7, iwin_height - 20, 0, 0)
+    end
   end
   
    
@@ -1154,7 +1159,7 @@ end
 -- ------------------
 
 function toggle_map_zoom(status)
- if ((imap_enabled and imap_shown)) then
+ if ((imap_enabled and imap_shown and planemaxx >= 2299)) then
   config.map_zoom = do_toggle(config.map_zoom, status)
 
   if (config.map_zoom) then
@@ -1182,7 +1187,7 @@ function toggle_map_zoom(status)
   save_config()
   redraw_map()
  else
-	Note("-- IMap is currently disabled or hidden. --")
+	Note("-- IMap is currently disabled or hidden or planesize too small. --")
  end
 end
 
@@ -1319,7 +1324,7 @@ end
 
 
 function calc_pixpos(posx, posy)
-  local startx, starty, maxx, maxy, pixmaxx, pixmaxy, pixposx, pixposy, myposx, myposy
+  local startx, starty, maxx, maxy, pixmaxx, pixmaxy, pixposx, pixposy, myposx, myposy = 0
   
   startx = (imap_startx or 0) -- defaults to Alyria
   starty = (imap_starty or 0)
@@ -1327,14 +1332,13 @@ function calc_pixpos(posx, posy)
   maxy = planemaxy or 1499
   pixmaxx = iwin_width - 4 -- in pixels
   pixmaxy = iwin_height - 4
-  pixposx = ((posx - startx) * pixmaxx / maxx) -- pixels on map
-  pixposy = ((posy - starty) * pixmaxy / maxy)  
+  pixposx = ((posx + startx) * pixmaxx / maxx) -- pixels on map
+  pixposy = ((posy + starty) * pixmaxy / maxy)  
     
--- Handle Map Zoom Offsets
-  myposx = gmcpval("coord.x")
-  myposy = gmcpval("coord.y")
-  
-  if (config.map_zoom) then
+  if (config.map_zoom and planemaxx >= 2299) then
+	-- Handle Map Zoom Offsets
+    myposx = gmcpval("coord.x")
+    myposy = gmcpval("coord.y")
 	--Note("ORIGIN XC Test: " .. (posx-startx) * pixmaxx / maxx) --  (553 - 0) * 653 / 2299 = 157
 	--Note("ORIGIN YC Test: " .. (posy-starty) * pixmaxy / maxy) -- (1247 - 0) * 425 / 1499 = 353
 	--Note("New XC Test: " .. posx - (myposx - iwin_width/2))
@@ -1399,7 +1403,7 @@ function show_icon(posx, posy, iname, idata, points_with)
   }
  
 
-  if (map_zoom) then
+  if (config.map_zoom and planemaxx >= 2299) then
     xoff = 20
 	yoff = 20
   end
@@ -1570,7 +1574,7 @@ local sextant_readings = {
     ["strange ruins"] = "1804, 924",
   },
 
-  ["Faerie Plane"] = {
+  ["Faerie Plane Wilderness"] = {
     ["cavhfail"] = "347, 284",
     ["eanoss azelmar"] = "130, 65",
     ["engineers exclave"] = "451, 239",
@@ -1664,7 +1668,6 @@ local subareas = {
 
 function show_location(area_name, text)
   --shows non-persistent text, that will disappear on next sextant prompt - there can be more than 1
-
   if (imap_started) and (imap_shown) then
     if (text) then
       text = Trim(text)

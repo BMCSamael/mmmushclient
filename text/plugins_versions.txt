@@ -1,6 +1,6 @@
 id = d553d532b7fd796f3c0759c8  hash = BCFFC68E800BFDE0C79775EE48BF82ED
 id = e8db9e0976d964b82332096b  hash = B9C9FE7CDE4D4682F8FEFF00717E6C2D
-id = adc3a873d4e47348da7cb426  hash = AA77E8B20FE484EF91F9919B27A04F3E  aux_files = {   [1] = {     name = "arrow.png",     },   [2] = {     name = "circ.png",     },   [3] = {     name = "cross.png",     },   [4] = {     name = "custom.png",     },   [5] = {     name = "dest.png",     },   [6] = {     name = "horse.png",     },   [7] = {     name = "ship.png",     },   [8] = {     name = "alyria.png",     },   [9] = {     name = "alyria_spk_purple.png",     },   [10] = {     name = "alyria_spk_red.png",     },   [11] = {     name = "fp.png",     },   [12] = {     name = "lasler.png",     },   [13] = {     name = "social.png",     },   [14] = {     name = "sugxpanded.png",     },   [15] = {     name = "ug.png",     },   [16] = {     name = "verity.png",     },   }
+id = adc3a873d4e47348da7cb426  hash = A300D26C1230937BE00EC4270422AAFB  aux_files = {   [1] = {     name = "arrow.png",     },   [2] = {     name = "circ.png",     },   [3] = {     name = "cross.png",     },   [4] = {     name = "custom.png",     },   [5] = {     name = "dest.png",     },   [6] = {     name = "horse.png",     },   [7] = {     name = "ship.png",     },   [8] = {     name = "alyria.png",     },   [9] = {     name = "alyria_spk_purple.png",     },   [10] = {     name = "alyria_spk_red.png",     },   [11] = {     name = "fp.png",     },   [12] = {     name = "lasler.png",     },   [13] = {     name = "social.png",     },   [14] = {     name = "sugxpanded.png",     },   [15] = {     name = "ug.png",     },   [16] = {     name = "verity.png",     },   }
 id = aedf0cb0be5bf045860d54b7  hash = B5A1EA4CCE2DB3943DE170DB0B5FEE66
 id = f973af093e715dece34dc25f  hash = 2FCDED30D82C661BD76E7CE3E480E3AE  aux_files = {   [1] = {     name = "mm_mapper.lua",     dest = "MUSH/lua",     },   }
 id = f67c4339ed0591a5b010d05b  hash = 8548063918EAA5D797276072445050DB  aux_files = {   [1] = {     name = "gmcphelper.lua",     dest = "MUSH/lua",     },   [2] = {     name = "sandbox.dune.net.MCL",     dest = "MUSH/worlds",     },   }
@@ -48,7 +48,7 @@ id = a11c9d4e484b5fc428a49941  hash = 07895D34A6CE27389F295372BA5A0DDF
 id = 3a006258a11ad009439f9dd9  hash = 3D0D413E466DE2B57B68C7FFA62A692D
 id = 226fb67b0722e0f0ddc3a235  hash = 982E9446378EC8DED0F1A30D0D72FBFF
 id = 84cc0397252aec0dbd589eaa  hash = FF8D1242B08D8F2B58D503C037A1A4DE
-id = 8755063a5cf00f3312b113e6  hash = 2BA0083FA8640D5882C7FF77ECA26BF4
+id = 8755063a5cf00f3312b113e6  hash = 85F75533C2791E3326DC02F654A370A3  aux_files = {   [1] = {     name = "mm_mobs_n_items.db",     dest = "MUSH",     },   }
 id = 1df4fa3b486a36ededa19433  hash = 15BB07ECB155478D86D90D6B3A26E894
 id = 1d71bf1797912d451784ca21  hash = CD14A04272B27465B9A296D04377FB05
 id = 54846c23d8b15594e7eb4b8a  hash = 70178FAAA76F63173377C05BF9F350C0
@@ -110,4 +110,5 @@ name = sugxpanded.png  hash = 08DAF8CB85AF584B6CF4D31C08D50F32
 name = ug.png  hash = CFCD2CC1F4F1408212E0FE420F452C39
 name = ug2x.png  hash = C7C6E62CD1AA71B5E876018B70157130
 name = verity.png  hash = 0346D57425CAA91EE6104C1CBE8593B9
-name = mm_mapper.db  hash = E7E2961783940C920A78B42BAD320EE1
+name = mm_mapper.db  hash = 33068FADD185406DC974CA971F123662
+name = mm_mobs_n_items.db  hash = 9CCA0C30069B9900E824C2DE337E5715
