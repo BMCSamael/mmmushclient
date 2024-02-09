@@ -958,15 +958,7 @@ function process_room()
       end
 
       -- show icon
-	  if (config.map_zoom and planemaxx >= 2299) then
-	    icon_pos = {
-          ["arrow"] = "upleft",
-          ["circ"] = "midcenter",
-          ["cross"] = "midcenter",
-          ["horse"] = "upleft",
-          ["ship"] = "upleft",
-		}
-	  else  
+
 		icon_pos = {
           ["arrow"] = "upleft",
           ["circ"] = "midcenter",
@@ -974,7 +966,7 @@ function process_room()
           ["horse"] = "midcenter",
           ["ship"] = "midcenter",
 		}
-	  end
+
       
 	  if (atsea) then
         show_icon(posx, posy, "iicon", imap_img_ship, icon_pos[config.imap_shipicon])
