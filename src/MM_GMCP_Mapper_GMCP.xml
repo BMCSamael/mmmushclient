@@ -84,6 +84,7 @@ Syntax:
 > Queries:
 
 * mapper where <room_name>  - show room# and area for an existing room, by its room name (Note that the % symbol can be used as a wildcard.)
+* mapper coord <x> <y> - show room# and area for an existing room, by its x and y coords
 * mapper find <text>  - search by keywords (eg, courtyard OR lobby)
 * mapper bookmarks  - show nearby rooms that you bookmarked ('nearby' is determined by your mapper's depth setting)
 * mapper findbm <text>  - search by bookmark
@@ -360,6 +361,15 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
     regexp="y"
     sequence="100"
     script="map_where"
+  >
+  </alias>
+  
+  <alias
+    enabled="y"
+    match="^mapper[ ]+coord[ ]+(?<x>[^\:]+)[ ]+(?<y>[^\:]+)$"
+    regexp="y"
+    sequence="100"
+    script="map_coord"
   >
   </alias>
 
@@ -1142,6 +1152,7 @@ end
 function plugin_update_aux_url()
   local t = {
     "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/mm_mapper.lua,MUSH/lua",
+	"https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/res/mm_mapper.db,MUSH",
   }
   return (table.concat(t, ";"))
 end
@@ -2120,6 +2131,28 @@ function map_where(name, line, wildcards)
   end
 end
 
+function map_coord(name, line, wildcards)
+  local xcoord = wildcards.x
+  local ycoord = wildcards.y
+  local t = {}
+  local a = {}
+
+  for row in db:nrows(string.format("SELECT uid, area, name FROM rooms WHERE xcoord = %d and ycoord = %d", xcoord, ycoord)) do
+    if (not is_vmap(row.area)) then     
+	 t[#t + 1] = row.uid
+	else
+	 a[#a + 1] = row.uid
+	end
+  end -- finding rooms
+
+  ColourNote("lightgreen", "black", "VMAP Results for: '" .. xcoord .. ", " .. ycoord .. "':")
+  show_hyperlinks(a)
+  ColourNote("lightgreen", "black", "ROOM Results for: '" .. xcoord .. ", " .. ycoord .. "':")
+  show_hyperlinks(t)
+  if (verbose_mode) then
+    ColourNote("lightgreen", "black", "Click on a room's name or type 'mapper goto <id>' to speedwalk to the room, if possible.")
+  end
+end
 
 function map_wheree(name, line, wildcards)
   local rname = wildcards.rname
@@ -2794,7 +2827,7 @@ function map_path2(fromuid, touid, dont_show)
   end
 
   local old_depth = config.SCAN.depth
-  config.SCAN.depth = 2500
+  config.SCAN.depth = 1500
 
   local paths = mapper.find_paths(fromuid,
            function (uid)
@@ -2994,7 +3027,7 @@ function map_goto(wanted)
 
   if (is_vmap(zone))
   or (zone ~= room.area) then
-    config.SCAN.depth = 2500
+    config.SCAN.depth = 1500
   else
     config.SCAN.depth = 500
   end

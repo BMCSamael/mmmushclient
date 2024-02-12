@@ -1033,7 +1033,7 @@ function inc_other_dmg(desc, who, target, bpart, type, dmg)
                     string.gsub(
                     v.text,
                     desc,
-                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. attacktype .. (" "):rep(space+(string.len(attacktype)%2)) .. "] [ " .. who .. " ] > [" .. target .. "]"
+                    "[  " .. damage_dealt[dmg] .. "  ] [" .. (" "):rep(space) .. attacktype .. (" "):rep(space+(string.len(attacktype)%2)) .. "] [ " .. who .. " ] > [ " .. target .. " ]"
                 )
             else
                 newval = string.gsub(v.text, desc, "[  " .. damage_dealt[dmg] .. "  ] " .. desc)
