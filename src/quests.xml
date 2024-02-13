@@ -295,11 +295,24 @@ next_quest_in(min * 60)
   <send>found_crystal()
 </send>
   </trigger>
+  
+  <trigger
+   enabled="y"
+   group="crystal"
+   keep_evaluating="y"
+   match="^[ ]+A crystal originating from the (Faerie Plane) glows octarine on the floor\.$"
+   regexp="y"
+   send_to="12"
+   sequence="100"
+  >
+  <send>found_crystal()
+</send>
+  </trigger>
 
   <trigger
    enabled="y"
    keep_evaluating="y"
-   match="^You take a (small|(massive |)blood) crystal\.$"
+   match="^You take (a|an) (octarine|(small|(massive |)blood)) crystal\.$"
    regexp="y"
    send_to="12"
    sequence="100"
