@@ -54,7 +54,7 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
 
   <variable name="char_name">[a-zA-Z0-9 ,.'-]+</variable>
 
-  <variable name="ordinal">(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth)</variable>
+  <variable name="ordinal">(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|eleventh|twelvth)</variable>
 
 </variables>
 
@@ -658,7 +658,7 @@ check_other_dmg("%0", "%&lt;who&gt;", "%&lt;tgt&gt;", "none", "fail", "miss")
    group="script-dpercent"
    keep_evaluating="y"
    expand_variables="y"
-   match="^(?P&lt;tgt&gt;(@!char_name)) is (\w) with your (?P&lt;type&gt;.+) causing (?P&lt;how_much&gt;.+) damage\.$"
+   match="^(?P&lt;tgt&gt;(@!char_name)) is (\w+) with your (?P&lt;type&gt;.+) causing (?P&lt;how_much&gt;.+) damage\.$"
    omit_from_output="y"
    regexp="y"
    send_to="14"
