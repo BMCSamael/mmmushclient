@@ -261,6 +261,7 @@ default_list = {
   ["numpad4"] = "west",
   ["numpad7"] = "northwest",
   ["numpad5"] = "look",
+  ["numpad0"] = "scan",
   ["subtract"] = "up",
   ["add"] = "down",
 
@@ -446,7 +447,7 @@ reserved_keystrokes = {
 -- (they will be modifiable by calling the functions with override = "yes")
 semi_reserved_keystrokes = {
   -- numpad
-  "numpad1", "numpad2", "numpad3", "numpad4", "numpad6", "numpad7", "numpad8", "numpad9", "subtract", "add",
+  "numpad1", "numpad2", "numpad3", "numpad4", "numpad5", "numpad0","numpad6", "numpad7", "numpad8", "numpad9", "subtract", "add",
 
   -- alt+numpad
   "alt+numpad1", "alt+numpad2", "alt+numpad3", "alt+numpad4", "alt+numpad6", "alt+numpad7", "alt+numpad8", "alt+numpad9", "alt+subtract", "alt+add",
