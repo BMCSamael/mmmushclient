@@ -9,7 +9,7 @@
 
 <plugin
   name="mobs_n_items"
-  author="Ruthgul"
+  author="Tamlin/Ruthgul"
   id="8755063a5cf00f3312b113e6"
   language="Lua"
   purpose="NPCs and items database"
@@ -376,13 +376,6 @@ end
 function plugin_update_url()
   local t = {
     "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/mobs_n_items.xml",
-  }
-  return (table.concat(t, ";"))
-end
-
-function plugin_update_aux_url()
-  local t = {
-    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/res/mm_mobs_n_items.db,MUSH",
   }
   return (table.concat(t, ";"))
 end
