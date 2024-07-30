@@ -962,7 +962,8 @@ end
 function add_imms()
   local oldlist = Trim(GetVariable("imms") or "")
   if (oldlist == "") then
-    oldlist = "Duende|Elana|Esker|Iyara|Lanasar|Moirae|Omnis|Satina|Sekhet|Sueno"
+    -- oldlist = "Duende|Elana|Esker|Iyara|Lanasar|Moirae|Omnis|Satina|Sekhet|Sueno"
+	oldlist = "Kherthos|Kezok"
   end
   oldlist = string.gsub(oldlist, "|", "\r\n")
 
