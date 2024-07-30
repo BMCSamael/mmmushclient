@@ -11,7 +11,7 @@ id = f99134f19ea994a0cc0888d1  hash = E5CB741046E4973471B0FAFEE949F60A
 id = 6010f6bda5ebf2210998613d  hash = 3617166B8F5C49C468F37A4949F53CC0
 id = 118122989b315b5a97526fcc  hash = E0B21EFB9C3090F016D6B8077A5A33AC
 id = 366aa79676f9fb1941eb5f69  hash = DEFB89175344A7E43A8B7F043EE35A3D
-id = b2772cad800b33a6073d9377  hash = 0745D660971604E888C2EE10FC8E90D0  aux_files = {   [1] = {     name = "captures.MCL",     dest = "MUSH/worlds",     },   [2] = {     name = "announce.mp3",     dest = "MUSH/sounds",     },   }
+id = b2772cad800b33a6073d9377  hash = 4F34A5C3D816177551D770959854D1E8  aux_files = {   [1] = {     name = "captures.MCL",     dest = "MUSH/worlds",     },   [2] = {     name = "announce.mp3",     dest = "MUSH/sounds",     },   }
 id = 0d02361abda86a9c64488bf3  hash = 8FB537E60172A734CAC8E584CE5BEE1D
 id = 47150df0ca58b162ea22b396  hash = DDA6CCA16D4411009B46E0645F98C6BA
 id = fdebcc7a082dc4e7c6d4c306  hash = 1268EE7D74990F9C8F75EFA5AC74D768  aux_files = {   [1] = {     name = "generic_miniwindow.lua",     dest = "MUSH/lua",     },   }
@@ -57,7 +57,7 @@ id = cab11fa55cae7d04b2fe8b70  hash = 03303A2E587A4978E83D04CBBCBD7AE4
 id = 5945aedf1aacc09e42c48cef  hash = 92F197983D475C1335E90FB4250752AB
 id = ad02c292bb640b7aee9e4df0  hash = 96424A0D9F26739428ADFA5EA63DE8E0
 id = e377771aeee520a633f3dd4d  hash = 454AA8F39327FD10E069B1481D9A62C1
-id = 66f8ef96f2166bb586529087  hash = 84BB42432CFCC6F39FA79F80140ACFE9
+id = 66f8ef96f2166bb586529087  hash = 3A8480375E98A11528A8F12FC6DA7043
 id = bb2a97fe72b34a0cd5135bcf  hash = 618AEABE0FFF54677D9E9858DD78AD09
 id = d2b442f2da9a95f34f5a199f  hash = DCD2806A48CBB8DD35D487AEB6E84AF9  aux_files = {   [1] = {     name = "generic_miniwindow.lua",     dest = "MUSH/lua",     },   }
 id = 233091f6c00f9afb14a2af62  hash = 497E51571985D9B7AAB0F34FF868B0A1  aux_files = {   [1] = {     name = "generic_miniwindow.lua",     dest = "MUSH/lua",     },   }
