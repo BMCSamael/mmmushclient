@@ -154,7 +154,7 @@ function OnPluginCommand(name, line, wildcards)
     end
 
     -- Debugging: Show the input state
-    ColourNote("blue", "", "Input state: " .. input)
+    -- ColourNote("blue", "", "Input state: " .. input)
 
     -- Ensure the initial state is exactly 10 elements
     if #input ~= 10 then
@@ -168,27 +168,35 @@ function OnPluginCommand(name, line, wildcards)
     end
 
     -- Debugging: Show the initial state array
-    ColourNote("blue", "", "Initial state array: " .. table.concat(initial_state, ", "))
+    -- ColourNote("blue", "", "Initial state array: " .. table.concat(initial_state, ", "))
 
-    local toggle_map = {
-        [1] = {room = 80802, switches = {2}},  -- Button 1 in room 80802 toggles switch 2
-        [2] = {room = 80806, switches = {2, 4, 6}},  -- Button 2 in room 80806 toggles switches 2, 4, 6
-        [3] = {room = 80785, switches = {7, 8}},  -- Button 3 in room 80785 toggles switches 7 and 8
-        [4] = {room = 80805, switches = {1, 3, 4}},  -- Button 4 in room 80805 toggles switches 1, 3, and 4
-        [5] = {room = 80792, switches = {3, 7}},  -- Button 5 in room 80792 toggles switches 3 and 7
-        [6] = {room = 80795, switches = {9}},  -- Button 6 in room 80795 toggles switch 9
-        [7] = {room = 80797, switches = {4, 6, 9}},  -- Button 7 in room 80797 toggles switches 4, 6, 9
-        [8] = {room = 80796, switches = {6, 9}},  -- Button 8 in room 80796 toggles switches 6 and 9
-        [9] = {room = 80804, switches = {3, 5, 7, 8}},  -- Button 9 in room 80804 toggles switches 3, 5, 7, 8
-    }
+local toggle_map = {
+    [1] = {room = 80802, switches = {2}},  -- Button 1 in room 80802 toggles switch 2
+    [2] = {room = 80806, switches = {2, 4, 6}},  -- Button 2 in room 80806 toggles switches 2, 4, 6
+    [3] = {room = 80785, switches = {7, 8, 10}},  -- Button 3 in room 80785 toggles switches 7, 8, 10
+    [4] = {room = 80805, switches = {1, 3, 5}},  -- Button 4 in room 80805 toggles switches 1, 3, 5
+    [5] = {room = 80792, switches = {3, 7}},  -- Button 5 in room 80792 toggles switches 4, 7
+    [6] = {room = 80795, switches = {9}},  -- Button 6 in room 80795 toggles switch 9
+    [7] = {room = 80797, switches = {4, 6, 9}},  -- Button 7 in room 80797 toggles switches 4, 6, 9
+    [8] = {room = 80796, switches = {6, 9}},  -- Button 8 in room 80796 toggles switches 7, 9
+    [9] = {room = 80804, switches = {3, 5, 7, 8}},  -- Button 9 in room 80804 toggles switches 3, 5, 7, 8
+}
 
     local solution = find_solution(initial_state, toggle_map)
-    if solution then
+      ColourNote("yellow", "", "Solution found:\n")  
+  if solution then
         local solution_text = ""
         for _, action in ipairs(solution) do
-            solution_text = solution_text .. string.format("Room %d: Press Button %d\n", action[1], action[2])
+		    local room_number = tostring(action[1])  -- Convert room number to string
+			local button_number = tostring(action[2])  -- Convert button number to string
+			local command = "mapper goto " .. room_number  -- Command to send
+			local commanddisplay_text = "Room: " .. room_number  -- Text to display
+			local buttoncommand = "push button" -- Command to Press Button
+			local buttondisplay_text = " Button " .. button_number  -- Text to display
+            Hyperlink(command, commanddisplay_text, "", "lightgreen", "black", false)
+			Hyperlink(buttoncommand, buttondisplay_text, "", "white", "black", false)
+			Note("\r")
         end
-        ColourNote("green", "", "Solution found:\n" .. solution_text)
     else
         ColourNote("red", "", "No solution found.")
     end
