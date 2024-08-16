@@ -1101,14 +1101,26 @@ resource_defaults = {
 }
 
 
-function load_resources()
-  resource_wanted = {}
-  assert(loadstring(GetVariable("resource_wanted") or ""))()
+ function load_resources()
+        resource_wanted = {}
 
-  for resource, amount in pairs(resource_defaults) do
-    resource_wanted[resource] = tonumber(resource_wanted[resource] or amount)
-  end
-end
+        local loaded_code = GetVariable("resource_wanted") or ""
+        local func, err = loadstring(loaded_code)
+        if not func then
+            print("Error loading resource_wanted:", err)
+            resource_wanted = {}
+        else
+            func()
+        end
+
+        if type(resource_wanted) ~= "table" then
+            resource_wanted = {}
+        end
+
+        for resource, amount in pairs(resource_defaults) do
+            resource_wanted[resource] = tonumber(resource_wanted[resource] or amount)
+        end
+    end
 
 
 function save_resources()
