@@ -2116,52 +2116,74 @@ function get_npc_areas(mob_name)
   local sname = fixsql(string.upper(mob_name))
   local mob_ids = {}
 
---  print(sname)
-
-  for row in db:nrows(string.format("SELECT mobid FROM mobs WHERE UPPER(name) = %s", sname)) do
+  -- Prepare and execute the statement to get mob IDs
+  local stmt = db:prepare("SELECT mobid FROM mobs WHERE UPPER(name) = ?")
+  stmt:bind(1, sname)
+  for row in stmt:nrows() do
     mob_ids[#mob_ids + 1] = row.mobid
-  end -- finding rooms
+  end
+  stmt:finalize()
 
---  print(serialize.save_simple(mob_ids))
-
+  -- Table to hold area information
   local t = {}
 
-  for i = 1, #mob_ids do
-    for row in db:nrows(string.format("SELECT area FROM mobsloc WHERE mobid = %s", fixsql(mob_ids[i]))) do
+  -- Prepare the statement to get areas for each mob ID
+  local stmt_areas = db:prepare("SELECT area FROM mobsloc WHERE mobid = ?")
+
+  -- Loop through each mob_id and get the corresponding areas
+  for _, mobid in ipairs(mob_ids) do
+    stmt_areas:bind(1, mobid)  -- Bind the current mobid to the statement
+    
+    for row in stmt_areas:nrows() do
       t[#t + 1] = row.area
     end
+    
+    stmt_areas:reset()  -- Reset the statement for the next mobid
   end
 
---  print(serialize.save_simple(t))
+  -- Finalize the statement after the loop
+  stmt_areas:finalize()
 
   return table.concat(t, ";")
 end
+
 
 
 function get_item_areas(item_name)
   local sname = fixsql(string.upper(item_name))
---  print(sname)
-
   local item_ids = {}
 
-  for row in db:nrows(string.format("SELECT itemid FROM items WHERE UPPER(name) = %s", sname)) do
+  -- Prepare and execute the statement to get item IDs
+  local stmt = db:prepare("SELECT itemid FROM items WHERE UPPER(name) = ?")
+  stmt:bind(1, sname)
+  for row in stmt:nrows() do
     item_ids[#item_ids + 1] = row.itemid
-  end -- finding rooms
+  end
+  stmt:finalize()
 
---  print(serialize.save_simple(item_ids))
-
+  -- Table to hold area information
   local t = {}
 
-  for i = 1, #item_ids do
-    for row in db:nrows(string.format("SELECT area FROM itemsloc WHERE itemid = %s", fixsql(item_ids[i]))) do
+  -- Prepare the statement to get areas for each item ID
+  local stmt_areas = db:prepare("SELECT area FROM itemsloc WHERE itemid = ?")
+
+  -- Loop through each item_id and get the corresponding areas
+  for _, itemid in ipairs(item_ids) do
+    stmt_areas:bind(1, itemid)  -- Bind the current itemid to the statement
+    
+    for row in stmt_areas:nrows() do
       t[#t + 1] = row.area
     end
+    
+    stmt_areas:reset()  -- Reset the statement for the next itemid
   end
 
---  print(serialize.save_simple(t))
+  -- Finalize the statement after the loop
+  stmt_areas:finalize()
 
   return table.concat(t, ";")
 end
+
 
 
 ]]>

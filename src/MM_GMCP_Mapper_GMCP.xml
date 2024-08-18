@@ -2115,18 +2115,26 @@ end
 
 function map_where(name, line, wildcards)
   local rname = wildcards.rname
-  local sname = fixsql("%" .. string.upper(rname) .. "%")
+  local sname = "%" .. string.upper(rname) .. "%"
   local t = {}
 
-  for row in db:nrows(string.format("SELECT uid, area FROM rooms WHERE UPPER(name) like %s", sname)) do
-    if (not is_vmap(row.area)) then
+  -- Prepare the SQL statement once
+  local stmt = db:prepare("SELECT uid, area FROM rooms WHERE UPPER(name) LIKE ?")
+
+  -- Bind and execute the statement
+  stmt:bind(1, sname)
+  for row in stmt:nrows() do
+    if not is_vmap(row.area) then
       t[#t + 1] = row.uid
     end
-  end -- finding rooms
+  end
+
+  -- Finalize the statement
+  stmt:finalize()
 
   ColourNote("lightgreen", "black", "Results for: '" .. rname .. "':")
   show_hyperlinks(t)
-  if (verbose_mode) then
+  if verbose_mode then
     ColourNote("lightgreen", "black", "Click on a room's name or type 'mapper goto <id>' to speedwalk to the room, if possible.")
   end
 end
@@ -2137,19 +2145,31 @@ function map_coord(name, line, wildcards)
   local t = {}
   local a = {}
 
-  for row in db:nrows(string.format("SELECT uid, area, name FROM rooms WHERE xcoord = %d and ycoord = %d", xcoord, ycoord)) do
-    if (not is_vmap(row.area)) then     
-	 t[#t + 1] = row.uid
-	else
-	 a[#a + 1] = row.uid
-	end
-  end -- finding rooms
+  -- Prepare the SQL statement with placeholders
+  local stmt = db:prepare("SELECT uid, area FROM rooms WHERE xcoord = ? AND ycoord = ?")
+
+  -- Bind the coordinates to the statement
+  stmt:bind(1, xcoord)
+  stmt:bind(2, ycoord)
+
+  -- Execute the statement and classify results
+  for row in stmt:nrows() do
+    if not is_vmap(row.area) then     
+      t[#t + 1] = row.uid
+    else
+      a[#a + 1] = row.uid
+    end
+  end
+
+  -- Finalize the statement
+  stmt:finalize()
 
   ColourNote("lightgreen", "black", "VMAP Results for: '" .. xcoord .. ", " .. ycoord .. "':")
   show_hyperlinks(a)
   ColourNote("lightgreen", "black", "ROOM Results for: '" .. xcoord .. ", " .. ycoord .. "':")
   show_hyperlinks(t)
-  if (verbose_mode) then
+
+  if verbose_mode then
     ColourNote("lightgreen", "black", "Click on a room's name or type 'mapper goto <id>' to speedwalk to the room, if possible.")
   end
 end
@@ -2157,20 +2177,27 @@ end
 function map_wheree(name, line, wildcards)
   local rname = wildcards.rname
   local area = wildcards.area
-  local sname = fixsql(string.upper(rname))
   local t = {}
 
   area = Trim(area)
+  
+  -- Prepare SQL query to fetch rooms by name
+  local stmt = db:prepare("SELECT uid, area FROM rooms WHERE UPPER(name) = ?")
+  stmt:bind(1, string.upper(rname))
 
-  for row in db:nrows(string.format("SELECT uid, area FROM rooms WHERE UPPER(name) = %s", sname)) do
-    if (not is_vmap(row.area)) and (area ~= "") then
-      if (string.lower(row.area) == string.lower(area)) then
+  -- Execute the query and filter results based on area
+  for row in stmt:nrows() do
+    if (not is_vmap(row.area)) then
+      if (area ~= "" and string.lower(row.area) ~= string.lower(area)) then
+        -- Skip this room if area is not matching and area filter is applied
+      else
         t[#t + 1] = row.uid
       end
-    else
-      t[#t + 1] = row.uid
     end
-  end -- finding rooms
+  end
+
+  -- Finalize the statement
+  stmt:finalize()
 
   ColourTell("lightgreen", "black", "Results for: '" .. rname .. "'")
   if (area ~= "") then
@@ -2188,23 +2215,28 @@ function map_wheree(name, line, wildcards)
   end
 end
 
-
 function get_room_areas(rname)
-  local sname = fixsql(string.upper(rname))
   local t = {}
 
-  for row in db:nrows(string.format("SELECT area FROM rooms WHERE UPPER(name) = %s", sname)) do
+  -- Prepare SQL query to fetch areas by room name
+  local stmt = db:prepare("SELECT area FROM rooms WHERE UPPER(name) = ?")
+  stmt:bind(1, string.upper(rname))
+
+  -- Execute the query and collect areas
+  for row in stmt:nrows() do
     t[#t + 1] = row.area
-  end -- finding rooms
+  end
+
+  -- Finalize the statement
+  stmt:finalize()
 
   return table.concat(t, ";")
 end
 
-
 function map_find(name, line, wildcards)
   local keywords = wildcards.keywords
 
-  -- it won't work when we are peeking another room
+  -- It won't work when we are peeking another room
   if (peeking) then
     return
   end
@@ -2217,7 +2249,7 @@ function map_find(name, line, wildcards)
   local unbold = ANSI(22)
   local red = ANSI(31)
 
-  function show_snippet(uid)
+  local function show_snippet(uid)
     local room = rooms[uid]
     if (not room) then
       room = load_room_from_database(uid)
@@ -2235,26 +2267,27 @@ function map_find(name, line, wildcards)
     end
   end
 
-  -- find matching rooms using FTS3
-  for row in db:nrows(string.format(
-     [[
-      SELECT uid, name, snippet(rooms_lookup, '%s', '%s', ' ... ', -1, -10) AS snippet
-        FROM rooms_lookup
-        WHERE rooms_lookup MATCH %s]],
-      bold, unbold,
-      fixsql(keywords))) do
-     rooms[row.uid] = true
-     snippets[row.uid] = row.snippet
-     count = count + 1
-  end -- finding room
+  -- Prepare SQL query for FTS3
+  local fts_query = db:prepare([[
+    SELECT uid, name, snippet(rooms_lookup, ?, ?, ' ... ', -1, -10) AS snippet
+    FROM rooms_lookup
+    WHERE rooms_lookup MATCH ?
+  ]])
+  fts_query:bind(1, bold)
+  fts_query:bind(2, unbold)
+  fts_query:bind(3, fixsql(keywords))
 
---    for id, _ in pairs(rooms) do
---      print(room)
---    end
+  -- Find matching rooms using FTS3
+  for row in fts_query:nrows() do
+    rooms[row.uid] = true
+    snippets[row.uid] = row.snippet
+    count = count + 1
+  end
 
-  -- see if nearby
+  -- Finalize the statement after use
+  fts_query:finalize()
 
-  -- find such places
+  -- See if nearby
   local old_depth = config.SCAN.depth
   config.SCAN.depth = 250
 
@@ -2265,16 +2298,15 @@ function map_find(name, line, wildcards)
         rooms[uid] = nil
       end
       return room, next(rooms) == nil
-    end,  -- function
-    show_vnums,  -- show vnum?
-    count,       -- how many to expect
-    false,       -- don't auto-walk
-    show_snippet -- show find snippet
+    end,  -- Function
+    show_vnums,  -- Show vnum?
+    count,       -- How many to expect
+    false,       -- Don't auto-walk
+    show_snippet -- Show find snippet
   )
 
   config.SCAN.depth = old_depth
 end
-
 
 function map_find_bookmarks(name, line, wildcards)
   if (compatibility) then
@@ -2284,32 +2316,38 @@ function map_find_bookmarks(name, line, wildcards)
 
   local rooms = {}
   local count = 0
+  local zone = fixsql(wildcards.zone)  -- Assuming 'zone' is provided by wildcards
 
-  -- build table of special places (with info in them)
-  for row in db:nrows(string.format("SELECT uid FROM rooms WHERE area = %s", fixsql(zone))) do
+  -- Prepare and execute the SQL statement to get room UIDs
+  local stmt_rooms = db:prepare("SELECT uid FROM rooms WHERE area = ?")
+  stmt_rooms:bind(1, zone)
+
+  for row in stmt_rooms:nrows() do
     local anote = load_notes_from_database(row.uid)
     if (anote) and (anote ~= "") then
       rooms[row.uid] = capitalize(anote)
       count = count + 1
     end
-  end   -- finding room
+  end
 
-  -- find such places
+  -- Finalize the statement after use
+  stmt_rooms:finalize()
+
+  -- Find such places
   mapper.find(
     function (uid)
       local room = rooms[uid]
       if room then
         rooms[uid] = nil
       end
-      return room, next(rooms) == nil  -- room will be type of info(eg. shop)
-    end,  -- function
-    show_vnums,  -- show vnum?
-    count,       -- how many to expect
-    false,       -- don't auto-walk
+      return room, next(rooms) == nil  -- room will be type of info (e.g., shop)
+    end,  -- Function
+    show_vnums,  -- Show vnum?
+    count,       -- How many to expect
+    false,       -- Don't auto-walk
     config2.safewalk
   )
 end
-
 
 function map_where_bookmark(name, line, wildcards)
   local bm = wildcards.bm
@@ -2322,14 +2360,22 @@ function map_where_bookmark(name, line, wildcards)
   local sbook = "%" .. string.upper(bm) .. "%"
   local t = {}
 
-  for row in db:nrows(string.format('SELECT * FROM bookmarks WHERE UPPER(notes) like "%s"', sbook)) do
+  -- Prepare the SQL statement for bookmarks with a parameterized query
+  local stmt = db:prepare('SELECT uid FROM bookmarks WHERE UPPER(notes) LIKE ?')
+  stmt:bind(1, sbook)
+
+  -- Execute the query and process results
+  for row in stmt:nrows() do
     local room = load_room_from_database(row.uid)
     if (room and room.area == current_area) then
       t[#t + 1] = row.uid
     end
-  end -- finding rooms
+  end
 
-  ColourNote("lightgreen", "black", "Rooms bookmarked as: '" .. sbook .. "':")
+  -- Finalize the statement to release resources
+  stmt:finalize()
+
+  ColourNote("lightgreen", "black", "Rooms bookmarked as: '" .. bm .. "':")
   show_hyperlinks(t)
 
   if (verbose_mode) then
@@ -2337,35 +2383,34 @@ function map_where_bookmark(name, line, wildcards)
   end
 end
 
-
 function map_where_flags(name, line, wildcards)
   local flags = wildcards.flags
   map_where_by_flags(flags)
 end
 
-
 function map_where_by_flags(flags)
   local sflags = utils.split(flags, " ")
   local rarea = current_area
   local t = {}
-  local rflags
 
-  local use_column = "flags"
-  if (compatibility) then
-    use_column = "description"
-  end
+  -- Choose the column based on compatibility
+  local use_column = compatibility and "description" or "flags"
 
-  for row in db:nrows(string.format('SELECT uid, %s FROM rooms WHERE area = "%s"', use_column, rarea)) do
-    local use_field = row.flags
-    if (compatibility) then
-      use_field = row.description
-    end
-    rflags = string.gsub(use_field or "", " ", "")
-    rflags = utils.split(rflags, ",")
+  -- Prepare the SQL statement to get room information
+  local stmt = db:prepare(string.format('SELECT uid, %s FROM rooms WHERE area = ?', use_column))
+  stmt:bind(1, rarea)
+
+  -- Execute the query and process results
+  for row in stmt:nrows() do
+    local use_field = row[use_column]
+    local rflags = utils.split((string.gsub(use_field or "", " ", "")), ",")
     if (has_all(sflags, rflags)) then
       t[#t + 1] = row.uid
     end
-  end -- finding rooms
+  end
+
+  -- Finalize the statement to release resources
+  stmt:finalize()
 
   mapper.mapprint("Results for flag(s)", flags, "in the area", rarea)
   show_hyperlinks(t)
@@ -2440,31 +2485,30 @@ function get_alt_flag_name(flag)
   return alt_flag_names[string.lower(flag)]  
 end
 
-
 function map_where_by_not_flags(name, line, wildcards)
   local flags = wildcards.flags
   local sflags = utils.split(flags, " ")
   local rarea = current_area
   local t = {}
-  local rflags
 
-  local use_column = "flags"
-  if (compatibility) then
-    use_column = "description"
-  end
+  -- Determine the column to use based on compatibility
+  local use_column = compatibility and "description" or "flags"
 
-  for row in db:nrows(string.format('SELECT uid, name, %s FROM rooms WHERE area = "%s"', use_column, rarea)) do
-    local use_field = row.flags
-    if (compatibility) then
-      use_field = row.description
-    end
-    rflags = string.gsub(use_field or "", " ", "")
-    rflags = utils.split(rflags, ",")
+  -- Prepare the SQL statement to get room information
+  local stmt = db:prepare(string.format('SELECT uid, %s FROM rooms WHERE area = ?', use_column))
+  stmt:bind(1, rarea)
 
+  -- Execute the query and process results
+  for row in stmt:nrows() do
+    local use_field = row[use_column]
+    local rflags = utils.split((string.gsub(use_field or "", " ", "")), ",")
     if (has_none(sflags, rflags)) then
       t[#t + 1] = row.uid
     end
-  end -- finding rooms
+  end
+
+  -- Finalize the statement to release resources
+  stmt:finalize()
 
   mapper.mapprint("Results for NOT flag(s)", flags, "in the area", rarea)
   show_hyperlinks(t)
@@ -2473,7 +2517,6 @@ function map_where_by_not_flags(name, line, wildcards)
     mapper.mapprint("Click on a room's name or type 'mapper goto <id>' to speedwalk to the room, if possible.")
   end
 end
-
 
 function map_hyperlink(name, line, wildcards)
   local id = wildcards.id
@@ -2545,15 +2588,17 @@ function show_exithyperlinks(t)
 end
 
 function map_show_adjacent_rooms(name, line, wildcards)
-  local name = wildcards.name
-  local sname = fixsql(string.upper(Trim(name)))
+  local sname = fixsql(string.upper(Trim(wildcards.name)))
 
-  -- find matching rooms
+  -- Prepare and execute the SQL statement to get room IDs
+  local stmt = db:prepare("SELECT uid FROM rooms WHERE UPPER(name) = ?")
+  stmt:bind(1, sname)
+  
   local taux = {}
-
-  for row in db:nrows(string.format("SELECT uid FROM rooms WHERE UPPER(name) = %s", sname)) do
+  for row in stmt:nrows() do
     taux[#taux + 1] = row.uid
   end
+  stmt:finalize()
 
   mapper.mapprint("Adjacent rooms for name =", name)
 
@@ -2564,36 +2609,33 @@ function map_show_adjacent_rooms(name, line, wildcards)
 
   table.sort(taux)
 
-  -- find adjacent exits with names /= name
+  -- Find adjacent exits with names /= name
   local tres = {}
   local thisroom, adjroom
 
   for i = 1, #taux do
     thisroom = load_room_from_database(taux[i])
 
+    -- Check if exits are valid and adjacent room name is not the same
     for _, num in pairs(thisroom.exits) do
       adjroom = load_room_from_database(num)
-
-      if (adjroom)
-      and (string.upper(Trim(adjroom.name)) ~= string.upper(Trim(name))) then
+      if adjroom and string.upper(Trim(adjroom.name)) ~= string.upper(Trim(name)) then
         tres[#tres + 1] = "(" .. adjroom.area .. ") " .. adjroom.name
       end
     end
   end
 
-  -- show results, if any
-  if (#tres <= 0) then
+  -- Show results, if any
+  if (#tres == 0) then
     Note("No matches.")
     return
   end
 
   table.sort(tres)
-
-  for i = 1, #tres do
-    ColourNote("silver", "black", tres[i])
+  for _, result in ipairs(tres) do
+    ColourNote("silver", "black", result)
   end
 end
-
 
 function map_signposts()
   if (peeking) then
@@ -2676,86 +2718,87 @@ function map_trainers()
   end
 end
 
-
 function map_find_by_tags(tags)
   local stags = utils.split(tags, " ")
   local rooms = {}
   local count = 0
 
-  -- build table of special places (with info in them)
-  for row in db:nrows(string.format("SELECT uid, tags FROM player_tags")) do
+  -- Prepare and execute the SQL statement to get player tags
+  local stmt = db:prepare("SELECT uid, tags FROM player_tags")
+  for row in stmt:nrows() do
     local rtags = row.tags
     rtags = string.gsub(rtags or "", " ", "")
     rtags = utils.split(rtags, ",")
 
-    if (has_all(stags, rtags)) then
+    if has_all(stags, rtags) then
       rooms[row.uid] = true
       count = count + 1
     end
-  end   -- finding room
+  end
+  stmt:finalize()
 
-  -- find such places
+  -- Find such places
   local old_depth = config.SCAN.depth
   config.SCAN.depth = 250
 
   mapper.find(
     function (uid)
-      local room = rooms[uid]
-      if room then
-        rooms[uid] = nil
-      end
-      return room, next(rooms) == nil  -- room will be type of info(eg. shop)
-    end,  -- function
-    show_vnums,  -- show vnum?
-    count,       -- how many to expect
-    false,       -- don't auto-walk
+      return rooms[uid] and rooms[uid] == true, next(rooms) == nil
+    end,
+    show_vnums,
+    count,
+    false,
     config2.safewalk
   )
 
   config.SCAN.depth = old_depth
 end
 
-
 function map_where_by_tags(tags)
   local stags = utils.split(tags, " ")
   local rarea = current_area
   local t = {}
-  local room, rtags
+  local rtags
 
-  for row in db:nrows(string.format('SELECT * FROM player_tags')) do
-    room = do_load_room(row.uid)
+  -- Prepare and execute the SQL statement to get player tags
+  local stmt = db:prepare("SELECT uid, tags FROM player_tags")
+  for row in stmt:nrows() do
+    local room = load_room_from_database(row.uid)
 
-    if (room.area == rarea) then
+    if room.area == rarea then
       rtags = row.tags
       rtags = string.gsub(rtags or "", " ", "")
       rtags = utils.split(rtags, ",")
 
-      if (has_all(stags, rtags)) then
+      if has_all(stags, rtags) then
         t[#t + 1] = row.uid
       end
     end
-  end -- finding rooms
+  end
+  stmt:finalize()
 
+  -- Output results
   mapper.mapprint("Results for tag(s)", tags, "in the area", rarea)
   show_hyperlinks(t)
 
-  if (verbose_mode) then
+  if verbose_mode then
     mapper.mapprint("Click on a room's name or type 'mapper goto <id>' to speedwalk to the room, if possible.")
   end
 end
-
 
 function map_where_by_tags_compat(which)
   local rooms = {}
   local count = 0
 
-  -- build table of special places (with info in them)
-  for row in db:nrows(string.format("SELECT uid, name FROM rooms WHERE %s = 1", which)) do
+  -- Prepare and execute the SQL statement to get room UIDs
+  local stmt = db:prepare(string.format("SELECT uid FROM rooms WHERE %s = 1", which))
+  for row in stmt:nrows() do
     rooms[row.uid] = true
     count = count + 1
-  end   -- finding room
+  end
+  stmt:finalize()
 
-  -- find such places
+  -- Find such places
   mapper.find(
     function (uid)
       local room = rooms[uid]
@@ -2770,8 +2813,6 @@ function map_where_by_tags_compat(which)
     config2.safewalk
   )
 end
-
-
 
 -------------
 -- movement
@@ -2865,10 +2906,17 @@ function map_exits(name, line, wildcards)
 
   ColourNote("lightgreen", "black", "Results for: '" .. toid .. "':")
 
-  for row in db:nrows(string.format("SELECT fromuid, dir, touid FROM exits WHERE touid like %s", toid)) do
-	ColourNote("lightblue", "black", "FROM: " .. row.fromuid .. " TO: " .. row.touid .. " - DIR: " .. row.dir)
-       t[#t + 1] = row.fromuid
-  end -- finding rooms
+  -- Prepare the SQL statement once
+  local stmt = db:prepare("SELECT fromuid, dir, touid FROM exits WHERE touid = ?")
+  stmt:bind(1, toid) -- Bind the parameter
+
+  -- Execute the query and handle results
+  for row in stmt:nrows() do
+    ColourNote("lightblue", "black", "FROM: " .. row.fromuid .. " TO: " .. row.touid .. " - DIR: " .. row.dir)
+    t[#t + 1] = row.fromuid
+  end
+  
+  stmt:finalize() -- Finalize the statement
 
   show_hyperlinks(t)
   if (verbose_mode) then
@@ -3086,46 +3134,42 @@ end
 -- ---------------------------------
 
 function process_room()
-  uid = gmcpval("num")
-  zone = gmcpval("zone")
+  local uid = gmcpval("num")
+  local zone = gmcpval("zone")
 
   if (uid ~= "") then
-  -- and (not is_maze(uid))
---    print(uid)
+    -- and (not is_maze(uid))
+    --    print(uid)
 
     if (uid) then
-      roomname = gmcpval("name")
+		roomname = gmcpval("name")
+		roomflags = gmcpval("flags")
+		if roomflags == "_empty" then
+			roomflags = nil
+		end
 
-      roomflags = gmcpval("flags")
-      if (roomflags == "_empty") then
-        roomflags = nil
-      end
+		exits = {}
+		exits_str = gmcp_get_exits()
+	
+		current_area = zone
+		terrain = gmcpval("terrain")
+		terraininfo = gmcpval("terraininfo")
 
-      exits = {}
-      exits_str = gmcp_get_exits()
+		check_if_show_flags_and_terrain(roomflags, terrain)
 
-      current_area = zone
-
-      terrain = gmcpval("terrain")
-      terraininfo = gmcpval("terraininfo")
-
-      check_if_show_flags_and_terrain(roomflags, terrain)
-
-	-- Tamlin Mapping
-	 xcoord = gmcpval("coord.x")
-	 ycoord = gmcpval("coord.y")
-	 symbol = gmcpval("coord.sym")
-         rcolor = gmcpval("coord.color")
+		-- Tamlin Mapping
+		xcoord = gmcpval("coord.x")
+		ycoord = gmcpval("coord.y")
+		symbol = gmcpval("coord.sym")
+		rcolor = gmcpval("coord.color")
 
       current_room = uid
-
       local room = rooms[current_room] or load_room_from_database(current_room)
 
       if (not room) then -- room isn't mapped yet
         if (config2.do_map_wilds) -- we're mapping everything
         or ((not is_vmap(zone) or (is_road(terrain) and not is_cave(roomname)))) then -- it's not in the wilds
           db:exec("BEGIN TRANSACTION;")
-         
 
           save_room_to_database(current_room, roomname, roomflags, zone, terrain, terraininfo, xcoord, ycoord, symbol, rcolor)
           save_exits_to_database(current_room, exits_str)
@@ -3152,12 +3196,10 @@ function process_room()
   and ((config2.do_map_wilds) -- we're mapping the wilds
     or ((not is_vmap(zone) or (is_road(terrain) and not is_cave(roomname))))) then
   -- or we're in a part of the wilds that we always wanna map
---    print(uid)
+    --    print(uid)
     mapper_redraw() -- call mapper to draw this room
   end
 end
-
-
 
 -------------------
 -- various checks
@@ -3376,15 +3418,12 @@ end
 ------------------------
 
 function dbcheck(code)
- if code ~= sqlite3.OK and    -- no error
-    code ~= sqlite3.ROW and   -- completed OK with another row of data
-    code ~= sqlite3.DONE then -- completed OK, no more rows
-    local err = db:errmsg()   -- the rollback will change the error message
-    db:exec("ROLLBACK")       -- rollback any transaction to unlock the database
-    error(err, 2)             -- show error in caller's context
+  if code ~= sqlite3.OK and code ~= sqlite3.ROW and code ~= sqlite3.DONE then
+    local err = db:errmsg()   -- Capture the error message
+    db:exec("ROLLBACK")       -- Rollback any ongoing transaction
+    error("Database error: " .. err, 2)  -- Include more context in the error message
   end
 end
-
 
 function fixsql(s)
   if s then
@@ -3420,132 +3459,141 @@ end
 
 function create_tables_new(use_db)
   dbcheck(use_db:execute[[
-
     PRAGMA foreign_keys = ON;
     PRAGMA journal_mode = WAL;
 
     CREATE TABLE IF NOT EXISTS rooms(
-      uid           TEXT NOT NULL,    -- vnum or how the MUD identifies the room
-      name          TEXT,             -- name of room
-      flags         TEXT,             -- room flags
-      area          TEXT,             -- which area it is in
-      terrain       TEXT,             -- terrain
-      terraininfo   TEXT,             -- terrain info
-      date_added    DATE,             -- date added to database
-      xcoord        INTEGER,          -- xcoordinate
-      ycoord        INTEGER,          -- ycoordinate
-      symbol	    TEXT,             -- symbol of the room
-      rcolor	    TEXT,	      -- room color from mud
-      UNIQUE(uid)
+      uid           TEXT NOT NULL,    -- Unique identifier for the room
+      name          TEXT,             -- Room name
+      flags         TEXT,             -- Room flags
+      area          TEXT,             -- Area the room is in
+      terrain       TEXT,             -- Terrain type
+      terraininfo   TEXT,             -- Additional terrain info
+      date_added    DATE,             -- Date when added to the database
+      xcoord        INTEGER,          -- X-coordinate
+      ycoord        INTEGER,          -- Y-coordinate
+      symbol        TEXT,             -- Symbol representing the room
+      rcolor        TEXT,             -- Room color
+      UNIQUE(uid)                     -- Ensure UID is unique
     );
 
     CREATE TABLE IF NOT EXISTS bookmarks(
-      uid           TEXT NOT NULL,    -- room's vnum
-      notes         TEXT,             -- player notes
-      UNIQUE(uid),
-      FOREIGN KEY(uid) REFERENCES rooms(uid)
+      uid           TEXT NOT NULL,    -- Room's UID
+      notes         TEXT,             -- Player notes
+      UNIQUE(uid),                  -- Ensure UID is unique
+      FOREIGN KEY(uid) REFERENCES rooms(uid)  -- Foreign key reference
     );
 
     CREATE TABLE IF NOT EXISTS player_tags(
-      uid           TEXT NOT NULL,    -- room's vnum
-      tags          TEXT,             -- player tags (signpost, DT, no-speed, shop, trainer, trap)
-      UNIQUE(uid),
-      FOREIGN KEY(uid) REFERENCES rooms(uid)
+      uid           TEXT NOT NULL,    -- Room's UID
+      tags          TEXT,             -- Tags associated with the room
+      UNIQUE(uid),                  -- Ensure UID is unique
+      FOREIGN KEY(uid) REFERENCES rooms(uid)  -- Foreign key reference
     );
 
     CREATE TABLE IF NOT EXISTS exits(
-      dir           TEXT NOT NULL,    -- direction, eg. "n", "s"
-      fromuid       TEXT NOT NULL,    -- exit from which room(in rooms table)
-      touid         TEXT NOT NULL,    -- exit to which room(in rooms table)
-      date_added    DATE,             -- date added to database
-      FOREIGN KEY(fromuid) REFERENCES rooms(uid)
+      dir           TEXT NOT NULL,    -- Direction of the exit
+      fromuid       TEXT NOT NULL,    -- UID of the originating room
+      touid         TEXT NOT NULL,    -- UID of the destination room
+      date_added    DATE,             -- Date when added to the database
+      FOREIGN KEY(fromuid) REFERENCES rooms(uid)  -- Foreign key reference
     );
 
     CREATE TABLE IF NOT EXISTS exits_tags(
-      dir           TEXT NOT NULL,    -- direction, eg. "n", "s"
-      fromuid       TEXT NOT NULL,    -- exit from which room(in rooms table)
-      tags          TEXT,             -- player tags (no-speed, etc.)
-      FOREIGN KEY(fromuid) REFERENCES rooms(uid)
+      dir           TEXT NOT NULL,    -- Direction of the exit
+      fromuid       TEXT NOT NULL,    -- UID of the originating room
+      tags          TEXT,             -- Tags associated with the exit
+      FOREIGN KEY(fromuid) REFERENCES rooms(uid)  -- Foreign key reference
     );
 
+    -- Indexes for optimizing queries
     CREATE INDEX IF NOT EXISTS fromuid_index ON exits(fromuid);
     CREATE INDEX IF NOT EXISTS touid_index   ON exits(touid);
   ]])
 end
 
-
 function create_tables_compatibility(use_db)
   dbcheck(use_db:execute[[
-
     PRAGMA foreign_keys = ON;
     PRAGMA journal_mode = WAL;
 
+    -- Rooms table
     CREATE TABLE IF NOT EXISTS rooms(
-      roomid        INTEGER PRIMARY KEY AUTOINCREMENT,
-      uid           TEXT NOT NULL,    -- vnum or how the MUD identifies the room
-      name          TEXT,             -- name of room
-      description   TEXT,             -- room flags
-      area          TEXT,             -- which area it is in
-      terrain       TEXT,             -- terrain
-      terraininfo   TEXT,             -- terrain info
-      safe          INTEGER,          -- 1 = safe room
-      lpk           INTEGER,          -- 1 = lpk room
-      npk           INTEGER,          -- 1 = npk room
-      cpk           INTEGER,          -- 1 = cpk room
-      shop          INTEGER,          -- 1 = shop here
-      train         INTEGER,          -- 1 = trainer here
-      notes         TEXT,             -- player notes
-      date_added    DATE,             -- date added to database
-      UNIQUE(uid)
+      roomid        INTEGER PRIMARY KEY AUTOINCREMENT, -- Unique identifier
+      uid           TEXT NOT NULL,                    -- Unique identifier for the room
+      name          TEXT,                             -- Name of the room
+      description   TEXT,                             -- Description or flags of the room
+      area          TEXT,                             -- Area the room is in
+      terrain       TEXT,                             -- Terrain type
+      terraininfo   TEXT,                             -- Additional terrain info
+      safe          INTEGER,                          -- 1 = safe room
+      lpk           INTEGER,                          -- 1 = lpk room
+      npk           INTEGER,                          -- 1 = npk room
+      cpk           INTEGER,                          -- 1 = cpk room
+      shop          INTEGER,                          -- 1 = shop here
+      train         INTEGER,                          -- 1 = trainer here
+      notes         TEXT,                             -- Player notes
+      date_added    DATE,                             -- Date added to the database
+      UNIQUE(uid)                                   -- Ensure UID is unique
     );
+
+    -- Indexes for optimizing queries on room attributes
     CREATE INDEX IF NOT EXISTS safe_index ON rooms(safe);
     CREATE INDEX IF NOT EXISTS cpk_index ON rooms(cpk);
     CREATE INDEX IF NOT EXISTS shop_index ON rooms(shop);
     CREATE INDEX IF NOT EXISTS train_index ON rooms(train);
 
+    -- Exits table
     CREATE TABLE IF NOT EXISTS exits(
-      exitid        INTEGER PRIMARY KEY AUTOINCREMENT,
-      dir           TEXT NOT NULL,    -- direction, eg. "n", "s"
-      fromuid       TEXT NOT NULL,    -- exit from which room(in rooms table)
-      touid         TEXT NOT NULL,    -- exit to which room(in rooms table)
-      date_added    DATE,             -- date added to database
-      FOREIGN KEY(fromuid) REFERENCES rooms(uid)
+      exitid        INTEGER PRIMARY KEY AUTOINCREMENT, -- Unique identifier
+      dir           TEXT NOT NULL,                    -- Direction of the exit
+      fromuid       TEXT NOT NULL,                    -- UID of the originating room
+      touid         TEXT NOT NULL,                    -- UID of the destination room
+      date_added    DATE,                             -- Date added to the database
+      FOREIGN KEY(fromuid) REFERENCES rooms(uid)     -- Foreign key constraint
     );
+
+    -- Indexes for optimizing queries on exits
     CREATE INDEX IF NOT EXISTS fromuid_index ON exits(fromuid);
     CREATE INDEX IF NOT EXISTS touid_index   ON exits(touid);
-
   ]])
 end
 
-
 function create_rooms_lookup_new(use_db)
-  local table_exists
-  for a in use_db:nrows "SELECT * FROM sqlite_master WHERE name = 'rooms_lookup' AND type = 'table'" do
+  -- Check if the rooms_lookup table exists
+  local table_exists = false
+  for row in use_db:nrows("SELECT name FROM sqlite_master WHERE type='table' AND name='rooms_lookup'") do
     table_exists = true
   end
 
   if not table_exists then
-    dbcheck(use_db:execute "CREATE VIRTUAL TABLE rooms_lookup USING FTS3(uid, name, area);")
-    -- in case we only deleted the rooms_lookup table to save space in the download
-    dbcheck(use_db:execute "INSERT INTO rooms_lookup(uid, name, area) SELECT uid, name, area FROM rooms;")
+    -- Create the FTS virtual table
+    local create_result = use_db:execute("CREATE VIRTUAL TABLE rooms_lookup USING FTS3(uid, name, area);")
+    dbcheck(create_result)
+
+    -- Insert data from the rooms table into the rooms_lookup table
+    local insert_result = use_db:execute("INSERT INTO rooms_lookup(uid, name, area) SELECT uid, name, area FROM rooms;")
+    dbcheck(insert_result)
   end
 end
-
 
 function create_rooms_lookup_compatibility(use_db)
-  local table_exists
-  for a in use_db:nrows "SELECT * FROM sqlite_master WHERE name = 'rooms_lookup' AND type = 'table'" do
+  -- Check if the rooms_lookup table exists
+  local table_exists = false
+  for row in use_db:nrows("SELECT name FROM sqlite_master WHERE type='table' AND name='rooms_lookup'") do
     table_exists = true
   end
 
   if not table_exists then
-    dbcheck(use_db:execute "CREATE VIRTUAL TABLE rooms_lookup USING FTS3(uid, name, description);")
-    -- in case we only deleted the rooms_lookup table to save space in the download
-    dbcheck(use_db:execute "INSERT INTO rooms_lookup(uid, name, description) SELECT uid, name, description FROM rooms;")
+    -- Create the FTS virtual table
+    local create_result = use_db:execute("CREATE VIRTUAL TABLE rooms_lookup USING FTS3(uid, name, description);")
+    dbcheck(create_result)
+
+    -- Insert data from the rooms table into the rooms_lookup table
+    local insert_result = use_db:execute("INSERT INTO rooms_lookup(uid, name, description) SELECT uid, name, description FROM rooms;")
+    dbcheck(insert_result)
   end
 end
-
-
 
 ---------------------
 -- database queries
@@ -3570,67 +3618,97 @@ function load_room_from_database(uid)
   return nil
 end
 
-
 function do_load_room(uid)
-  local room
+  local room = nil
 
-  for row in db:nrows(string.format("SELECT * FROM rooms WHERE uid = %s", fixsql(uid))) do
-    room = {
-      uid = row.uid,
-      name = row.name,
-      area = row.area,
-      terrain = row.terrain,
-      terraininfo = row.terraininfo,
-      date_added = row.date_added,
-      xcoord = row.xcoord,
-      ycoord = row.ycoord,
-      symbol = row.symbol,
-      rcolor = row.rcolor
-    }
+  -- Ensure the UID is properly escaped to prevent SQL injection
+  local query = string.format("SELECT * FROM rooms WHERE uid = %s", fixsql(uid))
 
-    if (not compatibility) then
-      room.flags = row.flags
-      room.notes = load_notes_from_database(uid)
-      room.tags = load_tags_from_database(uid)
+  -- Execute the query and handle possible errors
+  local success, err = pcall(function()
+    for row in db:nrows(query) do
+      room = {
+        uid = row.uid,
+        name = row.name,
+        area = row.area,
+        terrain = row.terrain,
+        terraininfo = row.terraininfo,
+        date_added = row.date_added,
+        xcoord = row.xcoord,
+        ycoord = row.ycoord,
+        symbol = row.symbol,
+        rcolor = row.rcolor
+      }
 
-    else
-      room.flags = row.description
-      room.flags = fix_flag(room.flags, row.safe, "safe")
-      room.flags = fix_flag(room.flags, row.lpk, "LPK", "player-kill-lawful")
-      room.flags = fix_flag(room.flags, row.npk, "NPK", "player-kill-neutral")
-      room.flags = fix_flag(room.flags, row.cpk, "CPK", "player-kill-chaotic")
+      if not compatibility then
+        room.flags = row.flags
+        room.notes = load_notes_from_database(uid)
+        room.tags = load_tags_from_database(uid)
+      else
+        room.flags = row.description
+        room.flags = fix_flag(room.flags, row.safe, "safe")
+        room.flags = fix_flag(room.flags, row.lpk, "LPK", "player-kill-lawful")
+        room.flags = fix_flag(room.flags, row.npk, "NPK", "player-kill-neutral")
+        room.flags = fix_flag(room.flags, row.cpk, "CPK", "player-kill-chaotic")
 
-      room.notes = row.notes
+        room.notes = row.notes
 
-      room.tags = fix_tag(room.tags, row.shop, "shop")
-      room.tags = fix_tag(room.tags, row.train, "trainer")
+        room.tags = fix_tag(room.tags, row.shop, "shop")
+        room.tags = fix_tag(room.tags, row.train, "trainer")
+      end
+
+      -- Load exits and exit tags
+      room.exits = load_exits_from_database(room, uid)
+      room.exits_tags = load_exits_tags_from_database(room, uid)
     end
+  end)
 
-    room.exits = load_exits_from_database(room, uid)
-    room.exits_tags = load_exits_tags_from_database(room, uid)
-  end   -- finding room
-
+  if not success then
+    error("Failed to load room data: " .. err)
+  end
+  
   return room
 end
 
-
 function load_exits_from_database(room, uid)
   local exits = {}
-  for exitrow in db:nrows(string.format("SELECT * FROM exits WHERE fromuid = %s", fixsql(uid))) do
-    exits[exitrow.dir] = tostring(exitrow.touid)
-  end -- for each exit
+
+  -- Construct the SQL query with proper escaping
+  local query = string.format("SELECT * FROM exits WHERE fromuid = %s", fixsql(uid))
+
+  -- Execute the query and handle potential errors
+  local success, err = pcall(function()
+    for exitrow in db:nrows(query) do
+      exits[exitrow.dir] = tostring(exitrow.touid)
+    end
+  end)
+
+  if not success then
+    error("Failed to load exits: " .. err)
+  end
+
   return exits
 end
 
-
 function load_exits_tags_from_database(room, uid)
   local exits_tags = {}
-  for exitrow in db:nrows(string.format("SELECT * FROM exits_tags WHERE fromuid = %s", fixsql(uid))) do
-    exits_tags[exitrow.dir] = exitrow.tags
-  end -- for each exit
+
+  -- Construct the SQL query with proper escaping
+  local query = string.format("SELECT * FROM exits_tags WHERE fromuid = %s", fixsql(uid))
+
+  -- Execute the query and handle potential errors
+  local success, err = pcall(function()
+    for exitrow in db:nrows(query) do
+      exits_tags[exitrow.dir] = exitrow.tags
+    end
+  end)
+
+  if not success then
+    error("Failed to load exits tags: " .. err)
+  end
+
   return exits_tags
 end
-
 
 function room_exits(uid)
   local room = rooms[uid]
@@ -3672,29 +3750,45 @@ function add_a_flag(flags, flag)
   return add_a_tag(flags, flag)
 end
 
-
 function load_notes_from_database(uid)
-  local res
+  local notes = ""
 
-  for row in db:nrows(string.format("SELECT * FROM bookmarks WHERE uid = %s", fixsql(uid))) do
-    res = row.notes
+  -- Construct the SQL query with proper escaping
+  local query = string.format("SELECT * FROM bookmarks WHERE uid = %s", fixsql(uid))
+
+  -- Execute the query and handle potential errors
+  local success, err = pcall(function()
+    for row in db:nrows(query) do
+      notes = row.notes or ""  -- Ensure notes is set to an empty string if nil
+    end
+  end)
+
+  if not success then
+    error("Failed to load notes: " .. err)
   end
 
-  return res
+  return notes
 end
-
 
 function load_tags_from_database(uid)
-  local res
+  local tags = ""
 
-  for row in db:nrows(string.format("SELECT * FROM player_tags WHERE uid = %s", fixsql(uid))) do
-    res = row.tags
+  -- Construct the SQL query with proper escaping
+  local query = string.format("SELECT * FROM player_tags WHERE uid = %s", fixsql(uid))
+
+  -- Execute the query and handle potential errors
+  local success, err = pcall(function()
+    for row in db:nrows(query) do
+      tags = row.tags or ""  -- Ensure tags is set to an empty string if nil
+    end
+  end)
+
+  if not success then
+    error("Failed to load tags: " .. err)
   end
 
-  return res
+  return tags
 end
-
-
 
 -- -----------
 -- additions
@@ -3706,83 +3800,115 @@ end
 
 function map_add_room(name, line, wildcards)
   local id = wildcards.id
-  local name = wildcards.name
+  local room_name = wildcards.name
   local zone = wildcards.area
   local flags = wildcards.flags
   local terrain = wildcards.terrain
   local terraininfo = wildcards.terraininfo
 
-  local room = load_room_from_database(id)
+  -- Optional parameters with default values if not provided
+  local xcoord = wildcards.xcoord or 0
+  local ycoord = wildcards.ycoord or 0
+  local symbol = wildcards.symbol or ""
+  local rcolor = wildcards.rcolor or ""
 
-  if (room) then
+  -- Check if the room already exists
+  local room = load_room_from_database(id)
+  if room then
     mapper.mapprint("The room", id, "is already mapped.")
     return
   end
 
-  -- room isn't mapped yet
-  db:exec("BEGIN TRANSACTION;")
-  save_room_to_database(id, Trim(name), Trim(flags), Trim(zone), Trim(terrain), Trim(terraininfo), Trim(xcoord), Trim(ycoord), Trim(symbol), Trim(rcolor))
-  db:exec("COMMIT;")
+  -- Begin transaction to add room to the database
+  local success, err = pcall(function()
+    db:exec("BEGIN TRANSACTION;")
+    save_room_to_database(
+      id,
+      Trim(room_name),
+      Trim(flags),
+      Trim(zone),
+      Trim(terrain),
+      Trim(terraininfo),
+      Trim(xcoord),
+      Trim(ycoord),
+      Trim(symbol),
+      Trim(rcolor)
+    )
+    db:exec("COMMIT;")
+  end)
 
-  -- update in-memory table
+  if not success then
+    db:exec("ROLLBACK;")
+    error("Failed to add room: " .. err)
+  end
+
+  -- Update in-memory table and redraw the map
   load_room_from_database(id)
-
   mapper_redraw()
 end
 
 
+
 function save_room_to_database(uid, title, flags, area, terrain, terraininfo, xcoord, ycoord, symbol, rcolor)
   assert(uid, "No UID supplied to save_room_to_database")
-  if (is_maze(uid)) then
+  
+  -- Skip saving if it's a maze
+  if is_maze(uid) then
     return
   end
 
   local use_column = "flags"
-  if (compatibility) then
+  if compatibility then
     use_column = "description"
   end
 
-  dbcheck(db:execute(string.format(
-    "INSERT INTO rooms(uid, name, %s, area, terrain, terraininfo, date_added, xcoord, ycoord, symbol, rcolor) VALUES(%s, %s, %s, %s, %s, %s, DATETIME('NOW'), %s, %s, %s, %s);",
-      use_column,
-      fixsql(uid),
-      fixsql(title),
-      fixsql(flags),
-      fixsql(area),
-      fixsql(terrain),
-      fixsql(terraininfo),
-      fixsql(xcoord),
-      fixsql(ycoord),
-      fixsql(symbol),
-      fixsql(rcolor)
-  )))
+  -- Insert room into the 'rooms' table
+  local sql = string.format([[
+    INSERT INTO rooms(uid, name, %s, area, terrain, terraininfo, date_added, xcoord, ycoord, symbol, rcolor)
+    VALUES (%s, %s, %s, %s, %s, %s, DATETIME('NOW'), %s, %s, %s, %s);
+  ]],
+    use_column,
+    fixsql(uid),
+    fixsql(title),
+    fixsql(flags),
+    fixsql(area),
+    fixsql(terrain),
+    fixsql(terraininfo),
+    fixsql(xcoord),
+    fixsql(ycoord),
+    fixsql(symbol),
+    fixsql(rcolor)
+  )
 
-  use_column = "area"
-  local use_field = area
-  if (compatibility) then
-    use_column = "flags"
-    use_field = flags
+  dbcheck(db:execute(sql))
+
+  -- Insert room into the 'rooms_lookup' table
+  local lookup_column = compatibility and "flags" or "area"
+  local lookup_value = compatibility and flags or area
+
+  sql = string.format([[
+    INSERT INTO rooms_lookup(uid, name, %s)
+    VALUES (%s, %s, %s);
+  ]],
+    lookup_column,
+    fixsql(uid),
+    fixsql(title),
+    fixsql(lookup_value)
+  )
+
+  dbcheck(db:execute(sql))
+
+  -- Save tags if terraininfo contains "ship-only"
+  if string.match(terraininfo, "ship-only") then
+    local tags = "no-speed"
+    save_tags_to_database(uid, tags)
   end
 
-  dbcheck(db:execute(string.format(
-    "INSERT INTO rooms_lookup(uid, name, %s) VALUES(%s, %s, %s);",
-      use_column,
-      fixsql(uid),
-      fixsql(title),
-      fixsql(use_field)
-  )))
-
-if string.match(terraininfo,"ship-only") then
-        tags = "no-speed"
-	save_tags_to_database(uid, tags)
-end
-
+  -- Update in-memory cache
   room_not_in_database[uid] = nil
 
   show_update(uid, "Added room " .. uid .. " to database. Name: " .. title)
 end
-
-
 
 ------------------
 -- add bookmarks
@@ -3840,259 +3966,343 @@ function map_add_bookmark(name, line, wildcards)
   end
 end
 
-
 function gui_room_edit_bookmark(room, uid)
-  if (compatibility) then
+  if compatibility then
     ColourNote("tomato", "black", "GMCP Mapper: I can't edit bookmarks in compatibility mode. Please upgrade your database.")
     return
   end
 
-  if (is_maze(uid)) then
+  if is_maze(uid) then
     mapper.mapprint("Can't add bookmarks to maze rooms.")
     return
   end
 
-  local notes = room.notes or ""
+  local old_notes = room.notes or ""
+  local new_notes
 
-  if (notes ~= "") then
-    newnotes = utils.inputbox("Modify room comment (clear it to delete from database)", room.name, notes)
+  if old_notes ~= "" then
+    new_notes = utils.inputbox("Modify room comment (clear it to delete from database)", room.name, old_notes)
   else
-    newnotes = utils.inputbox("Enter room comment (creates a bookmark for this room)", room.name, notes)
+    new_notes = utils.inputbox("Enter room comment (creates a bookmark for this room)", room.name, old_notes)
   end
 
-  if (not newnotes) then
-    return
-  end -- if cancelled
+  if not new_notes then
+    return  -- Cancelled
+  end
 
-  if (notes ~= newnotes) then
-    if (newnotes == "") then
-      if (notes == "") then
+  if old_notes ~= new_notes then
+    if new_notes == "" then
+      if old_notes == "" then
         mapper.mapprint("No comment entered, bookmark not saved.")
       else
         del_bookmark_from_database(uid)
-        mapper.mapprint("Bookmark for room", uid, "deleted. Was previously:", notes)
+        mapper.mapprint("Bookmark for room", uid, "deleted. Was previously:", old_notes)
 
-        -- update in-memory table
-        if (rooms[id]) then
-          rooms[id].notes = nil
+        -- Update in-memory table
+        if rooms[uid] then
+          rooms[uid].notes = nil
         end
       end
-
-    else -- newnotes not empty
-      if (notes == "") then
-        save_bookmark(uid, newnotes)
-        mapper.mapprint("Bookmark added to room", uid, ":", newnotes)
+    else
+      if old_notes == "" then
+        save_bookmark(uid, new_notes)
+        mapper.mapprint("Bookmark added to room", uid, ":", new_notes)
       else
-        update_bookmark(uid, newnotes)
-        mapper.mapprint("Bookmark for room", uid, "changed to:", newnotes)
+        update_bookmark(uid, new_notes)
+        mapper.mapprint("Bookmark for room", uid, "changed to:", new_notes)
       end
 
-      -- update in-memory table
-      if (rooms[id]) then
-        rooms[id].notes = newnotes
+      -- Update in-memory table
+      if rooms[uid] then
+        rooms[uid].notes = new_notes
       end
     end
   end
 end
 
-
 function save_bookmark(uid, notes)
-  dbcheck(db:execute(string.format(
+  -- Ensure UID and notes are properly supplied
+  assert(uid and notes, "UID and notes must be provided for save_bookmark")
+
+  -- Execute the SQL command to insert the bookmark
+  local result, errmsg = db:execute(string.format(
     "INSERT INTO bookmarks(uid, notes) VALUES(%s, %s);",
       fixsql(uid),
       fixsql(notes)
-  )))
+  ))
+
+  -- Check for errors and handle them
+  if not result then
+    ColourNote("tomato", "black", "Error saving bookmark: " .. errmsg)
+    error("Failed to save bookmark for UID: " .. uid .. " - " .. errmsg, 2)
+  end
 end
-
-
 
 -------------
 -- add tags
 -------------
 
 function save_tags_to_database(uid, tags)
-  dbcheck(db:execute(string.format(
+  -- Ensure UID and tags are properly supplied
+  assert(uid and tags, "UID and tags must be provided for save_tags_to_database")
+
+  -- Execute the SQL command to insert the tags
+  local result, errmsg = db:execute(string.format(
     "INSERT INTO player_tags(uid, tags) VALUES(%s, %s);",
       fixsql(uid),
       fixsql(tags)
-  )))
+  ))
+
+  -- Check for errors and handle them
+  if not result then
+    ColourNote("tomato", "black", "Error saving tags: " .. errmsg)
+    error("Failed to save tags for UID: " .. uid .. " - " .. errmsg, 2)
+  end
 end
 
-
 function save_exit_tags_to_database(uid, dir, tags)
-  dbcheck(db:execute(string.format(
+  -- Ensure UID, direction, and tags are properly supplied
+  assert(uid and dir and tags, "UID, direction, and tags must be provided for save_exit_tags_to_database")
+
+  -- Execute the SQL command to insert the exit tags
+  local result, errmsg = db:execute(string.format(
     "INSERT INTO exits_tags(fromuid, dir, tags) VALUES(%s, %s, %s);",
       fixsql(uid),
       fixsql(dir),
       fixsql(tags)
-  )))
+  ))
+
+  -- Check for errors and handle them
+  if not result then
+    ColourNote("tomato", "black", "Error saving exit tags: " .. errmsg)
+    error("Failed to save exit tags for UID: " .. uid .. " - Direction: " .. dir .. " - " .. errmsg, 2)
+  end
 end
-
-
 
 --------------
 -- add exits
 --------------
 
 function save_exits_to_database(uid, exits_str)
-  if (is_maze(uid)) then
+  -- Check if the UID refers to a maze; if so, skip processing
+  if is_maze(uid) then
     return
   end
-  
-  room = load_room_from_database(uid)
+
+  -- Load the room from the database
+  local room = load_room_from_database(uid)
+  if not room then
+    mapper.mapprint("Room", uid, "not found in database. Exits not saved.")
+    return
+  end
+
+  -- Start a database transaction
   db:exec("BEGIN TRANSACTION;")
+
+  -- Iterate over each direction in the exits string
   for dir in string.gmatch(exits_str, "%a+") do
     local dest = gmcpval("exits." .. dir)
-    add_or_update_exit(room, dir, dest)
+
+    -- Add or update the exit in the database
+    local success, errmsg = pcall(function()
+      add_or_update_exit(room, dir, dest)
+    end)
+
+    -- Handle any errors that occurred during exit processing
+    if not success then
+      ColourNote("tomato", "black", "Error processing exit direction " .. dir .. ": " .. errmsg)
+      db:exec("ROLLBACK;")
+      error("Failed to save exits for UID: " .. uid .. " - Direction: " .. dir .. " - " .. errmsg, 2)
+    end
   end -- for each exit
+
+  -- Commit the transaction
   db:exec("COMMIT;")
 end
-
 
 function map_add_exit(name, line, wildcards)
   local dir = wildcards.dir
   local fromid = wildcards.fromid
   local toid = wildcards.toid
 
-  if (fromid == "") then
-    fromid = current_room -- current room is default
+  -- Default to the current room if fromid is not provided
+  if fromid == "" then
+    fromid = current_room
   end
 
-  if (is_maze(fromid)) then
+  -- Check if the room is a maze
+  if is_maze(fromid) then
     mapper.mapprint("Can't add exits to maze rooms.")
     return
   end
 
+  -- Load the room from the database
   local room = load_room_from_database(fromid)
-  if (not room) then
+  if not room then
     mapper.mapprint("The room", fromid, "isn't in the map.")
     return
   end
 
-  if (not is_valid_direction(dir)) then
+  -- Validate the direction
+  if not is_valid_direction(dir) then
     mapper.mapprint("You must provide a valid direction (n, ne, etc.)")
     return
   end
 
-  if (is_volatile(toid)) then
+  -- Check if the destination room is volatile
+  if is_volatile(toid) then
     mapper.mapprint("The room", toid, "changes locations.")
     return
   end
 
+  -- Start a transaction to ensure atomicity
   db:exec("BEGIN TRANSACTION;")
-  add_or_update_exit(room, dir, toid, true)
-  db:exec("COMMIT;")
+  
+  -- Add or update the exit in the database
+  local success, errmsg = pcall(function()
+    add_or_update_exit(room, dir, toid, true)
+  end)
 
-  -- update in-memory table
-  if (rooms[fromid]) then
-    if (not rooms[fromid].exits) then
-      rooms[fromid].exits = {}
+  if not success then
+    ColourNote("tomato", "black", "Error adding exit: " .. errmsg)
+    db:exec("ROLLBACK;")
+    error("Failed to add exit from " .. fromid .. " to " .. toid .. ": " .. errmsg, 2)
+  else
+    -- Commit the transaction if successful
+    db:exec("COMMIT;")
+
+    -- Update in-memory table
+    if rooms[fromid] then
+      if not rooms[fromid].exits then
+        rooms[fromid].exits = {}
+      end
+
+      rooms[fromid].exits[dir] = toid
     end
 
-    rooms[fromid].exits[dir] = toid
+    -- Redraw the mapper to reflect changes
+    mapper_redraw()
   end
-
-  mapper_redraw()
 end
-
 
 function add_or_update_exit(room, dir, touid, show_not_changed)
-  if (not room.exits[dir]) then
-    -- no exits, adding
-    add_exit_to_database(dir, room.uid, touid)
-    room.exits[dir] = touid
-  elseif (room.exits[dir] ~= touid) then
-    -- exit changed, updating
-    update_database_exit(dir, room.uid, touid)
-    room.exits[dir] = touid
-  elseif (show_not_changed) then
-    show_update(room.uid, "Exit not updated (the destination room didn't change).")
+  if not room.exits then
+    room.exits = {}
+  end
+
+  if not room.exits[dir] then
+    -- No existing exit in this direction, adding new exit
+    local success, errmsg = pcall(function()
+      add_exit_to_database(dir, room.uid, touid)
+    end)
+
+    if not success then
+      ColourNote("tomato", "black", "Error adding exit: " .. errmsg)
+      error("Failed to add exit " .. dir .. " from " .. room.uid .. " to " .. touid .. ": " .. errmsg, 2)
+    else
+      room.exits[dir] = touid
+      --show_update(room.uid, "Added new exit " .. dir .. " to " .. touid)
+    end
+
+  elseif room.exits[dir] ~= touid then
+    -- Exit exists but destination has changed, updating exit
+    local success, errmsg = pcall(function()
+      update_database_exit(dir, room.uid, touid)
+    end)
+
+    if not success then
+      ColourNote("tomato", "black", "Error updating exit: " .. errmsg)
+      error("Failed to update exit " .. dir .. " for " .. room.uid .. ": " .. errmsg, 2)
+    else
+      room.exits[dir] = touid
+      show_update(room.uid, "Updated exit " .. dir .. " to " .. touid)
+    end
+
+  elseif show_not_changed then
+    -- Exit exists and is unchanged
+    show_update(room.uid, "Exit " .. dir .. " not updated (the destination room didn't change).")
   end
 end
 
-
 function add_exit_to_database(dir, fromuid, touid, dont_show)
+  -- Validate input parameters
   assert(dir, "No direction supplied to add_exit_to_database")
   assert(fromuid, "No fromUID supplied to add_exit_to_database")
   assert(touid, "No toUID supplied to add_exit_to_database")
-  if (is_maze(fromuid)) or (is_maze(touid))
-  or (is_volatile(fromuid)) or (is_volatile(touid)) then
+
+  -- Check if either room is a maze or volatile, and exit if so
+  if is_maze(fromuid) or is_maze(touid) or is_volatile(fromuid) or is_volatile(touid) then
     return
   end
 
-  dbcheck(db:execute(string.format(
-    "INSERT INTO exits(dir, fromuid, touid, date_added) VALUES(%s, %s, %s, DATETIME('NOW'));",
-      fixsql(dir),     -- direction (eg. "n")
-      fixsql(fromuid), -- from room
-      fixsql(touid)    -- destination room
-  )))
+  -- Attempt to insert the exit into the database
+  local success, errmsg = pcall(function()
+    dbcheck(db:execute(string.format(
+      "INSERT INTO exits(dir, fromuid, touid, date_added) VALUES(%s, %s, %s, DATETIME('NOW'));",
+        fixsql(dir),     -- Direction (e.g., "n", "s")
+        fixsql(fromuid), -- From room ID
+        fixsql(touid)    -- To room ID
+    )))
+  end)
 
-  if (not dont_show) then
-    show_update(fromuid, "Added exit to database, " .. dir .. " from " .. fromuid .. " to " .. touid)
+  -- Handle errors during the database operation
+  if not success then
+    ColourNote("tomato", "black", "Error adding exit: " .. errmsg)
+    error("Failed to add exit " .. dir .. " from " .. fromuid .. " to " .. touid .. ": " .. errmsg, 2)
+  end
+
+  -- Optionally show update message
+  if not dont_show then
+    show_update(fromuid, "Added exit " .. dir .. " from " .. fromuid .. " to " .. touid)
   end
 end
 
-
 function gui_room_add_exit(room, uid)
-  if (is_maze(uid)) or (is_maze(touid)) then
+  -- Check if the current room is a maze
+  if is_maze(uid) then
     mapper.mapprint("Can't add exits to or from maze rooms.")
     return
   end
 
+  -- Get available exits
   local available = get_non_existing_exits(room)
 
+  -- Check if there are any available exits
   if next(available) == nil then
     utils.msgbox("All exits already used.", "No free exits!", "ok", "!", 1)
     return
-  end -- not known
+  end
 
+  -- Let the user choose an exit
   local chosen_exit = utils.listbox("Choose exit to add", "Exits ...", available)
-  if (not chosen_exit) then
+  if not chosen_exit then
     return
   end
 
-  exit_destination = utils.inputbox("Enter destination room id for " .. available[chosen_exit], room.name, "")
+  -- Input the destination room ID
+  local exit_destination = utils.inputbox("Enter destination room id for " .. available[chosen_exit], room.name, "")
+  if not exit_destination then
+    return -- User cancelled
+  end
 
-  if (not exit_destination) then
-    return
-  end -- cancelled
-
+  -- Begin transaction
   db:exec("BEGIN TRANSACTION;")
+
+  -- Add exit to the database
   add_exit_to_database(chosen_exit, uid, exit_destination)
+
+  -- Commit transaction
   db:exec("COMMIT;")
 
-  -- update in-memory table
+  -- Update in-memory table
+  if not rooms[uid].exits then
+    rooms[uid].exits = {}
+  end
   rooms[uid].exits[chosen_exit] = exit_destination
 
+  -- Redraw the map
   mapper_redraw()
 end
-
-
-function get_non_existing_exits(room)
-  local available = {
-    n = "North",
-    s = "South",
-    e = "East",
-    w = "West",
-    u = "Up",
-    d = "Down",
-    ne = "Northeast",
-    sw = "Southwest",
-    nw = "Northwest",
-    se = "Southeast",
-    tprt = "Teleport",
-    prtl = "Portal",
-  }
-
-  -- remove existing exits
-  for k in pairs(room.exits) do
-    available[k] = nil
-  end
-
-  return available
-end
-
-
 
 -- -----------
 -- deletions
