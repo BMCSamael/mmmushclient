@@ -452,8 +452,6 @@ function plugin_update_aux_url()
   return (table.concat(t, ";"))
 end
 
-
-
 ---------------
 -- GMCP stuff
 ---------------
@@ -829,8 +827,9 @@ function process_plane()
     ["Faerie Plane Wilderness"] = "fp",
     ["IEN Ivory Tower"] = "social",
     ["Lasler Wilderness"] = "lasler",
+	["Lasler Valley"] = "lasler",
     ["Sigil Underground"] = "sug",
-    ["Verity Isle"] = "verity",
+    ["Verity Isle"] = "verity", 
   }
 
   plane = gmcpval("zone")
@@ -902,9 +901,9 @@ function imap_setplane(plane)
 
     ["lasler"] = {
       name = "lasler",
-      maxx = 111 + 44,
-      maxy = 101,
-      startx = 44 / 2,
+      maxx = 100,
+      maxy = 100,
+      startx = 0,
       starty = 0,
       filename = "lasler.png",
     },

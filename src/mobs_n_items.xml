@@ -1524,30 +1524,37 @@ end
 
 
 function update_mobs_hits()
-  --print(serialize.save_simple(mobs_locations_cache))
-
-  local t
-
   Note("-- mobs_n_items: updating mobs locations hits... --")
 
-  db:exec("BEGIN TRANSACTION;")
+  local mob_updates = {}
 
   for mobid, val in pairs(mobs_locations_cache) do
-    SetStatus("... updating locations hits for mob #" .. mobid .. "...")
+    local mobid_updates = {}
 
     for where, hits in pairs(val) do
-      if (hits.changed) then
-        t = utils.split(where, "|")
-        update_mob_locations_database_info(mobid, t[1], t[2], hits.hits)
+      if hits.changed then
+        local t = utils.split(where, "|")
+        table.insert(mobid_updates, { area = t[1], room = t[2], hits = hits.hits })
       end
+    end
+
+    if #mobid_updates > 0 then
+      mob_updates[mobid] = mobid_updates
     end
   end
 
-  db:exec("COMMIT;")
+  if next(mob_updates) then
+    db:exec("BEGIN TRANSACTION;")
+    for mobid, updates in pairs(mob_updates) do
+      batch_update_mob_locations(mobid, updates)
+    end
+    db:exec("COMMIT;")
+  end
 
-  SetStatus ("Ready")
+  SetStatus("Ready")
   Note("... done!")
 end
+
 
 
 function update_items_hits()
@@ -1577,26 +1584,56 @@ function update_items_hits()
 end
 
 
+function batch_update_mob_locations(mobid, updates)
+  local sql = "UPDATE mobsloc SET hits = CASE"
+
+  for _, update in ipairs(updates) do
+    sql = sql .. string.format(
+      " WHEN mobid = %s AND area = %s AND room = %s THEN %i",
+      fixsql(mobid),
+      fixsql(update.area),
+      fixsql(update.room),
+      update.hits
+    )
+  end
+
+  sql = sql .. " END WHERE mobid = " .. fixsql(mobid) .. " AND ("
+
+  for i, update in ipairs(updates) do
+    sql = sql .. string.format(
+      "(area = %s AND room = %s)",
+      fixsql(update.area),
+      fixsql(update.room)
+    )
+    if i < #updates then
+      sql = sql .. " OR "
+    end
+  end
+
+  sql = sql .. ");"
+  dbcheck(db:execute(sql))
+end
+
 function update_mob_locations_database_info(mobid, area, room, hits)
   dbcheck(db:execute(string.format(
     "UPDATE mobsloc SET hits = %i WHERE mobid = %s AND area = %s AND room = %s;",
-      hits,
-      fixsql(mobid),
-      fixsql(area),
-      fixsql(room)
+    hits,
+    fixsql(mobid),
+    fixsql(area),
+    fixsql(room)
   )))
 end
-
 
 function update_item_locations_database_info(itemid, area, room, hits)
   dbcheck(db:execute(string.format(
     "UPDATE itemsloc SET hits = %i WHERE itemid = %s AND area = %s AND room = %s;",
-      hits,
-      fixsql(itemid),
-      fixsql(area),
-      fixsql(room)
+    hits,
+    fixsql(itemid),
+    fixsql(area),
+    fixsql(room)
   )))
 end
+
 
 
 

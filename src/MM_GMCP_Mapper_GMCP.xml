@@ -856,8 +856,16 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
     script="rebuild_lookup"
   >
   </alias>
-
-
+  
+ <alias
+    enabled="y"
+    match="^mapper[ ]+update[ ]+pf$"
+    regexp="y"
+    sequence="100"
+    script="update_pf"
+	>
+ </alias>
+ 
 <!-- used by scripts -->
 
   <alias
@@ -1227,7 +1235,7 @@ function help_maintenance()
 
 * mapper recreate database  - copy data to a new database file
 * mapper rebuild lookup  - rebuild the rooms_lookup table
-
+* mapper update pf - will update the playeer flags table for any new no-speed rooms known
 ]])
 
 end
@@ -1974,7 +1982,6 @@ end
 
 function check_if_show_room_number(exits)
   local texits = utils.split(Trim(exits), " ")
-
   if (config2.show_numbers) or (texits[1] == "?") or (texits[1] == "None.") then
     show_room_number()
   end
@@ -2033,7 +2040,7 @@ function show_unmapped_exits()
   unmapped_exits = {}
   one_way_exits = {}
 
-  local uid = gmcpval("num")
+  uid = gmcpval("num")
 
   for dir in string.gmatch(exits_str, "%a+") do
     dest = gmcpval("exits." .. dir)
@@ -2140,8 +2147,8 @@ function map_where(name, line, wildcards)
 end
 
 function map_coord(name, line, wildcards)
-  local xcoord = wildcards.x
-  local ycoord = wildcards.y
+  xcoord = wildcards.x
+  ycoord = wildcards.y
   local t = {}
   local a = {}
 
@@ -3134,8 +3141,8 @@ end
 -- ---------------------------------
 
 function process_room()
-  local uid = gmcpval("num")
-  local zone = gmcpval("zone")
+  uid = gmcpval("num")
+  zone = gmcpval("zone")
 
   if (uid ~= "") then
     -- and (not is_maze(uid))
@@ -5712,6 +5719,41 @@ end
 ------------------
 -- rebuild stuff
 ------------------
+
+function update_pf()
+  -- Begin the transaction
+  db:exec("BEGIN TRANSACTION;")
+  
+  -- Inform the user about the update process
+  mapper.mapprint("Updating player_tags table...")
+  
+  -- Execute the query to insert new entries into player_tags
+  local result, err = db:execute([[
+    INSERT INTO player_tags (uid)
+    SELECT r.uid
+    FROM rooms r
+    WHERE (r.flags LIKE '%immortal%' OR r.terrain LIKE '%ship-only%' OR r.terraininfo LIKE '%ship-only%')
+      AND r.uid NOT IN (SELECT uid FROM player_tags);
+  ]])
+  
+  -- Check for errors in query execution
+  if not result then
+    mapper.mapprint("Error updating player_tags table: " .. err)
+    db:exec("ROLLBACK;")
+    SetStatus("Error")
+    return
+  end
+
+  -- Commit the transaction
+  db:exec("COMMIT;")
+  
+  -- Get the number of rows inserted
+  local rows_added = db:changes()
+  
+  -- Update the status and inform the user that the operation is done
+  SetStatus("Ready")
+  mapper.mapprint(string.format("Done. %d rows added.", rows_added))
+end
 
 function rebuild_lookup()
   db:exec("BEGIN TRANSACTION;")
