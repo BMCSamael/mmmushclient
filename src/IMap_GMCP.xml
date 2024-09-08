@@ -826,6 +826,7 @@ function process_plane()
     ["Faerie Plane"] = "fp",
     ["Faerie Plane Wilderness"] = "fp",
     ["IEN Ivory Tower"] = "social",
+	["Chat Rooms Wilderness"] = "social",
     ["Lasler Wilderness"] = "lasler",
 	["Lasler Valley"] = "lasler",
     ["Sigil Underground"] = "sug",
@@ -892,9 +893,9 @@ function imap_setplane(plane)
 
     ["fp"] = {
       name = "faerie",
-      maxx = 481 + 132,
-      maxy = 400,
-      startx = 132 / 2,
+      maxx = 479,
+      maxy = 399,
+      startx = 0,
       starty = 0,
       filename = "fp.png",
     },
@@ -911,18 +912,18 @@ function imap_setplane(plane)
     ["verity"] = {
       name = "verity",
       maxx = 144,
-      maxy = 62 + 32,
+      maxy = 61,
       startx = 0,
-      starty = 32 / 2,
+      starty = 0,
       filename = "verity.png",
     },
 
     ["social"] = {
       name = "social",
       maxx = 144,
-      maxy = 62 + 32,
+      maxy = 62,
       startx = 0,
-      starty = 32 / 2,
+      starty = 0,
       filename = "social.png",
     },
   }

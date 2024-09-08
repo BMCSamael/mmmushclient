@@ -1295,119 +1295,132 @@ function save_state ()
 end -- save_state
 
 
--- generic room finder
-
+-- Generic room finder function
 -- f (uid) is a function which returns: found, done
 --    found is not nil if uid is a wanted room - if it is a string it is the reason it matched (eg. shop)
 --    done is true if we know there is nothing else to search for (eg. all rooms found)
 
--- show_uid is true if you want the room uid to be displayed
+function find(f, show_uid, expected_count, walk, safewalk, fcb)
+    -- Check if we are allowed to start searching
+    if not check_we_can_find() then
+        return
+    end
 
--- expected_count is the number we expect to find (eg. the number found on a database)
+    -- Validate callback function if provided
+    if fcb then
+        assert(type(fcb) == "function", "Callback (fcb) must be a function")
+    end
 
--- if 'walk' is true, we walk to the first match rather than displaying hyperlinks
+    -- Set safewalk mode
+    safewalk_mode = safewalk
 
--- if fcb is a function, it is called back after displaying each line
+    -- Start timer for performance tracking
+    local start_time = utils.timer()
+    local paths, count, depth = find_paths(current_room, f) -- Search paths from the current room
+    local end_time = utils.timer()
 
-function find (f, show_uid, expected_count, walk, safewalk, fcb) -- mod
+    -- Reset safewalk mode
+    safewalk_mode = nil
 
-  if not check_we_can_find () then
-    return
-  end -- if
+    -- Collect and count found rooms
+    local found_rooms = {}
+    local found_count = 0
+    for uid, _ in pairs(paths) do
+        table.insert(found_rooms, uid)
+        found_count = found_count + 1
+    end
 
-  if fcb then
-    assert (type (fcb) == "function")
-  end -- if
+    -- Print timing information if enabled
+    if timing then
+        print(string.format("Time to search %i rooms = %0.3f seconds, search depth = %i", count, end_time - start_time, depth))
+    end
 
-  safewalk_mode = safewalk -- mod
-  local start_time = utils.timer ()
-  local paths, count, depth = find_paths (current_room, f)
-  local end_time = utils.timer ()
-  safewalk_mode = nil -- mod
+    -- Handle no matches found
+    if found_count == 0 then
+        mapprint("No matches found.")
+        if safewalk then
+            mapprint("(Try again with safewalk off.)")
+        end
+        return
+    end
 
-  local t = {}
-  local found_count = 0
-  for k in pairs (paths) do
-    table.insert (t, k)
-    found_count = found_count + 1
-  end -- for
+    -- Walk to the first match if `walk` is enabled and there's only one match
+    if found_count == 1 and walk then
+        local uid, item = next(paths)
+        mapprint("Walking to:", rooms[uid].name)
+        start_speedwalk(item.path)
+        return
+    end
 
-  -- timing stuff
-  if timing then
-    print (string.format ("Time to search %i rooms = %0.3f seconds, search depth = %i",
-                          count, end_time - start_time, depth))
-  end -- if
+    -- Sort found rooms by proximity (shortest path first)
+    table.sort(found_rooms, function(a, b)
+        return #paths[a].path < #paths[b].path
+    end)
 
-  if found_count == 0 then
-    mapprint ("No matches.")
-    if safewalk then -- mod
-      mapprint ("(Try again with safewalk off.)") -- mod
-    end -- mod
-    return
-  end -- if
+    -- Prepare for displaying room hyperlinks
+    hyperlink_paths = {}
 
-  if found_count == 1 and walk then
-    uid, item = next (paths, nil)
-    mapprint ("Walking to:", rooms [uid].name)
-    start_speedwalk (item.path)
-    return
-  end -- if walking wanted
+    -- Iterate through found rooms and display information
+    for _, uid in ipairs(found_rooms) do
+        local room = rooms[uid] -- Room data must exist in the table
 
-  -- sort so closest ones are first
-  table.sort (t, function (a, b) return #paths [a].path < #paths [b].path end )
+        -- Ensure room data exists for the UID
+        assert(room, "Room " .. uid .. " is not in rooms table.")
 
-  hyperlink_paths = {}
+        if current_room == uid then
+            mapprint(room.name, "is the room you are in.")
+        else
+            -- Calculate distance in rooms
+            local distance = #paths[uid].path .. " room"
+            if #paths[uid].path > 1 then
+                distance = distance .. "s"
+            end
+            distance = distance .. " away"
 
-  for _, uid in ipairs (t) do
-    local room = rooms [uid] -- ought to exist or wouldn't be in table
+            -- Display room name and distance
+            local room_name = room.name
+            if show_uid then
+                room_name = room_name .. " (" .. uid .. ")"
+            end
 
-    assert (room, "Room " .. uid .. " is not in rooms table.")
+            -- Generate a unique hash for hyperlinking
+            local hash = utils.tohex(utils.md5(tostring(current_room) .. "<-->" .. tostring(uid)))
 
-    if current_room == uid then
-      mapprint (room.name, "is the room you are in")
-    else
-      local distance = #paths [uid].path .. " room"
-      if #paths [uid].path > 1 then
-        distance = distance .. "s"
-      end -- if
-      distance = distance .. " away"
+            -- Create hyperlink for speedwalking
+            Hyperlink("!!" .. GetPluginID() .. ":mapper.do_hyperlink(" .. hash .. ")", room_name, "Click to speedwalk there (" .. distance .. ")", "", "", false)
 
-      local room_name = room.name
-      if show_uid then
-        room_name = room_name .. " (" .. uid .. ")"
-      end -- if
+            -- Display reason if available
+            local info = ""
+            if type(paths[uid].reason) == "string" and paths[uid].reason ~= "" then
+                info = " [" .. paths[uid].reason .. "]"
+            end
 
-      -- in case the same UID shows up later, it is only valid from the same room
-      local hash = utils.tohex (utils.md5 (tostring (current_room) .. "<-->" .. tostring (uid)))
+            -- Print the distance and reason
+            mapprint(" - " .. distance .. info)
 
-      Hyperlink ("!!" .. GetPluginID () .. ":mapper.do_hyperlink(" .. hash .. ")",
-                room_name, "Click to speedwalk there (" .. distance .. ")", "", "", false)
-      local info = ""
-      if type (paths [uid].reason) == "string" and paths [uid].reason ~= "" then
-        info = " [" .. paths [uid].reason .. "]"
-      end -- if
-      mapprint (" - " .. distance .. info) -- new line
+            -- Callback to display extra information, if provided
+            if fcb then
+                local success, err = pcall(fcb, uid)
+                if not success then
+                    mapprint("Error during callback for room " .. uid .. ": " .. err)
+                end
+            end
 
-      -- callback to display extra stuff (like find context, room description)
-      if fcb then
-        fcb (uid)
-      end -- if callback
-      hyperlink_paths [hash] = paths [uid].path
-    end -- if
-  end -- for each room
+            -- Store the path for later reference
+            hyperlink_paths[hash] = paths[uid].path
+        end
+    end
 
-  if expected_count and found_count < expected_count then
-    local diff = expected_count - found_count
-    local were, matches = "were", "matches"
-    if diff == 1 then
-      were, matches = "was", "match"
-    end -- if
-    mapprint ("There", were, diff, matches,
-              "which I could not find a path to within",
-              config.SCAN.depth, "rooms.")
-  end -- if
-
-end -- map_find_things
+    -- Check if the number of found rooms is less than expected
+    if expected_count and found_count < expected_count then
+        local diff = expected_count - found_count
+        local were, matches = "were", "matches"
+        if diff == 1 then
+            were, matches = "was", "match"
+        end
+        mapprint("There", were, diff, matches, "which I could not find a path to within", config.SCAN.depth, "rooms.")
+    end
+end
 
 -- executed when the mapper draws a hyperlink to a room
 
