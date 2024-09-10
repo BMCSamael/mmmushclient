@@ -73,6 +73,7 @@ ed9db27b1b50b46624e21eb4 spdman2_default_database.xml
 71b23c59cf79acc8521fc4a9 speedwalk_manager_gmcp_p2.xml
 632048f8236c5a1319306ff6 speedwalk_manager_p1.xml
 cd8aa6f67b9f78ab77e67ae3 stats_mini.xml
+f637af736e715dece34dc25f storagemanager.xml
 d54ccc4800e5df1ad0ed0aac switch_maps.xml
 d81aeca9c0a10f0270dfe0f4 terrain_o_vision.xml
 783cca60ac0d776ca859de57 tick.xml
