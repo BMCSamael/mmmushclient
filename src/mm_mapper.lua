@@ -285,11 +285,15 @@ local shorten_direction = {
 }
 
 local function get_room (uid)
+  if not uid then
+    Note("Warning: UID is nil")
+    uid = "<none>"
+  end
   local room = supplied_get_room (uid)
   room = room or { unknown = true }
 
   -- defaults in case they didn't supply them ...
-  room.name = room.name or string.format ("Room %s", uid or "<none>")
+  room.name = mw.strip_colours(room.name or string.format("Room %s", uid))
   room.name = mw.strip_colours (room.name)  -- no colour codes for now
   room.exits = room.exits or {}
   room.exits_tags = room.exits_tags or {}
@@ -1189,7 +1193,7 @@ function find_paths (uid, f)
 
   SetStatus "Ready"
   return paths, count, depth
-end -- function find_paths
+end -- function find_pathsa
 
 -- draw our map starting at room: uid
 

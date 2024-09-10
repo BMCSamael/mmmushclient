@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE muclient []>
+
+<muclient>
+
+    <plugin
+        name="StorageManager"
+        author="Tamlin"
+        id="f637af736e715dece34dc25f"
+        language="Lua"
+        purpose="Manages the Pouch of Plenty and item storage"
+        save_state="n"
+        date_written="2024-02-03 20:26:09"
+        date_modified="2024-02-30 21:28:01"
+        requires="4.71"
+        version="1.0"
+    >
+
+    <description trim="y">
+    <![CDATA[
+        --- Pouch of Plenty Manager Help ---
+
+        1. **Setting Storage Containers**:
+        Use the `setstorage` alias to set the container where specific items will be stored.
+        Example: `setstorage "pot of winterroot soup" soup_bag`
+
+        2. **Turning Off Auto Pouch Collection**:
+        Use the `pouchoff` alias to disable automatic pouch item collection.
+        Example: `pouchoff`
+
+        3. **Auto Pouch Collection**:
+        This plugin automatically collects items when the trigger "Your pouch of plenty glows white as it accumulates possessions from the ether" is detected.
+
+        4. **Managing Items**:
+        You can specify how items are sorted by modifying the plugin's internal list. Items are categorized into "resources" and "food."
+
+        5. **Current Storage Settings**:
+        To view current storage settings for specific items, use `showstorage`
+
+        Authors: Tamlin
+    ]]>
+    </description>
+    </plugin>
+
+    <!-- Aliases -->
+    <aliases>
+        <!-- Plugin help -->
+        <alias
+            match="^pouchhelp$"
+            enabled="y"
+            regexp="y"
+            script="OnHelp"
+        >
+        </alias>
+
+        <!-- Alias for setting storage containers -->
+        <alias
+            match="^setstorage (.+) (.+)$"
+            enabled="y"
+            regexp="y"
+            send_to="12"
+            sequence="100"
+        >
+            <send>setstorage</send>
+        </alias>
+
+        <!-- Alias to disable pouch collection -->
+        <alias
+            match="^pouchoff$"
+            enabled="y"
+            regexp="y"
+            script="pouchoff"
+        >
+        </alias>
+
+        <!-- Alias to show storage settings (to be added) -->
+        <alias
+            match="^showstorage$"
+            enabled="y"
+            regexp="y"
+            script="showstorage"
+        >
+        </alias>
+    </aliases>
+
+    <!-- Triggers -->
+    <triggers>
+        <!-- Trigger for detecting pouch activity -->
+		<trigger
+			enabled="y"
+			group="plentypouch"
+			keep_evaluating="y"
+			expand_variables="y"
+			match="^Your pouch of plenty glows white as it accumulates possessions from the ether\.$"
+			omit_from_output="y"
+			regexp="y"
+			script="collect"
+			sequence="100"
+		/>
+
+    </triggers>
+
+    <!-- Variables -->
+    <variables>
+        <!-- Variable to enable or disable pouch item collection -->
+        <variable name="collecting_pouch_items">true</variable>
+    </variables>
+
+    <!-- Scripts -->
+    <script>
+    <![CDATA[
+        -- Plugin Stuff
+        function OnPluginInstall()
+            Note(string.format("StorageManager installed, version %0.1f", 1.0 ))
+        end
+        
+        function OnPluginListChanged()
+        end
+        
+        function is_plugin_present(name, id)
+            local res = false
+
+            local plugin_name = GetPluginInfo(id, 1)
+
+            if (plugin_name == name) then
+                -- is it enabled?
+                if (GetPluginInfo(id, 17)) then
+                    res = true
+                end
+            end
+
+            return res
+        end        
+        
+        function plugin_update_url()
+            local t = {"https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/StorageManager.xml",  }
+            return (table.concat(t, ";"))
+        end
+
+        function plugin_update_aux_url()
+            local t = {}
+            return (table.concat(t, ";"))
+        end
+        
+        ---------
+        -- help
+        ---------
+
+        function OnHelp()
+            ColourNote("silver", "black", world.GetPluginInfo(world.GetPluginID(), 3))
+            Note("")
+            ColourNote("silver", "black", "(this version: " .. os.date("%c", GetPluginInfo(GetPluginID(), 14)) .. ")")
+        end
+        
+        -- Table to store item mappings (name and storage container)
+        pouch_items = {
+            {name = "small salt crystal", container = "resource_bag"},
+            {name = "bag of sugar", container = "resource_bag"},
+            {name = "yeast starter", container = "resource_bag"},
+            {name = "gunpowder peppercorn", container = "resource_bag"},
+            {name = "chunk of chocolate", container = "resource_bag"},
+            {name = "dollop of whipped cream", container = "resource_bag"},
+            
+            {name = "cup of water", container = "food_bag"},
+            {name = "spanakopita", container = "food_bag"},
+            {name = "savory crimini pastry", container = "food_bag"},
+            {name = "croissant", container = "food_bag"},
+            {name = "carton of soup stock", container = "food_bag"},
+            {name = "tender turnip", container = "food_bag"},
+            {name = "slice of tiramisu", container = "food_bag"},
+            {name = "chile relleno", container = "food_bag"},
+            {name = "pineapple upside down cake", container = "food_bag"},
+            {name = "fresh, juicy red tomato", container = "food_bag"},
+            {name = "red pepper", container = "food_bag"},
+            {name = "fried sprouts", container = "food_bag"},
+            {name = "bagel chips", container = "food_bag"},
+            {name = "peanut butter milkshake", container = "food_bag"},
+            {name = "steak and potatoes", container = "food_bag"},
+            {name = "pot of winterroot soup", container = "food_bag"},
+            {name = "yule buche", container = "food_bag"},
+            {name = "plate of huevos rancheros", container = "food_bag"},
+            {name = "sweet pineapple", container = "food_bag"}
+        }
+
+        -- Function to grab and store items from the pouch
+        function GrabAndStoreItems()
+            for _, item in ipairs(pouch_items) do
+                Send("get " .. item.name .. " from pouch")
+                Send("put " .. item.name .. " in " .. item.container)
+                Note("Moved " .. item.name .. " to " .. item.container)
+            end
+        end
+        
+        -- Set Storage Item to Container
+        function setstorage(name, container)
+            for _, item in ipairs(pouch_items) do
+                if item.name == name then
+                    item.container = container
+                    Note(name .. " will now be stored in " .. container)
+                    return
+                end
+            end
+            Note("Item not found: " .. name)
+        end
+        
+        -- Turn collection off
+        function pouchoff()
+            collecting_pouch_items = false
+            Note("Pouch auto collection disabled.")
+        end
+        
+        -- Collect items from the pouch
+        function collect()
+            if collecting_pouch_items then
+                Send("open pouch")
+                GrabAndStoreItems()
+                Send("get all pouch")
+                Send("drop all.food pouch")
+                Send("close pouch")
+            end
+        end
+
+        -- Show storage settings (to be added)
+        function showstorage()
+            Note("Current storage settings:")
+            for _, item in ipairs(pouch_items) do
+                Note(item.name .. " is stored in " .. item.container)
+            end
+        end
+        
+    ]]>
+    </script>
+    
+</muclient>

@@ -954,17 +954,18 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
   </send>
   </trigger> 
   
-    <trigger
+<trigger
     enabled="y"
-    match="^as follows\: (?<dirs>[a-zA-Z0-9 \,\.\'\-]+)$"
+    match="^as follows\: (?<dirs>(?:[a-zA-Z0-9 \,\.\'\-\n]+))$"
     group="spores"
-   	keep_evaluating="y"
+    keep_evaluating="y"
     regexp="y"
-    sequence="100" 
-	script="map_spore"
-  >
-  </trigger> 
-  
+    sequence="100"
+    multi_line="y"
+    lines_to_match="3"
+    script="map_spore"
+/>
+
     <trigger
     enabled="y"
     match="^.*A cloud of airborne spores are not long for this world\.$"
@@ -978,8 +979,6 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
   </trigger> 
 
 </triggers>
-
-
 
 <!--  Scripts  -->
 
@@ -998,7 +997,6 @@ local use_nospeed_mode -- loaded via config2
 local use_grappling_mode -- loaded via config2
 local safewalk_mode -- loaded via config2
 local prefer_shown = true
-
 
 <![CDATA[
 
@@ -1026,14 +1024,11 @@ else
   require "mapper"
 end
 
-
 rooms = {}
 --areas = {}
 
 local fontcol = "silver"
 local bgcol = "black"
-
-
 
 -- --------------
 -- plugin stuff
@@ -1105,34 +1100,28 @@ function OnPluginInstall()
   end)
 end
 
-
 function OnPluginSaveState()
   mapper.save_state()
   SetVariable("config", "config = " .. serialize.save_simple(config))
 end
 
-
 function OnPluginClose()
   mapper.hide()
 end
-
 
 function OnPluginDisable()
   mapper.hide()
 end
 
-
 function OnPluginListChanged()
   detect_plugins()
 end
-
 
 function detect_plugins()
   use_events_mini = events_mini_installed()
   reader_present = detect_reader()
   sapi_present = sapi_plugin_present()
 end
-
 
 function is_plugin_present(name, id)
   local res = false
@@ -1148,7 +1137,6 @@ function is_plugin_present(name, id)
 
   return res
 end
-
 
 function plugin_update_url()
   local t = {
@@ -1166,8 +1154,6 @@ function plugin_update_aux_url()
   return (table.concat(t, ";"))
 end
 
-
-
 ---------
 -- help
 ---------
@@ -1178,7 +1164,6 @@ function OnHelp()
   Note("")
   ColourNote("silver", "black", "(this version: " .. os.date("%c", GetPluginInfo(GetPluginID(), 14)) .. ")")
 end
-
 
 function help_maintenance()
   ColourNote("silver", "black", world.GetPluginInfo(world.GetPluginID(), 3))
@@ -1249,7 +1234,7 @@ end
 
 function OnPluginBroadcast(msg, id, name, text)
   if (id =="f67c4339ed0591a5b010d05b") then -- GMCP message
-    if (text == "room.info") then -- room.info
+    if (text == "room.info") then -- room
       peeking = false
       purge_cache_if_area_changed()
 
@@ -1741,8 +1726,6 @@ function get_room(uid)
   return room
 end
 
-
-
 ----------------------
 -- gui main function
 ----------------------
@@ -1831,7 +1814,6 @@ function mapper_hide(prefer)
   mapper.hide()
 end
 
-
 function mapper_svar(prefer)
   -- show all variables and their values
   Note ("Showing Variables: ", prefer)
@@ -1839,7 +1821,6 @@ function mapper_svar(prefer)
     Note (k, " = ", v) 
   end
 end
-
 
 function toggle_terrain_to(name, line, wildcards)
   local status = wildcards.status
@@ -1949,7 +1930,6 @@ function check_if_show_flags_and_terrain(flags, terrain)
   end
 end
 
-
 function show_flags_and_terrain(flags, terrain)
   local show_flags = flags
   if (not show_flags) or (show_flags == "") then
@@ -1964,13 +1944,11 @@ function show_flags_and_terrain(flags, terrain)
   Note("[gmcp: " .. show_flags .. " / " .. show_terrain .. "]")
 end
 
-
 function check_if_show_bookmarks(notes)
   if (config2.show_bookmarks) then
     show_bookmarks(notes)
   end
 end
-
 
 function show_bookmarks(notes)
   if (not notes) or (notes == "") then
@@ -1980,14 +1958,12 @@ function show_bookmarks(notes)
   Note("notes: " .. notes)
 end
 
-
 function check_if_show_room_number(exits)
   local texits = utils.split(Trim(exits), " ")
   if (config2.show_numbers) or (texits[1] == "?") or (texits[1] == "None.") then
     show_room_number()
   end
 end
-
 
 function show_room_number()
   if (uid) then
@@ -1996,13 +1972,11 @@ function show_room_number()
   end
 end
 
-
 function check_if_show_road_exits()
   if (config2.vis_road_exits) and (is_vmap()) then
     show_road_exits()
   end
 end
-
 
 function show_road_exits()
   local dest, room, ok_exits
@@ -2027,13 +2001,11 @@ function show_road_exits()
   end
 end
 
-
 function check_if_show_unmapped_exits()
   if (config2.vis_unmapped_exits) and (not is_vmap()) then
     show_unmapped_exits()
   end
 end
-
 
 function show_unmapped_exits()
   local dest, room, ok_exits
@@ -2083,7 +2055,6 @@ function show_unmapped_exits()
   end
 end
 
-
 function peek_room(name, line, wildcards)
   local id = wildcards.id
 
@@ -2103,19 +2074,15 @@ function peek_room(name, line, wildcards)
   mapper.draw(id)
 end
 
-
 function notify_teleport()
   Note("-- mapper: wait for teleport... --")
 end
-
 
 function notify_portal()
   Note("-- mapper: enter portal/mirror/gate/etching/... --")
 
   BroadcastPlugin(1, "portal")
 end
-
-
 
 ------------
 -- queries
@@ -2247,7 +2214,6 @@ function get_room_areas(rname)
   return table.concat(t, ";")
 end
 
-
 function map_find(name, line, wildcards)
   local keywords = wildcards.keywords
 
@@ -2333,81 +2299,71 @@ function map_find_bookmarks(name, line, wildcards)
 
   local rooms = {}
   local count = 0
-  local zone = wildcards.zone  -- Assuming 'zone' is provided by wildcards
+    local t = {}
 
-  -- Prepare FTS4 query for searching area
-  local stmt_rooms = db:prepare([[
-    SELECT uid, snippet(rooms_lookup, 1, ' ... ', -1, -10) AS snippet
-    FROM rooms_lookup
-    WHERE rooms_lookup MATCH ?
-  ]])
-
-  -- Bind the 'zone' (area) to the FTS4 query
-  stmt_rooms:bind(1, zone)
-
-  -- Execute the query and load rooms with notes
-  for row in stmt_rooms:nrows() do
+  -- build table of special places (with info in them)
+  for row in db:nrows(string.format("SELECT uid FROM rooms WHERE area = %s and rooms.uid in (select uid from bookmarks)", fixsql(zone))) do
     local anote = load_notes_from_database(row.uid)
     if (anote) and (anote ~= "") then
       rooms[row.uid] = capitalize(anote)
+	     t[#t + 1] = row.uid
       count = count + 1
     end
-  end
+  end   -- finding room
 
-  -- Finalize the statement after use
-  stmt_rooms:finalize()
-
-  -- Find such places
+  if is_vmap(rarea) then
+    ColourNote("tomato", "black", "Skipping query for vmap area: " .. current_area)
+	ColourNote("tomato", "black", "Bookmarks Found:  Rooms Distance Won't be calculated")
+	show_hyperlinks(t)
+    return
+  else
+  -- find such places
   mapper.find(
     function (uid)
       local room = rooms[uid]
       if room then
         rooms[uid] = nil
       end
-      return room, next(rooms) == nil  -- room will be type of info (e.g., shop)
-    end,  -- Function
-    show_vnums,  -- Show vnum?
-    count,       -- How many to expect
-    false,       -- Don't auto-walk
+      return room, next(rooms) == nil  -- room will be type of info(eg. shop)
+    end,  -- function
+    show_vnums,  -- show vnum?
+    count,       -- how many to expect
+    false,       -- don't auto-walk
     config2.safewalk
   )
+  end
 end
 
 function map_where_bookmark(name, line, wildcards)
   local bm = wildcards.bm
 
-  if compatibility then
+  if (compatibility) then
     ColourNote("tomato", "black", "GMCP Mapper: I can't find bookmarks in compatibility mode. Please upgrade your database.")
     return
   end
 
+  local sbook = "%" .. string.upper(bm) .. "%"
   local t = {}
 
-  -- Prepare FTS4 query for bookmarks
-  local fts_query = db:prepare([[
-    SELECT uid, snippet(bookmarks_lookup, 1, ' ... ', -1, -10) AS snippet
-    FROM bookmarks_lookup
-    WHERE bookmarks_lookup MATCH ?
-  ]])
-
-  -- Bind the 'bm' parameter to the FTS4 query
-  fts_query:bind(1, fixsql(bm))
+  -- Prepare the SQL statement for bookmarks with a parameterized query
+  local stmt = db:prepare('SELECT uid FROM bookmarks WHERE UPPER(notes) LIKE ?')
+  stmt:bind(1, sbook)
 
   -- Execute the query and process results
-  for row in fts_query:nrows() do
+  for row in stmt:nrows() do
     local room = load_room_from_database(row.uid)
-    if room and room.area == current_area then
+    if (room and room.area == current_area) then
       t[#t + 1] = row.uid
     end
   end
 
   -- Finalize the statement to release resources
-  fts_query:finalize()
+  stmt:finalize()
 
   ColourNote("lightgreen", "black", "Rooms bookmarked as: '" .. bm .. "':")
   show_hyperlinks(t)
 
-  if verbose_mode then
+  if (verbose_mode) then
     ColourNote("lightgreen", "black", "Click on a room's name or type 'mapper goto <id>' to speedwalk to the room, if possible.")
   end
 end
@@ -2473,7 +2429,6 @@ function map_where_by_flags(flags)
     mapper.mapprint("Click on a room's name or type 'mapper goto <id>' to speedwalk to the room, if possible.")
   end
 end
-
 
 function has_all(sflags, rflags)
   if not sflags or not rflags then
@@ -2544,7 +2499,6 @@ function has_none(sflags, rflags)
   return true
 end
 
-
 function get_alt_flag_name(flag)
   local alt_flag_names = {
     ['lpk'] = 'player-kill-lawful',
@@ -2568,7 +2522,6 @@ function map_where_by_not_flags(name, line, wildcards)
     ColourNote("tomato", "black", "Skipping query for vmap area: " .. rarea)
     return
   end
-
 
   -- Determine the column to use based on compatibility
   local use_column = compatibility and "description" or "flags"
@@ -2667,6 +2620,7 @@ function show_hyperlinks(t)
     Note("")
   end
 end
+
 function show_exithyperlinks(t)
   -- Sort the table of room IDs
   table.sort(t)
@@ -2731,18 +2685,17 @@ function map_show_adjacent_rooms(name, line, wildcards)
   local tres = {}
   local thisroom, adjroom
 
-  for i = 1, #taux do
-    thisroom = load_room_from_database(taux[i])
-
-   -- Check if exits are valid and adjacent room name is not the same
+for i = 1, #taux do
+	thisroom = load_room_from_database(taux[i])
+	
+	-- Check if exits are valid and adjacent room name is not the same
     for _, num in pairs(thisroom.exits) do
       adjroom = load_room_from_database(num)
       if adjroom and string.upper(Trim(adjroom.name)) ~= string.upper(Trim(sname)) then
         tres[#tres + 1] = "(" .. adjroom.area .. ") " .. adjroom.name
       end
     end
-    ::continue::
-  end
+end
 
   -- Show results, if any
   if (#tres == 0) then
@@ -2755,7 +2708,6 @@ function map_show_adjacent_rooms(name, line, wildcards)
     ColourNote("silver", "black", result)
   end
 end
-
 
 function map_signposts()
   -- Exit if peeking is active
@@ -3139,13 +3091,20 @@ end
 function map_spore(name, line, wildcards)
 	local haveroom = false
 	local saferoom = ""
+	local printresults = false
+
+	if not string.find(line, ",") and not string.find(line," ") then
+		printresults = true
+		mapper.mapprint(string.format("Searching %d recall rooms for spores",totalrooms))
+	end
+	
+	 
   if (wildcards.dirs:sub(-1) ~= ",") then
 	saferooms = getSporeRooms(config2.spore_debug)
 	
 	sr= sporeEntries(saferooms)
+	totalrooms = sporeEntries(saferooms)
 
-	mapper.mapprint(string.format("Searching %d recall rooms for spores",sr))
-	
 	safe = utils.split(saferooms,",")	
 	path = utils.split(wildcards.dirs, ",") 
  
@@ -3174,7 +3133,6 @@ function map_spore(name, line, wildcards)
 			end -- if
 
 		--mapper.mapprint(string.format("Bug Check: PathLength: %d pathN: %s  Pathdir %s  ROOMID:  %d ", n, path[n], pathdir, id))
-
 			if get_room(id) then 
 				--mapper.mapprint(string.format("Path... %s Room %d...", pathdir, id))
 				haveroom = true
@@ -3200,7 +3158,8 @@ function map_spore(name, line, wildcards)
 		 end  -- while
 
 		-- OUTPUT FINAL RESULT
-		 if haveroom and room.area ~= "Alyria" and room.area ~= "Faerie Plane Wilderness" and room.area ~= "Sigil Underground" and room.area ~= "Great Alyrian Underground" then 
+
+		 if haveroom and room.area ~= "Alyria" and room.area ~= "Faerie Plane Wilderness" and room.area ~= "Sigil Underground" and room.area ~= "Great Alyrian Underground" and printresults then 
  				room = get_room(id)
 				sporenote(id,"FOUND", safe[sr])
 		 end -- if
@@ -3222,13 +3181,13 @@ function sporenote(id, status, saferoom)
     if room then
         -- Check if the room is within specific areas
         local excludedAreas = {
-			["alyria"] = true,
-			["chat rooms wilderness"] = true,
-			["faerie plane wilderness"] = true,
-			["great alyrian underground"] = true,
-			["lasler valley"] = true,
-			["sigil underground"] = true,
-			["verity isle"] = true,
+			["Alyria"] = true,
+			["Chat Rooms Wilderness"] = true,
+			["Faerie Plane Wilderness"] = true,
+			["Great Alyrian Underground"] = true,
+			["Lasler Valley"] = true,
+			["Sigil Underground"] = true,
+			["Verity Isle"] = true,
         }
 
         if not excludedAreas[room.area] then 
@@ -4598,6 +4557,30 @@ function gui_room_add_exit(room, uid)
 
   -- Redraw the map
   mapper_redraw()
+end
+
+function get_non_existing_exits(room)
+  local available = {
+    n = "North",
+    s = "South",
+    e = "East",
+    w = "West",
+    u = "Up",
+    d = "Down",
+    ne = "Northeast",
+    sw = "Southwest",
+    nw = "Northwest",
+    se = "Southeast",
+    tprt = "Teleport",
+    prtl = "Portal",
+  }
+
+  -- remove existing exits
+  for k in pairs(room.exits) do
+    available[k] = nil
+  end
+
+  return available
 end
 
 -- -----------
@@ -6021,7 +6004,7 @@ function update_pf()
     INSERT INTO player_tags (uid, tags)
     SELECT r.uid, "no-speed"
     FROM rooms r
-    WHERE ((r.flags LIKE '%immortal%' OR r.terrain LIKE '%ship-only%' OR r.terraininfo LIKE '%ship-only%') or (r.area = "Faerie Plane Wilderness" and (r.xcoord = 0 or r.xcoord = 479)))
+    WHERE ((r.flags LIKE '%immortal%' OR r.terrain LIKE '%ship-only%' OR r.terraininfo LIKE '%ship-only%') or (r.name="Dread Cleaver Caverns") or (r.area = "Faerie Plane Wilderness" and (r.xcoord = 0 or r.xcoord = 479)))
       AND r.uid NOT IN (SELECT uid FROM player_tags);
   ]])
   
