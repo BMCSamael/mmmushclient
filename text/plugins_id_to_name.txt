@@ -13,6 +13,7 @@ fdebcc7a082dc4e7c6d4c306 clocks.xml
 15160c25503baa781f667459 crystal_map_to_clipboard.xml
 e8db9e0976d964b82332096b CrystalLocator.xml
 9249299865b9d174ff96adbe ct_qrewards.xml
+e677af093e715dece34dc47f curio_altar.xml
 bc15ed541f8f0d068b9cf55f defenses_counter.xml
 d900cb999816b1f6f2d4bdc5 detect_globals.xml
 1079f88c024e8171e2d91e76 do_to_list.xml

@@ -2,7 +2,7 @@ id = d553d532b7fd796f3c0759c8  hash = BCFFC68E800BFDE0C79775EE48BF82ED
 id = e8db9e0976d964b82332096b  hash = B9C9FE7CDE4D4682F8FEFF00717E6C2D
 id = adc3a873d4e47348da7cb426  hash = B00731D61F34573B5B57A3E753AE95F9  aux_files = {   [1] = {     name = "arrow.png",     },   [2] = {     name = "circ.png",     },   [3] = {     name = "cross.png",     },   [4] = {     name = "custom.png",     },   [5] = {     name = "dest.png",     },   [6] = {     name = "horse.png",     },   [7] = {     name = "ship.png",     },   [8] = {     name = "alyria.png",     },   [9] = {     name = "alyria_spk_purple.png",     },   [10] = {     name = "alyria_spk_red.png",     },   [11] = {     name = "fp.png",     },   [12] = {     name = "lasler.png",     },   [13] = {     name = "social.png",     },   [14] = {     name = "sugxpanded.png",     },   [15] = {     name = "ug.png",     },   [16] = {     name = "verity.png",     },   }
 id = aedf0cb0be5bf045860d54b7  hash = B5A1EA4CCE2DB3943DE170DB0B5FEE66
-id = f973af093e715dece34dc25f  hash = E5F90ADADEE6CD8AB9DD4B6C6D776476  aux_files = {   [1] = {     name = "mm_mapper.lua",     dest = "MUSH/lua",     },   }
+id = f973af093e715dece34dc25f  hash = 6AB23EA9A0A92E6D0C4BA80610601E7D  aux_files = {   [1] = {     name = "mm_mapper.lua",     dest = "MUSH/lua",     },   }
 id = f67c4339ed0591a5b010d05b  hash = 8548063918EAA5D797276072445050DB  aux_files = {   [1] = {     name = "gmcphelper.lua",     dest = "MUSH/lua",     },   [2] = {     name = "sandbox.dune.net.MCL",     dest = "MUSH/worlds",     },   }
 id = 925cdd0331023d9f0b8f05a7  hash = 64373D837A6FE470DB2E36995FB8669B
 id = 463242566069ebfd1b379ec1  hash = 512D7D73A30BAD8C1237451B63D9396E
@@ -20,6 +20,7 @@ id = 51a661f409c5d66601ff16e9  hash = A1A649F01F3B8681778EAAC640CA1493  aux_file
 id = 7a03ddd09375ae8c2e4ae697  hash = A5D9530C48E2D502600616C8FA170E66
 id = 15160c25503baa781f667459  hash = 3D4A065FF0E5547EC0B6CE7646E5AD33
 id = 9249299865b9d174ff96adbe  hash = 70EA77E04F5DBAB00056C7E6132A1F5C
+id = e677af093e715dece34dc47f  hash = 2B64161FBBF2F7744E1E3D059998E049
 id = bc15ed541f8f0d068b9cf55f  hash = 5598C576E4BE379890DA7BFF25764F88
 id = d900cb999816b1f6f2d4bdc5  hash = 892C3A8B94A5FBFBAB9BA07377F281C2
 id = 1079f88c024e8171e2d91e76  hash = 54A32285B016DA38985C3BF458BCC80D
