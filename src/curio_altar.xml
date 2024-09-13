@@ -574,7 +574,6 @@ end
 
 function curio_complete(name, line, wildcards)
 	header_printed = false
-	process_update_queue()
 end
 
 -- Function to format date as MM/DD HH:MM
@@ -620,6 +619,7 @@ function capture_expiration_data(name, line, wildcards)
     
     -- Queue expiration data update
     queue_altar_update(last_altar, altar_data[last_altar].effect, expire_date_str)
+	process_update_queue()
 end
 
 
