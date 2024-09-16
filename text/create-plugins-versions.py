@@ -15,6 +15,7 @@ def create_plugins_versions():
   process_plugins('../src', '*.xml')
   process_other('../src', '*.lua')
   process_other('../res', '*.png')
+  process_other('../res/moons', '*.png')
   process_other('../res', '*.db')
 
 

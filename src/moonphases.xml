@@ -5,9 +5,9 @@
 <muclient>
 
 <plugin
-   name="MoonPhases"
+   name="moonphases"
    author="Tamlin"
-   id="8a73af093e715dece34dc7f3" 
+   id="3c006258a11ad009439f9dd9"
    language="Lua"
    purpose="Displays moon phases and worldgate timings"
    save_state="y"
@@ -297,10 +297,10 @@ function OnHelp()
 end
 
 function plugin_update_url()
-    local t = {
-        "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/moons.xml"
-    }
-    return (table.concat(t, ";"))
+  local t = {
+    "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/src/moonphases.xml",
+  }
+  return (table.concat(t, ";"))
 end
 
 function plugin_update_aux_url()
@@ -313,7 +313,6 @@ function plugin_update_aux_url()
     "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/res/moons/waning_gibbous.png",
     "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/res/moons/waxing_crescent.png",
     "https://raw.githubusercontent.com/BMCSamael/mmmushclient/master/res/moons/waxing_gibbous.png",
-    
   }
   return (table.concat(t, ";"))
 end

@@ -41,6 +41,7 @@ def md5sum(path):
     return d.hexdigest()
 
 def parse_plugins_dot_txt(path):
+   
     with open(path, "r") as f:
         for line in f:
             id = hash = name = rest = None
@@ -59,6 +60,7 @@ def parse_plugins_dot_txt(path):
                 rest = match.group(2)
 
             match = re.search(r'name\s*=\s*([\w.]+)', line)
+            
             if match:
                 name = match.group(1)
 

@@ -46,9 +46,9 @@ a11c9d4e484b5fc428a49941 meh_timers.xml
 84cc0397252aec0dbd589eaa mixer.xml
 f67c4339ed0591a5b010d05b MM_GMCP_handler.xml
 f973af093e715dece34dc25f MM_GMCP_Mapper_GMCP.xml
-8a73af093e715dece34dc7f3 moonphases.xml
-0d85c0ab3ab1503d1eb12345 mosaicsolver.xml
 8755063a5cf00f3312b113e6 mobs_n_items.xml
+3c006258a11ad009439f9dd9 moonphases.xml
+0d85c0ab3ab1503d1eb12345 mosaicsolver.xml
 1df4fa3b486a36ededa19433 msp_lua.xml
 925cdd0331023d9f0b8f05a7 MushReader.xml
 1d71bf1797912d451784ca21 opponent_hp_sub.xml
