@@ -50,7 +50,7 @@ id = 3a006258a11ad009439f9dd9  hash = 3D0D413E466DE2B57B68C7FFA62A692D
 id = 226fb67b0722e0f0ddc3a235  hash = 982E9446378EC8DED0F1A30D0D72FBFF
 id = 84cc0397252aec0dbd589eaa  hash = FF8D1242B08D8F2B58D503C037A1A4DE
 id = 8755063a5cf00f3312b113e6  hash = 99A39F1B8EBE4FAE9C73C52DBAF01002
-id = 3c006258a11ad009439f9dd9  hash = 143126CBC50B4358E90BE84015D2C52C  aux_files = {   [1] = {     name = "moons/full.png",     },   [2] = {     name = "moons/half_waning.png",     },   [3] = {     name = "moons/half_waxing.png",     },   [4] = {     name = "moons/new.png",     },   [5] = {     name = "moons/waning_crescent.png",     },   [6] = {     name = "moons/waning_gibbous.png",     },   [7] = {     name = "moons/waxing_crescent.png",     },   [8] = {     name = "moons/waxing_gibbous.png",     },   }
+id = 3c006258a11ad009439f9dd9  hash = 81F1844697E1ACF9D2A115D7902B0AB7  aux_files = {   [1] = {     name = "moons/full.png",     },   [2] = {     name = "moons/half_waning.png",     },   [3] = {     name = "moons/half_waxing.png",     },   [4] = {     name = "moons/new.png",     },   [5] = {     name = "moons/waning_crescent.png",     },   [6] = {     name = "moons/waning_gibbous.png",     },   [7] = {     name = "moons/waxing_crescent.png",     },   [8] = {     name = "moons/waxing_gibbous.png",     },   }
 id = 0d85c0ab3ab1503d1eb12345  hash = F7E66F4D5AC96E87026996AECC091447
 id = 1df4fa3b486a36ededa19433  hash = 15BB07ECB155478D86D90D6B3A26E894
 id = 1d71bf1797912d451784ca21  hash = CD14A04272B27465B9A296D04377FB05

@@ -679,16 +679,19 @@ function show_next_moon_phase()
         current_marabah_phase = "unknown"
     end
 
-    next_trigael_phase = get_next_moon_phase(current_trigael_phase)
-    next_marabah_phase = get_next_moon_phase(current_marabah_phase)
+    if not (current_trigael_phase == "unknown" and current_marabah_phase == "unknown") then 
+		next_trigael_phase = get_next_moon_phase(current_trigael_phase)
+		next_marabah_phase = get_next_moon_phase(current_marabah_phase)
 	
-	local new_gate_list = moon_data[next_trigael_phase][next_marabah_phase]
-    if not gate_list then
-        Note("No gates found for phases: " .. next_trigael_phase .. ", " .. next_marabah_phase)
-        return
-    end
-
-	next_worldgate = getworldgate(new_gate_list)
+		local new_gate_list = moon_data[next_trigael_phase][next_marabah_phase]
+		if not gate_list then
+			Note("No gates found for phases: " .. next_trigael_phase .. ", " .. next_marabah_phase)
+			return
+		end
+		next_worldgate = getworldgate(new_gate_list)
+	else
+		next_worldgate = "Unknown"
+	end
 end
 
 -- Utility function to check if a table contains a value
@@ -725,7 +728,7 @@ function do_show_clocks()
     txt = txt .. "??:??:??"
   end
 
-  add_to_mini("silver", "black", txt)
+  add_to_mini("yellow", "black", txt)
   add_to_mini("silver", "black", "\r\n")
 
 
@@ -737,29 +740,19 @@ function do_show_clocks()
     txt = txt .. "??:??:??"
   end
 
-  add_to_mini("silver", "black", txt)
-  add_to_mini("silver", "black", "\r\n")
-
-
-  -- Local time
-  txt = "local:  " .. os.date("%H:%M:%S")
-
-  add_to_mini("silver", "black", txt)
+	txt = txt .. "  local:  " .. os.date("%H:%M:%S")
+	
+  add_to_mini("yellow", "black", txt)
   add_to_mini("silver", "black", "\r\n")
   
   -- Moons Trig
-  txt = "Trigael:  " .. tostring(trigael)
-  add_to_mini("silver", "black", txt)	
-  add_to_mini("silver", "black", "\r\n")
-    
-	-- Moons Marabah
-  txt = "Marabah:  " .. tostring(marabah)
-  add_to_mini("silver", "black", txt)	
+  txt = "Current T:(" .. tostring(trigael) .. ") M:(" .. tostring(marabah) .. ")"
+  add_to_mini("orange", "black", txt)	
   add_to_mini("silver", "black", "\r\n")
   
   	-- Moons Gates
-  txt = "Gates:  " .. tostring(worldgate)
-  add_to_mini("silver", "black", txt)	
+  txt = "Gate:  " .. tostring(worldgate)
+  add_to_mini("orange", "black", txt)	
   add_to_mini("silver", "black", "\r\n")
   
     -- System time
@@ -769,21 +762,19 @@ function do_show_clocks()
   else
     txt = txt .. "??:??:??"
   end
-    add_to_mini("silver", "black", txt)	
+    add_to_mini("green", "black", txt)	
+	add_to_mini("silver", "black", "\r\n")
 	add_to_mini("silver", "black", "\r\n")
   
    -- Show Next Phase
    show_next_moon_phase()
-  txt = "Next Moons Trigael: " .. next_trigael_phase
-  add_to_mini("silver", "black", txt)	
-  add_to_mini("silver", "black", "\r\n")
-  
-  txt = "Next Moons Marabah: " .. next_marabah_phase
-  add_to_mini("silver", "black", txt)	
-  add_to_mini("silver", "black", "\r\n")
+  	
+  txt = "Next Phase: T:(" .. next_trigael_phase .. ") M:(" .. next_marabah_phase..")"
+  add_to_mini("green", "black", txt)	
+  add_to_mini("green", "black", "\r\n")
   
   txt = "Next Worldgate: " .. next_worldgate
-  add_to_mini("silver", "black", txt)	
+  add_to_mini("green", "black", txt)	
   add_to_mini("silver", "black", "\r\n")
     
 end
