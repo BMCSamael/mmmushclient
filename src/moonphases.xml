@@ -492,6 +492,9 @@ function update_times()
   if (sysup_time_ss ~= nil) then
 	sysup_time_ss = sysup_time_ss - 1
     sysup_time_hh, sysup_time_mm, sysup_time_ss = fix_time(sysup_time_hh, sysup_time_mm, sysup_time_ss)
+	if sysup_time_hh > 3 and sysup_time_mm > 30 then
+		init_clocks()
+	end
   end
   
   clocks_redraw()
@@ -556,22 +559,22 @@ moon_data = {
         ["gibbous waxing"] = { { "Verity Isle", "Lodge" } },
         ["half waning"] = { { "Lowangen", "Maldras Keep" } },
         ["half waxing"] = { { "SUG - Genauras", "UG - Lava" } },
-        ["new"] = { { "CTF", "Kalywak" } },
+        ["new"] = { { "Arcane", "Kalywak" } },
         ["crescent waning"] = { { "Rune", "SUG - Ghost" } },
-        ["crescent waxing"] = { { "Beltane", "Faerie Plane NE" } },
+        ["crescent waxing"] = { { "Takhtin", "Faerie Plane NE" } },
     },
     ["gibbous waning"] = {
         ["full"] = { { "Rune", "Garbool" } },
         ["gibbous waning"] = { { "Maldras Keep", "SUG - Gypsy" } },
         ["half waxing"] = { { "Maldras Keep", "Rune" } },
-        ["half waning"] = { { "CTF", "Verity Isle" } },
+        ["half waning"] = { { "Arcane", "Verity Isle" } },
         ["crescent waning"] = { { "Tellerium", "SUG - Genauras" } },
         ["crescent waxing"] = { { "Beltane", "SUG - Bandit" } },
-        ["new"] = { { "Sigil", "Faerie Plane NE" } },
+        ["new"] = { { "Sigil", "Faerie Plane SW" } },
         ["gibbous waxing"] = { { "Void", "SUG - Ghost" } },
     },
     ["half waning"] = {
-        ["gibbous waning"] = { { "Lowangen (1177, 384)", "Sigil (502, 1281)" } },
+        ["gibbous waning"] = { { "The Black Lodge", "Sigil" } },
         ["half waxing"] = { { "Tellerium", "Xaventry" } },
         ["crescent waning"] = { { "SUG - Genauras", "Maldras Keep" } },
         ["crescent waxing"] = { { "Faerie Plane SW", "Rune" } },
@@ -595,7 +598,7 @@ moon_data = {
         ["half waxing"] = { { "Beltane", "Tellerium" } },
         ["crescent waning"] = { { "Verity", "UG - Hotel Hello" } },
         ["crescent waxing"] = { { "Lowangen", "Garbool" } },
-        ["new"] = { { "CTF", "Maldras Keep" } },
+        ["new"] = { { "Vandemaars Keep", "Maldras Keep" } },
         ["half waning"] = { { "Xaventry", "CTF" } },
         ["gibbous waxing"] = { { "Maldras Keep", "Kalywak" } },
         ["full"] = { { "Rune", "Lowangen" } },
@@ -612,7 +615,7 @@ moon_data = {
     },
     ["half waxing"] = {
         ["gibbous waning"] = { { "Beltane", "Rune" } },
-        ["half waxing"] = { { "CTF", "SUG - Bandit" } },
+        ["half waxing"] = { { "Arcane", "Lava Wastes (SUG)" } },
         ["crescent waning"] = { { "Maldras Keep", "UG - Decara" } },
         ["crescent waxing"] = { { "Verity Isle", "Kalywak" } },
         ["new"] = { { "Lowangen", "SUG - Gypsy" } },
@@ -627,7 +630,7 @@ moon_data = {
         ["crescent waxing"] = { { "Xaventry", "Sigil" } },
         ["new"] = { { "SUG - Lava Wastes", "Rune" } },
         ["half waning"] = { { "Sigil", "Xaventry" } },
-        ["full"] = { { "Beltane", "SUG - Gypsy" } },
+        ["full"] = { { "Beltane", "Smugglers Gulch" } },
         ["gibbous waxing"] = { { "Tellerium", "Kalywak" } },
     },
 }
