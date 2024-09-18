@@ -102,7 +102,7 @@ local last_altar = "Curious"
 local update_queue = {}
 
 -- Define column widths for alignment
-local name_width = 20
+local name_width = 15
 local effect_width = 20
 local expire_width = 13
 local area_width = 30
@@ -521,6 +521,9 @@ function output_altar_info(altar_info)
 
     if not altar_name then
         altar_name = "Unknown"
+    else
+        -- Extract the first word of the altar_name
+        altar_name = altar_name:match("^[^%s]+")
     end
 
 local color = "green"	
