@@ -3320,10 +3320,12 @@ function map_goto(wanted)
 
   -- Find the desired room
   mapper.find(
-    function(uid)
-      local found = string.match(uid, "^" .. wanted .. "$")
-      return found, found
-    end,  -- function to match room ID
+	function(uid)
+		local found = string.match(uid, "^" .. wanted .. "$")
+		if found then
+			return found, uid -- Returning uid for further processing
+		end
+	end,  -- function to match room ID
     show_vnums,  -- whether to show vnums
     1,          -- number of results expected
     true,       -- whether to walk to the room

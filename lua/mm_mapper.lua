@@ -147,6 +147,8 @@ local use_nospeed_mode    -- true to use rooms and exits tagged as no-speed on s
 local use_grappling_mode  -- true to use grappling
 local safewalk_mode       -- true to avoid PK rooms, traps, etc. on speedwalks
 
+local MAX_PARTICLES = 1000 -- Overall limit
+
 -- current room number
 local current_room
 
@@ -285,11 +287,15 @@ local shorten_direction = {
 }
 
 local function get_room (uid)
+  if not uid then
+    Note("Warning: UID is nil")
+    uid = "<none>"
+  end
   local room = supplied_get_room (uid)
   room = room or { unknown = true }
 
   -- defaults in case they didn't supply them ...
-  room.name = room.name or string.format ("Room %s", uid or "<none>")
+  room.name = mw.strip_colours(room.name or string.format("Room %s", uid))
   room.name = mw.strip_colours (room.name)  -- no colour codes for now
   room.exits = room.exits or {}
   room.exits_tags = room.exits_tags or {}
@@ -1002,194 +1008,213 @@ end -- check_we_can_find
 
 -- if fcb is a function, it is called back after displaying each line
 
-function find (f, show_uid, expected_count, walk, fcb)
-
-  if not check_we_can_find () then
-    return
-  end -- if
-
-  if fcb then
-    assert (type (fcb) == "function")
-  end -- if
-
-  local start_time = utils.timer ()
-  local paths, count, depth = find_paths (current_room, f)
-  local end_time = utils.timer ()
-
-  local t = {}
-  local found_count = 0
-  for k in pairs (paths) do
-    table.insert (t, k)
-    found_count = found_count + 1
-  end -- for
-
-  -- timing stuff
-  if timing then
-    print (string.format ("Time to search %i rooms = %0.3f seconds, search depth = %i",
-                          count, end_time - start_time, depth))
-  end -- if
-
-  if found_count == 0 then
-    mapprint ("No matches.")
-    if (safewalk_mode) then
-      mapprint ("(Try again with 'mapper safewalk off'.)")
-    elseif (not use_nospeed_mode) then
-      mapprint ("(Try again with 'mapper use no-speed on'.)")
-    elseif (not use_grappling_mode) then
-      mapprint ("(Try again with 'mapper use grappling on'.)")
+function find(f, show_uid, expected_count, walk, fcb)
+    if not check_we_can_find() then
+        return
     end
-    return
-  end -- if
 
-  if found_count == 1 and walk then
-    uid, item = next (paths, nil)
-    mapprint ("Walking to:", rooms [uid].name)
-    start_speedwalk (item.path)
-    return
-  end -- if walking wanted
+    if fcb then
+        assert(type(fcb) == "function")
+    end
 
-  -- sort so closest ones are first
-  table.sort (t, function (a, b) return #paths [a].path < #paths [b].path end )
+    local start_time = utils.timer()
+    local paths, count, depth = run_pathfinding(current_room, f)
+    local end_time = utils.timer()
 
-  hyperlink_paths = {}
+    local t = {}
+    local found_count = 0
+    for k in pairs(paths) do
+        table.insert(t, k)
+        found_count = found_count + 1
+    end
 
-  for _, uid in ipairs (t) do
-    local room = rooms [uid] -- ought to exist or wouldn't be in table
+    -- Timing information
+    if timing then
+        print(string.format("Time to search %i rooms = %0.3f seconds, search depth = %i",
+                            count, end_time - start_time, depth))
+    end
 
-    assert (room, "Room " .. uid .. " is not in rooms table.")
+	if found_count == 0 then
+		mapprint ("No matches.")
+		if (safewalk_mode) then
+			mapprint ("(Try again with 'mapper safewalk off'.)")
+		elseif (not use_nospeed_mode) then
+			mapprint ("(Try again with 'mapper use no-speed on'.)")
+		elseif (not use_grappling_mode) then
+			mapprint ("(Try again with 'mapper use grappling on'.)")
+		end
+		return
+	end -- if
 
-    if current_room == uid then
-      mapprint (room.name, "is the room you are in")
-    else
-      local distance = #paths [uid].path .. " room"
-      if #paths [uid].path > 1 then
-        distance = distance .. "s"
-      end -- if
-      distance = distance .. " away"
+	if found_count == 1 and walk then
+		uid, item = next(paths, nil)
+		mapprint("Walking to:", rooms[uid].name)
+		start_speedwalk(item.path) -- Ensure you pass the correct path
+		return
+	end
 
-      local room_name = room.name
-      if show_uid then
-        room_name = room_name .. " (" .. uid .. ")"
-      end -- if
+    -- Sort paths by distance
+    table.sort(t, function(a, b) return #paths[a].path < #paths[b].path end)
 
-      -- in case the same UID shows up later, it is only valid from the same room
-      local hash = utils.tohex (utils.md5 (tostring (current_room) .. "<-->" .. tostring (uid)))
+    hyperlink_paths = {}
+    for _, uid in ipairs(t) do
+        local room = rooms[uid]
+        assert(room, "Room " .. uid .. " is not in rooms table.")
 
-      Hyperlink ("!!" .. GetPluginID () .. ":mapper.do_hyperlink(" .. hash .. ")",
-                room_name, "Click to speedwalk there (" .. distance .. ")", "", "", false)
-      local info = ""
-      if type (paths [uid].reason) == "string" and paths [uid].reason ~= "" then
-        info = " [" .. paths [uid].reason .. "]"
-      end -- if
-      mapprint (" - " .. distance .. info) -- new line
+        if current_room == uid then
+            mapprint(room.name, "is the room you are in")
+        else
+            local distance = #paths[uid].path .. " room"
+            if #paths[uid].path > 1 then
+                distance = distance .. "s"
+            end
+            distance = distance .. " away"
 
-      -- callback to display extra stuff (like find context, room description)
-      if fcb then
-        fcb (uid)
-      end -- if callback
-      hyperlink_paths [hash] = paths [uid].path
-    end -- if
-  end -- for each room
+            local room_name = room.name
+            if show_uid then
+                room_name = room_name .. " (" .. uid .. ")"
+            end
 
-  if expected_count and found_count < expected_count then
-    local diff = expected_count - found_count
-    local were, matches = "were", "matches"
-    if diff == 1 then
-      were, matches = "was", "match"
-    end -- if
-    mapprint ("There", were, diff, matches,
-              "which I could not find a path to within",
-              config.SCAN.depth, "rooms.")
-  end -- if
+            local hash = utils.tohex(utils.md5(tostring(current_room) .. "<-->" .. tostring(uid)))
+            Hyperlink("!!" .. GetPluginID() .. ":mapper.do_hyperlink(" .. hash .. ")",
+                      room_name, "Click to speedwalk there (" .. distance .. ")", "", "", false)
+            local info = ""
+            if type(paths[uid].reason) == "string" and paths[uid].reason ~= "" then
+                info = " [" .. paths[uid].reason .. "]"
+            end
+            mapprint(" - " .. distance .. info)
 
-end -- map_find_things
+            if fcb then
+                fcb(uid)
+            end
+            hyperlink_paths[hash] = paths[uid].path
+        end
+    end
+
+    if expected_count and found_count < expected_count then
+        local diff = expected_count - found_count
+        local were, matches = "were", "matches"
+        if diff == 1 then
+            were, matches = "was", "match"
+        end
+        mapprint("There", were, diff, matches,
+                  "which I could not find a path to within",
+                  config.SCAN.depth, "rooms.")
+    end
+end
 
 
-function find_paths (uid, f)
+local function make_particle(curr_loc, prev_path)
+    return {current_room = curr_loc, path = prev_path or {}}
+end
 
-  local function make_particle (curr_loc, prev_path)
-    local prev_path = prev_path or {}
-    return {current_room=curr_loc, path=prev_path}
-  end
+function find_paths_coroutine(uid, f)
+    return coroutine.create(function()
+        local function make_particle(curr_loc, prev_path)
+		local prev_path = prev_path or {}
+            return {current_room = curr_loc, path = prev_path}
+        end
+		
+        local depth, count, done = 0, 0, false
+        local found, reason
+        local explored_rooms = {}
+        local particles = {make_particle(uid)}
+		
+		local paths = {}
 
-  local depth = 0
-  local count = 0
-  local done = false
-  local found, reason
-  local explored_rooms, particles = {}, {}
+        while not done and #particles > 0 and depth < config.SCAN.depth do
+            
+			local new_generation = {}
+			depth = depth + 1
+            SetStatus(string.format("Scanning: %i/%i depth (%i rooms)", depth, config.SCAN.depth, count))         
 
-  -- this is where we collect found paths
-  -- the table is keyed by destination, with paths as values
-  local paths = {}
+            for _, part in ipairs(particles) do
+                count = count + 1
+				
+                if not rooms[part.current_room] then
+                    rooms[part.current_room] = get_room(part.current_room)
+                end -- not in cache yet
 
-  -- create particle for the initial room
-  table.insert (particles, make_particle (uid))
+                if rooms[part.current_room] then
+                    exits = rooms[part.current_room].exits
 
-  while (not done) and #particles > 0 and depth < config.SCAN.depth do
+                    for dir, dest in pairs(exits) do
+						-- if we've been in this room before, drop it
+                        if not explored_rooms[dest] and can_exit_be_used_on_speedwalks(part.current_room, dir) then
+                            explored_rooms[dest] = true
+                            rooms[dest] = supplied_get_room(dest)
+                            
+                            if rooms[dest] and is_safewalk_check_ok(dest) and can_be_used_on_speedwalks(dest) then
+								new_path = copytable.deep (part.path)
+								table.insert(new_path, { dir = dir, uid = dest } )
+								
+								-- if this room is in the list of destinations then save its path
+                                found, reason = f(dest)
+                                --print("Checking destination:", dest, "Found:", found, "Reason:", reason)
+                                if found then
+                                    paths[dest] = {path = new_path, reason = found}
+                                    done = true
+                                    break
+                                end
 
-    -- create a new generation of particles
-    new_generation = {}
-    depth = depth + 1
+                                table.insert(new_generation, make_particle(dest, new_path))
+                            end
+                        end
+                        if done then break end
+                    end
+                else
+                    print("Room not found:", part.current_room)
+                end
+                if done then break end
+				
+            end
+            
+            if #particles > MAX_PARTICLES then
+                table.sort(particles, function(a, b) return #a.path < #b.path end)
+                particles = {unpack(particles, 1, MAX_PARTICLES)}
+            end
+			
+			if depth % 200 == 0 then
+				--print("Yielding at count:", count)
+				coroutine.yield()  -- Yield control back
+				collectgarbage("collect")
+				--print("Memory used: ", collectgarbage("count"))
+			end
 
-    SetStatus (string.format ("Scanning: %i/%i depth (%i rooms)", depth, config.SCAN.depth, count))
+			particles = new_generation
+			
+        end
 
-    -- process each active particle
-    for i, part in ipairs (particles) do
+        SetStatus("Ready")
+        return paths, count, depth  -- Ensure these are returned
+    end)
+end
 
-      count = count + 1
+function run_pathfinding(uid, f)
+    local co = find_paths_coroutine(uid, f)
+    local function step()
+        local status, result1, result2, result3 = coroutine.resume(co)
 
-      if not rooms [part.current_room] then
-        rooms [part.current_room] = get_room (part.current_room)
-      end -- if not in memory yet
+        if coroutine.status(co) == "dead" then
+            mapprint("Pathfinding completed.")
+            paths, count, depth = result1, result2, result3
+            return paths, count, depth
+        end
 
-      -- if room doesn't exist, forget it
-      if rooms [part.current_room] then
+        if not status then
+            mapprint("Error: " .. result1)
+            return
+        end
 
-        -- get a list of exits from the current room
-        exits = rooms [part.current_room].exits
+        os.execute("sleep 0.1")
+        step()
+    end
 
-        -- create one new particle for each exit
-        for dir, dest in pairs(exits) do
-          -- if we've been in this room before, drop it
-          if not explored_rooms[dest]
-          and can_exit_be_used_on_speedwalks(part.current_room, dir) then
-            explored_rooms[dest] = true
-            rooms [dest] = supplied_get_room (dest) -- make sure this room in table
-            if rooms [dest]
-            and (is_safewalk_check_ok(dest))
-            and (can_be_used_on_speedwalks(dest)) then
-              new_path = copytable.deep (part.path)
-              table.insert(new_path, { dir = dir, uid = dest } )
+    step()
 
-              -- if this room is in the list of destinations then save its path
-              found, done = f (dest)
-              if found then
-                paths[dest] = { path = new_path, reason = found }
-              end -- found one!
+    return paths, count, depth
+end
 
-              -- make a new particle in the new room
-              table.insert(new_generation, make_particle(dest, new_path))
-            end -- if room exists and it's ok to walk it
-          end -- not explored this room
-          if done then
-            break
-          end
-
-        end -- for each exit
-
-      end -- if room exists
-
-      if done then
-        break
-      end
-    end  -- for each particle
-
-    particles = new_generation
-  end   -- while more particles
-
-  SetStatus "Ready"
-  return paths, count, depth
-end -- function find_paths
 
 -- draw our map starting at room: uid
 
