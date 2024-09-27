@@ -153,6 +153,25 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
 
 <aliases>
 
+<!-- DEV ONLY -->
+ <alias
+    enabled="y"
+    match="^mapper[ ]+checkexits[ ]+(?<roompat>[a-zA-Z0-9 \,\.\'\-\_\%]+)$"
+    regexp="y"
+    sequence="100"
+    script="map_checkexit"
+  >
+  </alias>
+  
+   <alias
+    enabled="y"
+    match="^mapper[ ]+recheckexits$"
+    regexp="y"
+    sequence="100"
+    script="map_recheckexit"
+  >
+  </alias>
+
 <!-- spore alias -->
   <alias
     enabled="y"
@@ -1740,7 +1759,86 @@ function get_room(uid)
   return room
 end
 
+function map_checkexit(name, line, wildcards)
+	local roompattern = wildcards.roompat
+	local t = {}
+	local delay = 1 -- delay in seconds between moves
+	local foundrooms
+	
+	-- check pattern
+	if roompattern then
+		ColourNote("silver", "black", "Searching for " .. roompattern)
+		
+		-- Prepare the FTS4 query for matching room names with a parameterized query
+		local stmt = db:prepare("SELECT touid FROM exits WHERE touid LIKE ? and touid not in (select uid from rooms)")
+		stmt:bind_values('%' .. roompattern .. '%')
 
+		-- Execute the query and collect room UIDs
+		for row in stmt:nrows() do
+			local roomexit = row.touid
+			t[#t + 1] = roomexit  -- Store touid in the table
+		end
+		
+		-- Finalize the statement
+		stmt:finalize()
+		
+		-- Get the number of rooms found in this iteration
+		foundRooms = #t
+		ColourNote("silver", "black", "Found " .. foundRooms .. " rooms.")
+		
+		if foundRooms > 0 then
+			-- If rooms were found, process them with delays
+			for index, room in ipairs(t) do
+				-- Use DoAfter to delay each move command
+				DoAfterSpecial(delay * (index ), "move " .. room, sendto.execute)
+			end
+			DoAfterSpecial(delay * (#t + 1 ), "c 'detect illusion'", sendto.world)
+			DoAfterSpecial(delay * (#t + 10), "mapper checkexits " .. roompattern, sendto.execute)
+		else
+			ColourNote("red","black:", "No Rooms Found")
+		end
+		ColourNote("silver", "black", "Found Rooms Completed")
+	else
+		ColourNote("silver", "black", "Missing Exit Pattern")
+	end
+end
+
+function map_recheckexit(name, line, wildcards)
+	local t = {}
+	local delay = 1 -- delay in seconds between moves
+	local foundrooms
+	
+	ColourNote("silver", "black", "ReChecking Exits")
+
+	local stmt = db:prepare("select uid from rooms where uid in (select touid from exits) and uid not in (select fromuid from exits) and uid != '-100' and uid != '-99' and flags not like ? and area not like ? and area not like ? and uid not in (select uid from player_tags where tags = 'dt') ORDER BY UID DESC LIMIT 1000")
+	stmt:bind_values('%momentary-darkness%', '%clan hall%', '%clanhall%')
+	
+	-- Execute the query and collect room UIDs
+	for row in stmt:nrows() do
+		local roomexit = row.uid
+		t[#t + 1] = roomexit  -- Store touid in the table
+	end
+		
+	-- Finalize the statement
+	stmt:finalize()
+		
+	-- Get the number of rooms found in this iteration
+	foundRooms = #t
+	ColourNote("silver", "black", "Found " .. foundRooms .. " rooms.")
+		
+	if foundRooms > 0 then
+		-- If rooms were found, process them with delays
+		for index, room in ipairs(t) do
+			-- Use DoAfter to delay each move command
+			DoAfterSpecial(delay * (index ), "move " .. room, sendto.execute)
+		end
+		DoAfterSpecial(delay * (#t + 1 ), "c 'detect illusion'", sendto.world)
+		DoAfterSpecial(delay * (#t + 5), "mapper recheckexits", sendto.execute)
+	else
+		ColourNote("red","black:", "No Rooms Found")
+	end
+	ColourNote("silver", "black", "Found Rooms Completed")
+end
 
 ----------------------
 -- gui main function
@@ -2078,7 +2176,7 @@ function show_unmapped_exits()
   one_way_exits = Trim(table.concat(one_way_exits, " "))
   if (one_way_exits ~= "") then
     Tell("  one way exits: ")
-    ColourNote("silver", "black", one_way_exits)
+		
   end
 end
 
