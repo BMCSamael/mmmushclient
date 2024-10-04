@@ -116,11 +116,12 @@ http://github.com/MateriaMagicaLLC/mm-mushclient-scripts
 <triggers>
 
 <!-- on prompt -->
-
+ <!-- |\(.+\)|\&gt; REMOVED -->
+ 
   <trigger
    name="a_prompt"
    keep_evaluating="y"
-   match="^(|[^ ]+(.*?))(\&lt;(.+)hp (.+)sp (.+)st\&gt;|\(.+\)|\&gt;) $"
+   match="^(|[^ ]+(.*?))(\&lt;(.+)hp (.+)sp (.+)st\&gt;) $"
    regexp="y"
    send_to="12"
    sequence="100"
