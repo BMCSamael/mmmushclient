@@ -57,7 +57,7 @@ CurioAltars show_active
 <triggers>
 <trigger
     enabled="y"
-    match="^(?<altar_name>[A-Za-z ]*(Altar|Alta|Alte|Alt|A))(?::)?\s+(?<altar_effect>\d+\s*\w[\w\s\-]*|altar\s+not\s+active\.)$"
+    match="^(?<altar_name>[A-Za-z ]*(Altar|Alta|Alte|Alt|A|Al))(?::)?\s+(?<altar_effect>\d+\s*\w[\w\s\-]*|altar\s+not\s+active\.)$"
     group="altar_data"
     keep_evaluating="n"
     regexp="y"
@@ -423,25 +423,43 @@ local altar_data = {
     },
     ["Tranquil Altar"] = {
         effect = "",
-        area = "Not Found",
-        room_no = 0,
+        area = "HBNT Manifest - Hidden Alcove",
+        room_no = 107297,
         affects = {"+5% defense chance", "100 weight modifier"},
         coins = 3,
         expire_date = "",
         name = "Tranquil"
+    }, 
+	["Breathtaking Al"] = {
+        effect = "",
+        area = "Rune Van Pelt (RU)",
+        room_no = 353834,
+        affects = {"7% Necro", "7% Cold", "7% Fire", "7% Lightning", "7% Mental"},
+        coins = 1,
+        expire_date = "PERM",
+        name = "Breathtaking"
+    },
+	["Priceless Altar"] = {
+        effect = "ALL",
+        area = "Rune Van Pelt (RU)",
+        room_no = 353849,
+        affects = {"35 SP, 5 Sp-R, 25 RfSpl, 3 Orien, 5 Dig, 4 Dmg, 50 Hp"},
+        coins = 1,
+        expire_date = "PERM",
+        name = "Priceless"
     }
 }
 
 
 -- Function to queue altar updates
 function queue_altar_update(altar_name, altar_effect, expire_date_str)
-    local existing_data = altar_data[altar_name]
+	local existing_data = altar_data[altar_name]
     if existing_data then
         -- Update altar data
         existing_data.effect = altar_effect
 	        		
 		-- Determine expiration date
-        local expire_date = parse_date(expire_date_str)
+		local expire_date = parse_date(expire_date_str)
         if not expire_date then
             expire_date_str = "N/A"
         end
@@ -499,6 +517,9 @@ end
 function capture_altar_data(name, line, wildcards)
     local altar_name = wildcards.altar_name
     local altar_effect = wildcards.altar_effect
+	if altar_name == "Priceless Altar" then 
+		altar_effect = "All"
+	end
     last_altar = altar_name
 
     -- Normalize altar_name by trimming extra spaces
@@ -531,11 +552,13 @@ local color = "green"
 		local fmt_expire_date = parse_date(altar_info.expire_date)
 		local current_time = os.time()
 		local seconds_in_a_day = 60 * 60 * 24
-		local days_remaining = math.ceil((fmt_expire_date - current_time) / seconds_in_a_day)
-
+		local days_remaining = 0
+		if fmt_expire_date then
+			days_remaining = math.ceil((fmt_expire_date - current_time) / seconds_in_a_day)
+		end
 		if days_remaining <= 15 then
 			color = "red"
-		elseif days_remaining <= 30 then
+		elseif days_remaining <= 30 and days_remaining >= 1 then
 			color = "yellow"
 		end
 	else 
@@ -546,6 +569,10 @@ local color = "green"
     local formatted_name = string.format("%-" .. name_width .. "s", altar_name or "Unknown")
     local formatted_effect = string.format("%-" .. effect_width .. "s", altar_info.effect or "N/A")
     local formatted_expires = string.format("%-" .. expire_width .. "s", format_expire_date(altar_info.expire_date) or "N/A")
+	if altar_name == "Breathtaking" or altar_name == "Priceless" then
+		color = "orange"
+		formatted_expires = string.format("%-" .. expire_width .. "s", "PERM")
+	end
     local formatted_area = string.format("%-" .. area_width .. "s", altar_info.area or "N/A")
     local formatted_room_no = string.format("%-" .. room_no_width .. "s", altar_info.room_no > 0 and altar_info.room_no or "Unknown")
     --local formatted_coins = string.format("%-" .. coin_width .. "s", altar_info.coins or 0)
