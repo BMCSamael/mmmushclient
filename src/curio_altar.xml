@@ -299,7 +299,7 @@ local altar_data = {
         effect = "",
         area = "Waylander's",
         room_no = 33869,
-        affects = {"2% Crit Chance", "+10 Crit DMG", "7% Inventory Cap"},
+        affects = {"1 Sold Use", "1 Wiz Use", "1 Shaman Use"},
         coins = 2,
         expire_date = "",
         name = "Lonely"
@@ -308,7 +308,7 @@ local altar_data = {
         effect = "",
         area = "Focault",
         room_no = 15298,
-        affects = {"1 Sold Use", "1 Wiz Use", "1 Shaman Use"},
+		affects = {"2% Crit Chance", "+10 Crit DMG", "7% Inventory Cap"},
         coins = 2,
         expire_date = "",
         name = "Excited"
@@ -519,6 +519,8 @@ function capture_altar_data(name, line, wildcards)
     local altar_effect = wildcards.altar_effect
 	if altar_name == "Priceless Altar" then 
 		altar_effect = "All"
+	elseif  altar_name == "Lonely Altar" then
+		altar_effect = altar_effect:gsub("increased uses to ","")
 	end
     last_altar = altar_name
 
