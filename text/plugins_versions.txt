@@ -122,5 +122,4 @@ name = waning_crescent.png  hash = 48838FB0ED175E33D23EFB8056BF5AD5
 name = waning_gibbous.png  hash = B10D0839BA440BBBEFA8AE9AF74AF377
 name = waxing_crescent.png  hash = 3CC33586A1CB665D2F39C66800DD8123
 name = waxing_gibbous.png  hash = 0EEA75108D92A50AF20A1E15A0F68A20
-name = mm_mapper.db  hash = 99FE3EC89C83FCBD8BB370042B96669B
 name = mm_mobs_n_items.db  hash = 8FAB95BA0B608B57905F035A4812B840
