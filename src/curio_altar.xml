@@ -68,6 +68,17 @@ CurioAltars show_active
  
  <trigger
     enabled="y"
+    match="^Type 'CURIO BUY \<\#\>' to purchase your desired curio\.$"
+    group="altar_data"
+    keep_evaluating="n"
+    regexp="y"
+    omit_from_output="y"
+    sequence="100"
+    script="curio_list_view"
+ />
+ 
+ <trigger
+    enabled="y"
     match="^Expires on\s+(?<expire_date>[\w\s:]+ \d{4})\.$"
     group="altar_data"
     keep_evaluating="n"
@@ -76,7 +87,7 @@ CurioAltars show_active
     sequence="101"
     script="capture_expiration_data"
  />
-
+ 
 	<trigger
 	enabled="y"
     match="^Type 'HELP CURIO' for more information\.$"
@@ -604,7 +615,12 @@ local color = "green"
 	Note("\r\n")
 end
 
+function curio_list_view(name, line, wildcards)
+	header_printed = true
+end
+
 function curio_complete(name, line, wildcards)
+	process_update_queue()
 	header_printed = false
 end
 
@@ -651,7 +667,6 @@ function capture_expiration_data(name, line, wildcards)
     
     -- Queue expiration data update
     queue_altar_update(last_altar, altar_data[last_altar].effect, expire_date_str)
-	process_update_queue()
 end
 
 
